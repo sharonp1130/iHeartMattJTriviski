@@ -1,15 +1,17 @@
 CREATE TABLE Location
 (
 	LocationId int auto_increment PRIMARY KEY,
-	Longitude point,
-    Latitude point,
+    UserName varchar(20) NOT NULL,
+	Longitude double,
+    Latitude double,
     ChangedAt datetime
 );
 
 CREATE PROCEDURE sp_InsertLocation
 (
-	Longitude point,
-    Latitude point
+    UserName varchar(20) NOT NULL,
+	Longitude double,
+    Latitude double
 )
 
     INSERT INTO Location
@@ -20,7 +22,13 @@ CREATE PROCEDURE sp_InsertLocation
 	)
     VALUES
     (
+        UserId,
 		Latitude,
         Longitude,
         NOW()
 	); 
+
+CREATE PROCEDURE sp_GetLastLocation 
+(
+    UserId int  
+)
