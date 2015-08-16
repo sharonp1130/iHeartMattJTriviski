@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="license" idMethod="native" phpName="License">
+    <column name="licenseId" phpName="Licenseid" type="INTEGER" size="32" primaryKey="true" required="true"/>
+    <column name="licenseNumber" phpName="Licensenumber" type="VARCHAR" size="32" required="true"/>
+    <column name="service" phpName="LicenseService" type="INTEGER" size="32" required="true"/>
+    <column name="user" phpName="LicenseUser" type="INTEGER" size="32" required="true"/>
+    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="user" name="license_uid_fk" onUpdate="CASCADE">
+      <reference local="user" foreign="userId"/>
+    </foreign-key>
+    <foreign-key foreignTable="service" name="license_serv_fk" onUpdate="CASCADE">
+      <reference local="service" foreign="serviceId"/>
+    </foreign-key>
+    <index name="license_servicetype_fk_idx">
+      <index-column name="service"/>
+    </index>
+    <index name="license_uid_fk_idx">
+      <index-column name="user"/>
+    </index>
+    <unique name="licenseId_UNIQUE">
+      <unique-column name="licenseId"/>
+    </unique>
+    <unique name="licenseNumber_UNIQUE">
+      <unique-column name="licenseNumber"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="location" idMethod="native" phpName="Location">
+    <column name="locationId" phpName="Locationid" type="INTEGER" size="32" primaryKey="true" required="true"/>
+    <column name="user" phpName="LocationUser" type="INTEGER" size="32" required="true"/>
+    <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
+    <column name="latitude" phpName="Latitude" type="DOUBLE" required="true"/>
+    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="user" name="location_fk" onUpdate="CASCADE">
+      <reference local="user" foreign="userId"/>
+    </foreign-key>
+    <index name="location_fk_idx">
+      <index-column name="user"/>
+    </index>
+    <unique name="locationId_UNIQUE">
+      <unique-column name="locationId"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="service" idMethod="native" phpName="Service">
+    <column name="serviceId" phpName="Serviceid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="100" required="true"/>
+    <unique name="description_UNIQUE">
+      <unique-column name="description"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="user" idMethod="native" phpName="User">
+    <column name="userId" phpName="Userid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="isProvider" phpName="Isprovider" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="userName" phpName="Username" type="VARCHAR" size="32" required="true"/>
+    <column name="firstName" phpName="Firstname" type="VARCHAR" size="20" required="true"/>
+    <column name="lastName" phpName="Lastname" type="VARCHAR" size="20" required="true"/>
+    <column name="suffix" phpName="Suffix" type="VARCHAR" size="5"/>
+    <column name="address" phpName="Address" type="VARCHAR" size="64" required="true"/>
+    <column name="phoneNumber" phpName="Phonenumber" type="VARCHAR" size="20" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="50" required="true"/>
+    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+    <unique name="typeId_UNIQUE">
+      <unique-column name="userId"/>
+    </unique>
+    <unique name="userName_UNIQUE">
+      <unique-column name="userName"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="userSettings" idMethod="native" phpName="Usersettings">
+    <column name="settingsId" phpName="Settingsid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="user" phpName="SettingsUser" type="INTEGER" size="32" required="true"/>
+    <column name="phoneOk" phpName="Phoneok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+    <column name="textOk" phpName="Textok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+    <column name="emailOk" phpName="Emailok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+    <column name="mondayStart" phpName="Mondaystart" type="TIMESTAMP"/>
+    <column name="mondayEnd" phpName="Mondayend" type="TIMESTAMP"/>
+    <column name="tuesdayStart" phpName="Tuesdaystart" type="TIMESTAMP"/>
+    <column name="tuesdayEnd" phpName="Tuesdayend" type="TIMESTAMP"/>
+    <column name="wednesdayStart" phpName="Wednesdaystart" type="TIMESTAMP"/>
+    <column name="wednesdayEnd" phpName="Wednesdayend" type="TIMESTAMP"/>
+    <column name="thursdayStart" phpName="Thursdaystart" type="TIMESTAMP"/>
+    <column name="thursdayEnd" phpName="Thursdayend" type="TIMESTAMP"/>
+    <column name="fridayStart" phpName="Fridaystart" type="TIMESTAMP"/>
+    <column name="fridayEnd" phpName="Fridayend" type="TIMESTAMP"/>
+    <column name="saturdayStart" phpName="Saturdaystart" type="TIMESTAMP"/>
+    <column name="saturdayEnd" phpName="Saturdayend" type="TIMESTAMP"/>
+    <column name="sundayStart" phpName="Sundaystart" type="TIMESTAMP"/>
+    <column name="sundayEnd" phpName="Sundayend" type="TIMESTAMP"/>
+    <foreign-key foreignTable="user" name="usersettings_fk" onUpdate="CASCADE">
+      <reference local="user" foreign="userId"/>
+    </foreign-key>
+    <index name="nhh_idx">
+      <index-column name="user"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

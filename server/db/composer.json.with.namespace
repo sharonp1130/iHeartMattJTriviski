@@ -1,0 +1,12 @@
+
+{ 
+    "require": { 
+        "propel/propel": "2.0.*@dev" 
+    }, 
+    "autoload": { 
+         "psr0": { 
+             "BreadAndButter": "models/" 
+         } 
+    } 
+} 
+
