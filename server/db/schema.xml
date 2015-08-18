@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
   <table name="license" idMethod="native" phpName="License">
-    <column name="licenseId" phpName="Licenseid" type="INTEGER" size="32" primaryKey="true" required="true"/>
+    <column name="licenseId" phpName="Licenseid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="licenseNumber" phpName="Licensenumber" type="VARCHAR" size="32" required="true"/>
     <column name="service" phpName="LicenseService" type="INTEGER" size="32" required="true"/>
     <column name="user" phpName="LicenseUser" type="INTEGER" size="32" required="true"/>
@@ -29,7 +29,7 @@
     </vendor>
   </table>
   <table name="location" idMethod="native" phpName="Location">
-    <column name="locationId" phpName="Locationid" type="INTEGER" size="32" primaryKey="true" required="true"/>
+    <column name="locationId" phpName="Locationid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="user" phpName="LocationUser" type="INTEGER" size="32" required="true"/>
     <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
     <column name="latitude" phpName="Latitude" type="DOUBLE" required="true"/>

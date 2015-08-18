@@ -76,17 +76,17 @@ abstract class User implements ActiveRecordInterface
     protected $userid;
 
     /**
+     * The value for the email field.
+     * @var        string
+     */
+    protected $email;
+
+    /**
      * The value for the isprovider field.
      * Note: this column has a database default value of: false
      * @var        boolean
      */
     protected $isprovider;
-
-    /**
-     * The value for the username field.
-     * @var        string
-     */
-    protected $username;
 
     /**
      * The value for the firstname field.
@@ -113,16 +113,22 @@ abstract class User implements ActiveRecordInterface
     protected $address;
 
     /**
+     * The value for the city field.
+     * @var        string
+     */
+    protected $city;
+
+    /**
+     * The value for the zipcode field.
+     * @var        string
+     */
+    protected $zipcode;
+
+    /**
      * The value for the phonenumber field.
      * @var        string
      */
     protected $phonenumber;
-
-    /**
-     * The value for the email field.
-     * @var        string
-     */
-    protected $email;
 
     /**
      * The value for the created_at field.
@@ -421,6 +427,16 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [email] column value.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Get the [isprovider] column value.
      *
      * @return boolean
@@ -438,16 +454,6 @@ abstract class User implements ActiveRecordInterface
     public function isIsprovider()
     {
         return $this->getIsprovider();
-    }
-
-    /**
-     * Get the [username] column value.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
     }
 
     /**
@@ -491,6 +497,26 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [city] column value.
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Get the [zipcode] column value.
+     *
+     * @return string
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
      * Get the [phonenumber] column value.
      *
      * @return string
@@ -498,16 +524,6 @@ abstract class User implements ActiveRecordInterface
     public function getPhonenumber()
     {
         return $this->phonenumber;
-    }
-
-    /**
-     * Get the [email] column value.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -571,6 +587,26 @@ abstract class User implements ActiveRecordInterface
     } // setUserid()
 
     /**
+     * Set the value of [email] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
+        }
+
+        return $this;
+    } // setEmail()
+
+    /**
      * Sets the value of the [isprovider] column.
      * Non-boolean arguments are converted using the following rules:
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
@@ -597,26 +633,6 @@ abstract class User implements ActiveRecordInterface
 
         return $this;
     } // setIsprovider()
-
-    /**
-     * Set the value of [username] column.
-     *
-     * @param string $v new value
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function setUsername($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->username !== $v) {
-            $this->username = $v;
-            $this->modifiedColumns[UserTableMap::COL_USERNAME] = true;
-        }
-
-        return $this;
-    } // setUsername()
 
     /**
      * Set the value of [firstname] column.
@@ -699,6 +715,46 @@ abstract class User implements ActiveRecordInterface
     } // setAddress()
 
     /**
+     * Set the value of [city] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setCity($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->city !== $v) {
+            $this->city = $v;
+            $this->modifiedColumns[UserTableMap::COL_CITY] = true;
+        }
+
+        return $this;
+    } // setCity()
+
+    /**
+     * Set the value of [zipcode] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setZipcode($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->zipcode !== $v) {
+            $this->zipcode = $v;
+            $this->modifiedColumns[UserTableMap::COL_ZIPCODE] = true;
+        }
+
+        return $this;
+    } // setZipcode()
+
+    /**
      * Set the value of [phonenumber] column.
      *
      * @param string $v new value
@@ -717,26 +773,6 @@ abstract class User implements ActiveRecordInterface
 
         return $this;
     } // setPhonenumber()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param string $v new value
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
@@ -821,11 +857,11 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('Userid', TableMap::TYPE_PHPNAME, $indexType)];
             $this->userid = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Isprovider', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->isprovider = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Username', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->username = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Isprovider', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->isprovider = (null !== $col) ? (boolean) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Firstname', TableMap::TYPE_PHPNAME, $indexType)];
             $this->firstname = (null !== $col) ? (string) $col : null;
@@ -839,19 +875,22 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Address', TableMap::TYPE_PHPNAME, $indexType)];
             $this->address = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('Phonenumber', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('City', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->city = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : UserTableMap::translateFieldName('Zipcode', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->zipcode = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('Phonenumber', TableMap::TYPE_PHPNAME, $indexType)];
             $this->phonenumber = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : UserTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -864,7 +903,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 11; // 11 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 12; // 12 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -1133,11 +1172,11 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_USERID)) {
             $modifiedColumns[':p' . $index++]  = 'userId';
         }
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
+        }
         if ($this->isColumnModified(UserTableMap::COL_ISPROVIDER)) {
             $modifiedColumns[':p' . $index++]  = 'isProvider';
-        }
-        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
-            $modifiedColumns[':p' . $index++]  = 'userName';
         }
         if ($this->isColumnModified(UserTableMap::COL_FIRSTNAME)) {
             $modifiedColumns[':p' . $index++]  = 'firstName';
@@ -1151,11 +1190,14 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_ADDRESS)) {
             $modifiedColumns[':p' . $index++]  = 'address';
         }
+        if ($this->isColumnModified(UserTableMap::COL_CITY)) {
+            $modifiedColumns[':p' . $index++]  = 'city';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ZIPCODE)) {
+            $modifiedColumns[':p' . $index++]  = 'zipcode';
+        }
         if ($this->isColumnModified(UserTableMap::COL_PHONENUMBER)) {
             $modifiedColumns[':p' . $index++]  = 'phoneNumber';
-        }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
         }
         if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
@@ -1177,11 +1219,11 @@ abstract class User implements ActiveRecordInterface
                     case 'userId':
                         $stmt->bindValue($identifier, $this->userid, PDO::PARAM_INT);
                         break;
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
                     case 'isProvider':
                         $stmt->bindValue($identifier, (int) $this->isprovider, PDO::PARAM_INT);
-                        break;
-                    case 'userName':
-                        $stmt->bindValue($identifier, $this->username, PDO::PARAM_STR);
                         break;
                     case 'firstName':
                         $stmt->bindValue($identifier, $this->firstname, PDO::PARAM_STR);
@@ -1195,11 +1237,14 @@ abstract class User implements ActiveRecordInterface
                     case 'address':
                         $stmt->bindValue($identifier, $this->address, PDO::PARAM_STR);
                         break;
+                    case 'city':
+                        $stmt->bindValue($identifier, $this->city, PDO::PARAM_STR);
+                        break;
+                    case 'zipcode':
+                        $stmt->bindValue($identifier, $this->zipcode, PDO::PARAM_STR);
+                        break;
                     case 'phoneNumber':
                         $stmt->bindValue($identifier, $this->phonenumber, PDO::PARAM_STR);
-                        break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1273,10 +1318,10 @@ abstract class User implements ActiveRecordInterface
                 return $this->getUserid();
                 break;
             case 1:
-                return $this->getIsprovider();
+                return $this->getEmail();
                 break;
             case 2:
-                return $this->getUsername();
+                return $this->getIsprovider();
                 break;
             case 3:
                 return $this->getFirstname();
@@ -1291,15 +1336,18 @@ abstract class User implements ActiveRecordInterface
                 return $this->getAddress();
                 break;
             case 7:
-                return $this->getPhonenumber();
+                return $this->getCity();
                 break;
             case 8:
-                return $this->getEmail();
+                return $this->getZipcode();
                 break;
             case 9:
-                return $this->getCreatedAt();
+                return $this->getPhonenumber();
                 break;
             case 10:
+                return $this->getCreatedAt();
+                break;
+            case 11:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1333,29 +1381,30 @@ abstract class User implements ActiveRecordInterface
         $keys = UserTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getUserid(),
-            $keys[1] => $this->getIsprovider(),
-            $keys[2] => $this->getUsername(),
+            $keys[1] => $this->getEmail(),
+            $keys[2] => $this->getIsprovider(),
             $keys[3] => $this->getFirstname(),
             $keys[4] => $this->getLastname(),
             $keys[5] => $this->getSuffix(),
             $keys[6] => $this->getAddress(),
-            $keys[7] => $this->getPhonenumber(),
-            $keys[8] => $this->getEmail(),
-            $keys[9] => $this->getCreatedAt(),
-            $keys[10] => $this->getUpdatedAt(),
+            $keys[7] => $this->getCity(),
+            $keys[8] => $this->getZipcode(),
+            $keys[9] => $this->getPhonenumber(),
+            $keys[10] => $this->getCreatedAt(),
+            $keys[11] => $this->getUpdatedAt(),
         );
 
         $utc = new \DateTimeZone('utc');
-        if ($result[$keys[9]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[9]];
-            $result[$keys[9]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
-        }
-
         if ($result[$keys[10]] instanceof \DateTime) {
             // When changing timezone we don't want to change existing instances
             $dateTime = clone $result[$keys[10]];
             $result[$keys[10]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[11]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[11]];
+            $result[$keys[11]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1447,10 +1496,10 @@ abstract class User implements ActiveRecordInterface
                 $this->setUserid($value);
                 break;
             case 1:
-                $this->setIsprovider($value);
+                $this->setEmail($value);
                 break;
             case 2:
-                $this->setUsername($value);
+                $this->setIsprovider($value);
                 break;
             case 3:
                 $this->setFirstname($value);
@@ -1465,15 +1514,18 @@ abstract class User implements ActiveRecordInterface
                 $this->setAddress($value);
                 break;
             case 7:
-                $this->setPhonenumber($value);
+                $this->setCity($value);
                 break;
             case 8:
-                $this->setEmail($value);
+                $this->setZipcode($value);
                 break;
             case 9:
-                $this->setCreatedAt($value);
+                $this->setPhonenumber($value);
                 break;
             case 10:
+                $this->setCreatedAt($value);
+                break;
+            case 11:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1506,10 +1558,10 @@ abstract class User implements ActiveRecordInterface
             $this->setUserid($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setIsprovider($arr[$keys[1]]);
+            $this->setEmail($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setUsername($arr[$keys[2]]);
+            $this->setIsprovider($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setFirstname($arr[$keys[3]]);
@@ -1524,16 +1576,19 @@ abstract class User implements ActiveRecordInterface
             $this->setAddress($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setPhonenumber($arr[$keys[7]]);
+            $this->setCity($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setEmail($arr[$keys[8]]);
+            $this->setZipcode($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setCreatedAt($arr[$keys[9]]);
+            $this->setPhonenumber($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setUpdatedAt($arr[$keys[10]]);
+            $this->setCreatedAt($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setUpdatedAt($arr[$keys[11]]);
         }
     }
 
@@ -1579,11 +1634,11 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_USERID)) {
             $criteria->add(UserTableMap::COL_USERID, $this->userid);
         }
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
+        }
         if ($this->isColumnModified(UserTableMap::COL_ISPROVIDER)) {
             $criteria->add(UserTableMap::COL_ISPROVIDER, $this->isprovider);
-        }
-        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
-            $criteria->add(UserTableMap::COL_USERNAME, $this->username);
         }
         if ($this->isColumnModified(UserTableMap::COL_FIRSTNAME)) {
             $criteria->add(UserTableMap::COL_FIRSTNAME, $this->firstname);
@@ -1597,11 +1652,14 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_ADDRESS)) {
             $criteria->add(UserTableMap::COL_ADDRESS, $this->address);
         }
+        if ($this->isColumnModified(UserTableMap::COL_CITY)) {
+            $criteria->add(UserTableMap::COL_CITY, $this->city);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ZIPCODE)) {
+            $criteria->add(UserTableMap::COL_ZIPCODE, $this->zipcode);
+        }
         if ($this->isColumnModified(UserTableMap::COL_PHONENUMBER)) {
             $criteria->add(UserTableMap::COL_PHONENUMBER, $this->phonenumber);
-        }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
         }
         if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
             $criteria->add(UserTableMap::COL_CREATED_AT, $this->created_at);
@@ -1695,14 +1753,15 @@ abstract class User implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setEmail($this->getEmail());
         $copyObj->setIsprovider($this->getIsprovider());
-        $copyObj->setUsername($this->getUsername());
         $copyObj->setFirstname($this->getFirstname());
         $copyObj->setLastname($this->getLastname());
         $copyObj->setSuffix($this->getSuffix());
         $copyObj->setAddress($this->getAddress());
+        $copyObj->setCity($this->getCity());
+        $copyObj->setZipcode($this->getZipcode());
         $copyObj->setPhonenumber($this->getPhonenumber());
-        $copyObj->setEmail($this->getEmail());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -2468,14 +2527,15 @@ abstract class User implements ActiveRecordInterface
     public function clear()
     {
         $this->userid = null;
+        $this->email = null;
         $this->isprovider = null;
-        $this->username = null;
         $this->firstname = null;
         $this->lastname = null;
         $this->suffix = null;
         $this->address = null;
+        $this->city = null;
+        $this->zipcode = null;
         $this->phonenumber = null;
-        $this->email = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

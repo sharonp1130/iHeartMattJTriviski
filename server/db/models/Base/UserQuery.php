@@ -21,26 +21,28 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildUserQuery orderByUserid($order = Criteria::ASC) Order by the userId column
+ * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUserQuery orderByIsprovider($order = Criteria::ASC) Order by the isProvider column
- * @method     ChildUserQuery orderByUsername($order = Criteria::ASC) Order by the userName column
  * @method     ChildUserQuery orderByFirstname($order = Criteria::ASC) Order by the firstName column
  * @method     ChildUserQuery orderByLastname($order = Criteria::ASC) Order by the lastName column
  * @method     ChildUserQuery orderBySuffix($order = Criteria::ASC) Order by the suffix column
  * @method     ChildUserQuery orderByAddress($order = Criteria::ASC) Order by the address column
+ * @method     ChildUserQuery orderByCity($order = Criteria::ASC) Order by the city column
+ * @method     ChildUserQuery orderByZipcode($order = Criteria::ASC) Order by the zipcode column
  * @method     ChildUserQuery orderByPhonenumber($order = Criteria::ASC) Order by the phoneNumber column
- * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUserQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildUserQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildUserQuery groupByUserid() Group by the userId column
+ * @method     ChildUserQuery groupByEmail() Group by the email column
  * @method     ChildUserQuery groupByIsprovider() Group by the isProvider column
- * @method     ChildUserQuery groupByUsername() Group by the userName column
  * @method     ChildUserQuery groupByFirstname() Group by the firstName column
  * @method     ChildUserQuery groupByLastname() Group by the lastName column
  * @method     ChildUserQuery groupBySuffix() Group by the suffix column
  * @method     ChildUserQuery groupByAddress() Group by the address column
+ * @method     ChildUserQuery groupByCity() Group by the city column
+ * @method     ChildUserQuery groupByZipcode() Group by the zipcode column
  * @method     ChildUserQuery groupByPhonenumber() Group by the phoneNumber column
- * @method     ChildUserQuery groupByEmail() Group by the email column
  * @method     ChildUserQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildUserQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -88,14 +90,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUser matching the query, or a new ChildUser object populated from the query conditions when no match is found
  *
  * @method     ChildUser findOneByUserid(int $userId) Return the first ChildUser filtered by the userId column
+ * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
  * @method     ChildUser findOneByIsprovider(boolean $isProvider) Return the first ChildUser filtered by the isProvider column
- * @method     ChildUser findOneByUsername(string $userName) Return the first ChildUser filtered by the userName column
  * @method     ChildUser findOneByFirstname(string $firstName) Return the first ChildUser filtered by the firstName column
  * @method     ChildUser findOneByLastname(string $lastName) Return the first ChildUser filtered by the lastName column
  * @method     ChildUser findOneBySuffix(string $suffix) Return the first ChildUser filtered by the suffix column
  * @method     ChildUser findOneByAddress(string $address) Return the first ChildUser filtered by the address column
+ * @method     ChildUser findOneByCity(string $city) Return the first ChildUser filtered by the city column
+ * @method     ChildUser findOneByZipcode(string $zipcode) Return the first ChildUser filtered by the zipcode column
  * @method     ChildUser findOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column
- * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
  * @method     ChildUser findOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column
  * @method     ChildUser findOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column *
 
@@ -103,27 +106,29 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOne(ConnectionInterface $con = null) Return the first ChildUser matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser requireOneByUserid(int $userId) Return the first ChildUser filtered by the userId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByIsprovider(boolean $isProvider) Return the first ChildUser filtered by the isProvider column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUser requireOneByUsername(string $userName) Return the first ChildUser filtered by the userName column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByFirstname(string $firstName) Return the first ChildUser filtered by the firstName column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByLastname(string $lastName) Return the first ChildUser filtered by the lastName column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneBySuffix(string $suffix) Return the first ChildUser filtered by the suffix column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByAddress(string $address) Return the first ChildUser filtered by the address column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByCity(string $city) Return the first ChildUser filtered by the city column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByZipcode(string $zipcode) Return the first ChildUser filtered by the zipcode column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUser objects based on current ModelCriteria
  * @method     ChildUser[]|ObjectCollection findByUserid(int $userId) Return ChildUser objects filtered by the userId column
+ * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
  * @method     ChildUser[]|ObjectCollection findByIsprovider(boolean $isProvider) Return ChildUser objects filtered by the isProvider column
- * @method     ChildUser[]|ObjectCollection findByUsername(string $userName) Return ChildUser objects filtered by the userName column
  * @method     ChildUser[]|ObjectCollection findByFirstname(string $firstName) Return ChildUser objects filtered by the firstName column
  * @method     ChildUser[]|ObjectCollection findByLastname(string $lastName) Return ChildUser objects filtered by the lastName column
  * @method     ChildUser[]|ObjectCollection findBySuffix(string $suffix) Return ChildUser objects filtered by the suffix column
  * @method     ChildUser[]|ObjectCollection findByAddress(string $address) Return ChildUser objects filtered by the address column
+ * @method     ChildUser[]|ObjectCollection findByCity(string $city) Return ChildUser objects filtered by the city column
+ * @method     ChildUser[]|ObjectCollection findByZipcode(string $zipcode) Return ChildUser objects filtered by the zipcode column
  * @method     ChildUser[]|ObjectCollection findByPhonenumber(string $phoneNumber) Return ChildUser objects filtered by the phoneNumber column
- * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
  * @method     ChildUser[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildUser objects filtered by the created_at column
  * @method     ChildUser[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildUser objects filtered by the updated_at column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -218,7 +223,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT userId, isProvider, userName, firstName, lastName, suffix, address, phoneNumber, email, created_at, updated_at FROM user WHERE userId = :p0';
+        $sql = 'SELECT userId, email, isProvider, firstName, lastName, suffix, address, city, zipcode, phoneNumber, created_at, updated_at FROM user WHERE userId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -350,6 +355,35 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the email column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByEmail('fooValue');   // WHERE email = 'fooValue'
+     * $query->filterByEmail('%fooValue%'); // WHERE email LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $email The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByEmail($email = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($email)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $email)) {
+                $email = str_replace('*', '%', $email);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_EMAIL, $email, $comparison);
+    }
+
+    /**
      * Filter the query on the isProvider column
      *
      * Example usage:
@@ -374,35 +408,6 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_ISPROVIDER, $isprovider, $comparison);
-    }
-
-    /**
-     * Filter the query on the userName column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByUsername('fooValue');   // WHERE userName = 'fooValue'
-     * $query->filterByUsername('%fooValue%'); // WHERE userName LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $username The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByUsername($username = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($username)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $username)) {
-                $username = str_replace('*', '%', $username);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(UserTableMap::COL_USERNAME, $username, $comparison);
     }
 
     /**
@@ -522,6 +527,64 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the city column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCity('fooValue');   // WHERE city = 'fooValue'
+     * $query->filterByCity('%fooValue%'); // WHERE city LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $city The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByCity($city = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($city)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $city)) {
+                $city = str_replace('*', '%', $city);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_CITY, $city, $comparison);
+    }
+
+    /**
+     * Filter the query on the zipcode column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByZipcode('fooValue');   // WHERE zipcode = 'fooValue'
+     * $query->filterByZipcode('%fooValue%'); // WHERE zipcode LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $zipcode The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByZipcode($zipcode = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($zipcode)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $zipcode)) {
+                $zipcode = str_replace('*', '%', $zipcode);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_ZIPCODE, $zipcode, $comparison);
+    }
+
+    /**
      * Filter the query on the phoneNumber column
      *
      * Example usage:
@@ -548,35 +611,6 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_PHONENUMBER, $phonenumber, $comparison);
-    }
-
-    /**
-     * Filter the query on the email column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByEmail('fooValue');   // WHERE email = 'fooValue'
-     * $query->filterByEmail('%fooValue%'); // WHERE email LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $email The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByEmail($email = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($email)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $email)) {
-                $email = str_replace('*', '%', $email);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(UserTableMap::COL_EMAIL, $email, $comparison);
     }
 
     /**
