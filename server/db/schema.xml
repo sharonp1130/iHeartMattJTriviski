@@ -59,20 +59,21 @@
   </table>
   <table name="user" idMethod="native" phpName="User">
     <column name="userId" phpName="Userid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="50" required="true"/>
     <column name="isProvider" phpName="Isprovider" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
-    <column name="userName" phpName="Username" type="VARCHAR" size="32" required="true"/>
     <column name="firstName" phpName="Firstname" type="VARCHAR" size="20" required="true"/>
     <column name="lastName" phpName="Lastname" type="VARCHAR" size="20" required="true"/>
     <column name="suffix" phpName="Suffix" type="VARCHAR" size="5"/>
     <column name="address" phpName="Address" type="VARCHAR" size="64" required="true"/>
+    <column name="city" phpName="City" type="VARCHAR" size="64" required="true"/>
+    <column name="zipcode" phpName="Zipcode" type="VARCHAR" size="5" required="true"/>
     <column name="phoneNumber" phpName="Phonenumber" type="VARCHAR" size="20" required="true"/>
-    <column name="email" phpName="Email" type="VARCHAR" size="50" required="true"/>
   	<behavior name="timestampable" />
     <unique name="typeId_UNIQUE">
       <unique-column name="userId"/>
     </unique>
-    <unique name="userName_UNIQUE">
-      <unique-column name="userName"/>
+    <unique name="email_UNIQUE">
+      <unique-column name="email"/>
     </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
