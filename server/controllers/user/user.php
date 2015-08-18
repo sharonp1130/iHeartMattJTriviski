@@ -8,57 +8,58 @@ use Base\UserQuery;
 
 
 /**
- * @param  $username
+ * @param  $email
  * @return ChildUser
  */
-function get_user($username) {
+function get_user($email) {
 	return UserQuery::create()
-		->findOneByUsername($userName);
+		->findOneByEmail($email);
 }
 
 /**
  * Same as get user but throws an exception if the user name was not found.
  * 
- * @param unknown $username
+ * @param unknown $email
  * @throws Exception
  * @return ChildUser
  */
-function get_user_with_error($username) {
-	$user = get_user($username);
+function get_user_with_error($email) {
+	$user = get_user($email);
 	if ($user == null) {
-		throw new Exception("User not found: username=" . $username);
+		throw new Exception("User not found for email address " . $email);
 	} else {
 		return $user;
 	}
 }
 
 /**
- * Throws 
- * @param unknown $username
+ * @param unknown $email
  * @param unknown $isProvider
  * @param unknown $firstName
  * @param unknown $lastName
  * @param unknown $address
+ * @param unknown $city
+ * @param unknown $zip
  * @param unknown $phoneNumber
- * @param unknown $email
  * @param string $suffix
- * @throws Exception if phone number is not correct and an sql exceptin if the username already exists.
+ * @throws Exception if phone number is not correct, zip is not in the right format or the email is already taken.
  * @return User
  */
-function create_user_and_get($username, $isProvider, $firstName, $lastName, $address, $phoneNumber, $email, $suffix=null) {
+function create_user_and_get($email, $isProvider, $firstName, $lastName, $address, $city, $zip, $phoneNumber, $suffix=null) {
 	
 	$phone = sanitize_phone($phoneNumber);
 	
 	if ($phone) {
 		$user = new User();
+		$user->setEmail($email);
 		$user->setIsprovider($isProvider ? 1 : 0);
-		$user->setUsername($username);
 		$user->setFirstname($firstName);
 		$user->setLastname($lastName);
 		$user->setSuffix($suffix);
 		$user->setAddress($address);
+		$user->setCity($city);
+		$user->setZipcode(filter_var($zip, FILTER_SANITIZE_NUMBER_INT));
 		$user->setPhonenumber($phone);
-		$user->setEmail($email);
 		
 		/**
 		 * If the user name exists this will throw an exception.
@@ -74,7 +75,7 @@ function create_user_and_get($username, $isProvider, $firstName, $lastName, $add
 /**
  * Updates user with the provided information.  Only updates values that are not null.
  * 
- * @param unknown $username
+ * @param unknown $email
  * @param string $isProvider
  * @param string $firstName
  * @param string $lastName
@@ -85,9 +86,9 @@ function create_user_and_get($username, $isProvider, $firstName, $lastName, $add
  * @return User after update.
  * 
  */
-function update_user_and_get($username, $isProvider=null, $firstName=null, $lastName=null, 
-		$address=null, $phoneNumber=null, $email=null, $suffix=null) {
-	$user = get_user_with_error($username);
+function update_user_and_get($email, $isProvider=null, $firstName=null, $lastName=null, 
+		$address=null, $city=null, $zip=null, $phoneNumber=null, $suffix=null) {
+	$user = get_user_with_error($email);
 	
 	if ($isProvider) {
 		$user->setIsprovider($isProvider);
@@ -105,16 +106,20 @@ function update_user_and_get($username, $isProvider=null, $firstName=null, $last
 		$user->setAddress($address);
 	}
 	
+	if ($city) {
+		$user->setCity($city);
+	}
+	
+	if ($zip) {
+		$user->setZipcode($zip);
+	}
+	
 	if ($phoneNumber) {
 		$pn = sanitize_phone($phoneNumber);
 
 		if ($ph) {
 			$user->setPhonenumber($pn);
 		}
-	}
-	
-	if ($email) {
-		$user->setEmail($email);
 	}
 	
 	if ($suffix) {
@@ -125,39 +130,34 @@ function update_user_and_get($username, $isProvider=null, $firstName=null, $last
 	return $user;
 }
 
-function check_in_location($username, $longitude, $latitude) {
-	
-}
-
 /**
- * @param unknown $username
+ * @param unknown $email
  * @param unknown $licenseNumber
  * @param unknown $serviceDescription
- * @return boolean If the license was added.
+ * @return ChildUser
  */
-function add_license($username, $licenseNumber, $serviceDescription) {
-	$user = get_user_with_error($username);
-	$user = new User();
+function add_license($email, $licenseNumber, $serviceDescription) {
+	$user = get_user_with_error($email);
 	
 	foreach ($user->getLicensesJoinService() as $lic) {
 		if ($lic->getLicensenumber() == $licenseNumber) {
-			print "Licens number has already been added to user: User:[" . $user . "] license::[" . $lic . "]"; 
-			return false;
+			print "License number has already been added to user with email[ " . $email . "]  and license [" . $lic . "]"; 
+			return $user;
 		}		
 	}
 	
 	/**
 	 * If we get here this is a new license and we want to add it.  Add a new license
 	 */
-	$service = ServiceQuery::create()->findByDescription($serviceDescription);
+	$service = ServiceQuery::create()->findOneByDescription($serviceDescription);
 	$license = new License();
 	$license->setService($service);
-	
-	
+	$license->setLicensenumber($licenseNumber);
 	
 	$user->addLicense($license);
+	$user->save();
 	
-	return true;
+	return $user;
 }
 
 function add_settings() {
@@ -168,7 +168,14 @@ function update_settings() {
 	
 }
 
+function check_in_location($email, $longitude, $latitude) {
 
+}
+
+print "Hello";
+$em = "matt@balls.com";
+$user = add_license($em, "eatadickk", "pooping");
+print $user;
 
 
 ?>
