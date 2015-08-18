@@ -149,7 +149,7 @@ class LicenseTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\License');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('licenseId', 'Licenseid', 'INTEGER', true, 32, null);
         $this->addColumn('licenseNumber', 'Licensenumber', 'VARCHAR', true, 32, null);
@@ -444,6 +444,10 @@ class LicenseTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from License object
+        }
+
+        if ($criteria->containsKey(LicenseTableMap::COL_LICENSEID) && $criteria->keyContainsValue(LicenseTableMap::COL_LICENSEID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.LicenseTableMap::COL_LICENSEID.')');
         }
 
 

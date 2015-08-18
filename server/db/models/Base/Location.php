@@ -820,6 +820,10 @@ abstract class Location implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
+        $this->modifiedColumns[LocationTableMap::COL_LOCATIONID] = true;
+        if (null !== $this->locationid) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . LocationTableMap::COL_LOCATIONID . ')');
+        }
 
          // check the columns in natural order for more readable SQL queries
         if ($this->isColumnModified(LocationTableMap::COL_LOCATIONID)) {
@@ -876,6 +880,13 @@ abstract class Location implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
+
+        try {
+            $pk = $con->lastInsertId();
+        } catch (Exception $e) {
+            throw new PropelException('Unable to get autoincrement id.', 0, $e);
+        }
+        $this->setLocationid($pk);
 
         $this->setNew(false);
     }
@@ -1255,7 +1266,6 @@ abstract class Location implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setLocationid($this->getLocationid());
         $copyObj->setLocationUser($this->getLocationUser());
         $copyObj->setLongitude($this->getLongitude());
         $copyObj->setLatitude($this->getLatitude());
@@ -1263,6 +1273,7 @@ abstract class Location implements ActiveRecordInterface
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
             $copyObj->setNew(true);
+            $copyObj->setLocationid(NULL); // this is a auto-increment column, so set to default value
         }
     }
 

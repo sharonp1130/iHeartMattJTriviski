@@ -842,6 +842,10 @@ abstract class License implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
+        $this->modifiedColumns[LicenseTableMap::COL_LICENSEID] = true;
+        if (null !== $this->licenseid) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . LicenseTableMap::COL_LICENSEID . ')');
+        }
 
          // check the columns in natural order for more readable SQL queries
         if ($this->isColumnModified(LicenseTableMap::COL_LICENSEID)) {
@@ -898,6 +902,13 @@ abstract class License implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
+
+        try {
+            $pk = $con->lastInsertId();
+        } catch (Exception $e) {
+            throw new PropelException('Unable to get autoincrement id.', 0, $e);
+        }
+        $this->setLicenseid($pk);
 
         $this->setNew(false);
     }
@@ -1292,7 +1303,6 @@ abstract class License implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setLicenseid($this->getLicenseid());
         $copyObj->setLicensenumber($this->getLicensenumber());
         $copyObj->setLicenseService($this->getLicenseService());
         $copyObj->setLicenseUser($this->getLicenseUser());
@@ -1300,6 +1310,7 @@ abstract class License implements ActiveRecordInterface
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
             $copyObj->setNew(true);
+            $copyObj->setLicenseid(NULL); // this is a auto-increment column, so set to default value
         }
     }
 

@@ -149,7 +149,7 @@ class LocationTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Location');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('locationId', 'Locationid', 'INTEGER', true, 32, null);
         $this->addForeignKey('user', 'LocationUser', 'INTEGER', 'user', 'userId', true, 32, null);
@@ -437,6 +437,10 @@ class LocationTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from Location object
+        }
+
+        if ($criteria->containsKey(LocationTableMap::COL_LOCATIONID) && $criteria->keyContainsValue(LocationTableMap::COL_LOCATIONID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.LocationTableMap::COL_LOCATIONID.')');
         }
 
 
