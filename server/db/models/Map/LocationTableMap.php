@@ -59,7 +59,7 @@ class LocationTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class LocationTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the locationId field
@@ -92,9 +92,14 @@ class LocationTableMap extends TableMap
     const COL_LATITUDE = 'location.latitude';
 
     /**
-     * the column name for the lastUpdate field
+     * the column name for the created_at field
      */
-    const COL_LASTUPDATE = 'location.lastUpdate';
+    const COL_CREATED_AT = 'location.created_at';
+
+    /**
+     * the column name for the updated_at field
+     */
+    const COL_UPDATED_AT = 'location.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +113,11 @@ class LocationTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Locationid', 'LocationUser', 'Longitude', 'Latitude', 'Lastupdate', ),
-        self::TYPE_CAMELNAME     => array('locationid', 'locationUser', 'longitude', 'latitude', 'lastupdate', ),
-        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATIONID, LocationTableMap::COL_USER, LocationTableMap::COL_LONGITUDE, LocationTableMap::COL_LATITUDE, LocationTableMap::COL_LASTUPDATE, ),
-        self::TYPE_FIELDNAME     => array('locationId', 'user', 'longitude', 'latitude', 'lastUpdate', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Locationid', 'LocationUser', 'Longitude', 'Latitude', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('locationid', 'locationUser', 'longitude', 'latitude', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATIONID, LocationTableMap::COL_USER, LocationTableMap::COL_LONGITUDE, LocationTableMap::COL_LATITUDE, LocationTableMap::COL_CREATED_AT, LocationTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('locationId', 'user', 'longitude', 'latitude', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class LocationTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Locationid' => 0, 'LocationUser' => 1, 'Longitude' => 2, 'Latitude' => 3, 'Lastupdate' => 4, ),
-        self::TYPE_CAMELNAME     => array('locationid' => 0, 'locationUser' => 1, 'longitude' => 2, 'latitude' => 3, 'lastupdate' => 4, ),
-        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATIONID => 0, LocationTableMap::COL_USER => 1, LocationTableMap::COL_LONGITUDE => 2, LocationTableMap::COL_LATITUDE => 3, LocationTableMap::COL_LASTUPDATE => 4, ),
-        self::TYPE_FIELDNAME     => array('locationId' => 0, 'user' => 1, 'longitude' => 2, 'latitude' => 3, 'lastUpdate' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Locationid' => 0, 'LocationUser' => 1, 'Longitude' => 2, 'Latitude' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
+        self::TYPE_CAMELNAME     => array('locationid' => 0, 'locationUser' => 1, 'longitude' => 2, 'latitude' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
+        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATIONID => 0, LocationTableMap::COL_USER => 1, LocationTableMap::COL_LONGITUDE => 2, LocationTableMap::COL_LATITUDE => 3, LocationTableMap::COL_CREATED_AT => 4, LocationTableMap::COL_UPDATED_AT => 5, ),
+        self::TYPE_FIELDNAME     => array('locationId' => 0, 'user' => 1, 'longitude' => 2, 'latitude' => 3, 'created_at' => 4, 'updated_at' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -150,7 +155,8 @@ class LocationTableMap extends TableMap
         $this->addForeignKey('user', 'LocationUser', 'INTEGER', 'user', 'userId', true, 32, null);
         $this->addColumn('longitude', 'Longitude', 'DOUBLE', true, null, null);
         $this->addColumn('latitude', 'Latitude', 'DOUBLE', true, null, null);
-        $this->addColumn('lastUpdate', 'Lastupdate', 'TIMESTAMP', true, null, null);
+        $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**
@@ -166,6 +172,19 @@ class LocationTableMap extends TableMap
   ),
 ), null, 'CASCADE', null, false);
     } // buildRelations()
+
+    /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+        );
+    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -312,13 +331,15 @@ class LocationTableMap extends TableMap
             $criteria->addSelectColumn(LocationTableMap::COL_USER);
             $criteria->addSelectColumn(LocationTableMap::COL_LONGITUDE);
             $criteria->addSelectColumn(LocationTableMap::COL_LATITUDE);
-            $criteria->addSelectColumn(LocationTableMap::COL_LASTUPDATE);
+            $criteria->addSelectColumn(LocationTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(LocationTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.locationId');
             $criteria->addSelectColumn($alias . '.user');
             $criteria->addSelectColumn($alias . '.longitude');
             $criteria->addSelectColumn($alias . '.latitude');
-            $criteria->addSelectColumn($alias . '.lastUpdate');
+            $criteria->addSelectColumn($alias . '.created_at');
+            $criteria->addSelectColumn($alias . '.updated_at');
         }
     }
 

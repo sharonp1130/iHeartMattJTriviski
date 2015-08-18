@@ -14,5 +14,5 @@ use Base\License as BaseLicense;
  */
 class License extends BaseLicense
 {
-
+	
 }

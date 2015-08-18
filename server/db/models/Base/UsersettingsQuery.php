@@ -39,6 +39,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersettingsQuery orderBySaturdayend($order = Criteria::ASC) Order by the saturdayEnd column
  * @method     ChildUsersettingsQuery orderBySundaystart($order = Criteria::ASC) Order by the sundayStart column
  * @method     ChildUsersettingsQuery orderBySundayend($order = Criteria::ASC) Order by the sundayEnd column
+ * @method     ChildUsersettingsQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
+ * @method     ChildUsersettingsQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildUsersettingsQuery groupBySettingsid() Group by the settingsId column
  * @method     ChildUsersettingsQuery groupBySettingsUser() Group by the user column
@@ -59,6 +61,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersettingsQuery groupBySaturdayend() Group by the saturdayEnd column
  * @method     ChildUsersettingsQuery groupBySundaystart() Group by the sundayStart column
  * @method     ChildUsersettingsQuery groupBySundayend() Group by the sundayEnd column
+ * @method     ChildUsersettingsQuery groupByCreatedAt() Group by the created_at column
+ * @method     ChildUsersettingsQuery groupByUpdatedAt() Group by the updated_at column
  *
  * @method     ChildUsersettingsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUsersettingsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -101,7 +105,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersettings findOneBySaturdaystart(string $saturdayStart) Return the first ChildUsersettings filtered by the saturdayStart column
  * @method     ChildUsersettings findOneBySaturdayend(string $saturdayEnd) Return the first ChildUsersettings filtered by the saturdayEnd column
  * @method     ChildUsersettings findOneBySundaystart(string $sundayStart) Return the first ChildUsersettings filtered by the sundayStart column
- * @method     ChildUsersettings findOneBySundayend(string $sundayEnd) Return the first ChildUsersettings filtered by the sundayEnd column *
+ * @method     ChildUsersettings findOneBySundayend(string $sundayEnd) Return the first ChildUsersettings filtered by the sundayEnd column
+ * @method     ChildUsersettings findOneByCreatedAt(string $created_at) Return the first ChildUsersettings filtered by the created_at column
+ * @method     ChildUsersettings findOneByUpdatedAt(string $updated_at) Return the first ChildUsersettings filtered by the updated_at column *
 
  * @method     ChildUsersettings requirePk($key, ConnectionInterface $con = null) Return the ChildUsersettings by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsersettings requireOne(ConnectionInterface $con = null) Return the first ChildUsersettings matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -125,6 +131,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersettings requireOneBySaturdayend(string $saturdayEnd) Return the first ChildUsersettings filtered by the saturdayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsersettings requireOneBySundaystart(string $sundayStart) Return the first ChildUsersettings filtered by the sundayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsersettings requireOneBySundayend(string $sundayEnd) Return the first ChildUsersettings filtered by the sundayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsersettings requireOneByCreatedAt(string $created_at) Return the first ChildUsersettings filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsersettings requireOneByUpdatedAt(string $updated_at) Return the first ChildUsersettings filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUsersettings[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUsersettings objects based on current ModelCriteria
  * @method     ChildUsersettings[]|ObjectCollection findBySettingsid(int $settingsId) Return ChildUsersettings objects filtered by the settingsId column
@@ -146,6 +154,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersettings[]|ObjectCollection findBySaturdayend(string $saturdayEnd) Return ChildUsersettings objects filtered by the saturdayEnd column
  * @method     ChildUsersettings[]|ObjectCollection findBySundaystart(string $sundayStart) Return ChildUsersettings objects filtered by the sundayStart column
  * @method     ChildUsersettings[]|ObjectCollection findBySundayend(string $sundayEnd) Return ChildUsersettings objects filtered by the sundayEnd column
+ * @method     ChildUsersettings[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildUsersettings objects filtered by the created_at column
+ * @method     ChildUsersettings[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildUsersettings objects filtered by the updated_at column
  * @method     ChildUsersettings[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -238,7 +248,7 @@ abstract class UsersettingsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT settingsId, user, phoneOk, textOk, emailOk, mondayStart, mondayEnd, tuesdayStart, tuesdayEnd, wednesdayStart, wednesdayEnd, thursdayStart, thursdayEnd, fridayStart, fridayEnd, saturdayStart, saturdayEnd, sundayStart, sundayEnd FROM userSettings WHERE settingsId = :p0';
+        $sql = 'SELECT settingsId, user, phoneOk, textOk, emailOk, mondayStart, mondayEnd, tuesdayStart, tuesdayEnd, wednesdayStart, wednesdayEnd, thursdayStart, thursdayEnd, fridayStart, fridayEnd, saturdayStart, saturdayEnd, sundayStart, sundayEnd, created_at, updated_at FROM userSettings WHERE settingsId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -1096,6 +1106,92 @@ abstract class UsersettingsQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the created_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCreatedAt('2011-03-14'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt('now'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt(array('max' => 'yesterday')); // WHERE created_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $createdAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function filterByCreatedAt($createdAt = null, $comparison = null)
+    {
+        if (is_array($createdAt)) {
+            $useMinMax = false;
+            if (isset($createdAt['min'])) {
+                $this->addUsingAlias(UsersettingsTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($createdAt['max'])) {
+                $this->addUsingAlias(UsersettingsTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UsersettingsTableMap::COL_CREATED_AT, $createdAt, $comparison);
+    }
+
+    /**
+     * Filter the query on the updated_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUpdatedAt('2011-03-14'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt('now'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt(array('max' => 'yesterday')); // WHERE updated_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $updatedAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function filterByUpdatedAt($updatedAt = null, $comparison = null)
+    {
+        if (is_array($updatedAt)) {
+            $useMinMax = false;
+            if (isset($updatedAt['min'])) {
+                $this->addUsingAlias(UsersettingsTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($updatedAt['max'])) {
+                $this->addUsingAlias(UsersettingsTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UsersettingsTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
+    }
+
+    /**
      * Filter the query by a related \User object
      *
      * @param \User|ObjectCollection $user The related object(s) to use as filter
@@ -1247,6 +1343,72 @@ abstract class UsersettingsQuery extends ModelCriteria
 
             return $affectedRows;
         });
+    }
+
+    // timestampable behavior
+
+    /**
+     * Filter by the latest updated
+     *
+     * @param      int $nbDays Maximum age of the latest update in days
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function recentlyUpdated($nbDays = 7)
+    {
+        return $this->addUsingAlias(UsersettingsTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by update date desc
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function lastUpdatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(UsersettingsTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by update date asc
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function firstUpdatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(UsersettingsTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by create date desc
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function lastCreatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(UsersettingsTableMap::COL_CREATED_AT);
+    }
+
+    /**
+     * Filter by the latest created
+     *
+     * @param      int $nbDays Maximum age of in days
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function recentlyCreated($nbDays = 7)
+    {
+        return $this->addUsingAlias(UsersettingsTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by create date asc
+     *
+     * @return     $this|ChildUsersettingsQuery The current query, for fluid interface
+     */
+    public function firstCreatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(UsersettingsTableMap::COL_CREATED_AT);
     }
 
 } // UsersettingsQuery

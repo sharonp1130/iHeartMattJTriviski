@@ -125,10 +125,16 @@ abstract class User implements ActiveRecordInterface
     protected $email;
 
     /**
-     * The value for the lastupdate field.
+     * The value for the created_at field.
      * @var        \DateTime
      */
-    protected $lastupdate;
+    protected $created_at;
+
+    /**
+     * The value for the updated_at field.
+     * @var        \DateTime
+     */
+    protected $updated_at;
 
     /**
      * @var        ObjectCollection|ChildLicense[] Collection to store aggregation of ChildLicense objects.
@@ -505,7 +511,7 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [optionally formatted] temporal [lastupdate] column value.
+     * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -515,12 +521,32 @@ abstract class User implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getLastupdate($format = NULL)
+    public function getCreatedAt($format = NULL)
     {
         if ($format === null) {
-            return $this->lastupdate;
+            return $this->created_at;
         } else {
-            return $this->lastupdate instanceof \DateTime ? $this->lastupdate->format($format) : null;
+            return $this->created_at instanceof \DateTime ? $this->created_at->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [updated_at] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getUpdatedAt($format = NULL)
+    {
+        if ($format === null) {
+            return $this->updated_at;
+        } else {
+            return $this->updated_at instanceof \DateTime ? $this->updated_at->format($format) : null;
         }
     }
 
@@ -713,24 +739,44 @@ abstract class User implements ActiveRecordInterface
     } // setEmail()
 
     /**
-     * Sets the value of [lastupdate] column to a normalized version of the date/time value specified.
+     * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\User The current object (for fluent API support)
      */
-    public function setLastupdate($v)
+    public function setCreatedAt($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->lastupdate !== null || $dt !== null) {
-            if ($this->lastupdate === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->lastupdate->format("Y-m-d H:i:s")) {
-                $this->lastupdate = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserTableMap::COL_LASTUPDATE] = true;
+        if ($this->created_at !== null || $dt !== null) {
+            if ($this->created_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->created_at->format("Y-m-d H:i:s")) {
+                $this->created_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_CREATED_AT] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setLastupdate()
+    } // setCreatedAt()
+
+    /**
+     * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setUpdatedAt($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->updated_at !== null || $dt !== null) {
+            if ($this->updated_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->updated_at->format("Y-m-d H:i:s")) {
+                $this->updated_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_UPDATED_AT] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setUpdatedAt()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -799,11 +845,17 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('Lastupdate', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->lastupdate = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -812,7 +864,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -941,8 +993,20 @@ abstract class User implements ActiveRecordInterface
             $ret = $this->preSave($con);
             if ($isInsert) {
                 $ret = $ret && $this->preInsert($con);
+                // timestampable behavior
+
+                if (!$this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
+                    $this->setCreatedAt(time());
+                }
+                if (!$this->isColumnModified(UserTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             } else {
                 $ret = $ret && $this->preUpdate($con);
+                // timestampable behavior
+                if ($this->isModified() && !$this->isColumnModified(UserTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             }
             if ($ret) {
                 $affectedRows = $this->doSave($con);
@@ -1093,8 +1157,11 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(UserTableMap::COL_LASTUPDATE)) {
-            $modifiedColumns[':p' . $index++]  = 'lastUpdate';
+        if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'created_at';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_UPDATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'updated_at';
         }
 
         $sql = sprintf(
@@ -1134,8 +1201,11 @@ abstract class User implements ActiveRecordInterface
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
-                    case 'lastUpdate':
-                        $stmt->bindValue($identifier, $this->lastupdate ? $this->lastupdate->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'created_at':
+                        $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'updated_at':
+                        $stmt->bindValue($identifier, $this->updated_at ? $this->updated_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1227,7 +1297,10 @@ abstract class User implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 9:
-                return $this->getLastupdate();
+                return $this->getCreatedAt();
+                break;
+            case 10:
+                return $this->getUpdatedAt();
                 break;
             default:
                 return null;
@@ -1268,7 +1341,8 @@ abstract class User implements ActiveRecordInterface
             $keys[6] => $this->getAddress(),
             $keys[7] => $this->getPhonenumber(),
             $keys[8] => $this->getEmail(),
-            $keys[9] => $this->getLastupdate(),
+            $keys[9] => $this->getCreatedAt(),
+            $keys[10] => $this->getUpdatedAt(),
         );
 
         $utc = new \DateTimeZone('utc');
@@ -1276,6 +1350,12 @@ abstract class User implements ActiveRecordInterface
             // When changing timezone we don't want to change existing instances
             $dateTime = clone $result[$keys[9]];
             $result[$keys[9]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[10]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[10]];
+            $result[$keys[10]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1391,7 +1471,10 @@ abstract class User implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 9:
-                $this->setLastupdate($value);
+                $this->setCreatedAt($value);
+                break;
+            case 10:
+                $this->setUpdatedAt($value);
                 break;
         } // switch()
 
@@ -1447,7 +1530,10 @@ abstract class User implements ActiveRecordInterface
             $this->setEmail($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setLastupdate($arr[$keys[9]]);
+            $this->setCreatedAt($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setUpdatedAt($arr[$keys[10]]);
         }
     }
 
@@ -1517,8 +1603,11 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $criteria->add(UserTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(UserTableMap::COL_LASTUPDATE)) {
-            $criteria->add(UserTableMap::COL_LASTUPDATE, $this->lastupdate);
+        if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
+            $criteria->add(UserTableMap::COL_CREATED_AT, $this->created_at);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_UPDATED_AT)) {
+            $criteria->add(UserTableMap::COL_UPDATED_AT, $this->updated_at);
         }
 
         return $criteria;
@@ -1614,7 +1703,8 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setAddress($this->getAddress());
         $copyObj->setPhonenumber($this->getPhonenumber());
         $copyObj->setEmail($this->getEmail());
-        $copyObj->setLastupdate($this->getLastupdate());
+        $copyObj->setCreatedAt($this->getCreatedAt());
+        $copyObj->setUpdatedAt($this->getUpdatedAt());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2386,7 +2476,8 @@ abstract class User implements ActiveRecordInterface
         $this->address = null;
         $this->phonenumber = null;
         $this->email = null;
-        $this->lastupdate = null;
+        $this->created_at = null;
+        $this->updated_at = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();
@@ -2436,6 +2527,20 @@ abstract class User implements ActiveRecordInterface
     public function __toString()
     {
         return (string) $this->exportTo(UserTableMap::DEFAULT_STRING_FORMAT);
+    }
+
+    // timestampable behavior
+
+    /**
+     * Mark the current object so that the update date doesn't get updated during next save
+     *
+     * @return     $this|ChildUser The current object (for fluent API support)
+     */
+    public function keepUpdateDateUnchanged()
+    {
+        $this->modifiedColumns[UserTableMap::COL_UPDATED_AT] = true;
+
+        return $this;
     }
 
     /**

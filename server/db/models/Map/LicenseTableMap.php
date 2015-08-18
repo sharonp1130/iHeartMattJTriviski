@@ -59,7 +59,7 @@ class LicenseTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class LicenseTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the licenseId field
@@ -92,9 +92,14 @@ class LicenseTableMap extends TableMap
     const COL_USER = 'license.user';
 
     /**
-     * the column name for the lastUpdate field
+     * the column name for the created_at field
      */
-    const COL_LASTUPDATE = 'license.lastUpdate';
+    const COL_CREATED_AT = 'license.created_at';
+
+    /**
+     * the column name for the updated_at field
+     */
+    const COL_UPDATED_AT = 'license.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +113,11 @@ class LicenseTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Licenseid', 'Licensenumber', 'LicenseService', 'LicenseUser', 'Lastupdate', ),
-        self::TYPE_CAMELNAME     => array('licenseid', 'licensenumber', 'licenseService', 'licenseUser', 'lastupdate', ),
-        self::TYPE_COLNAME       => array(LicenseTableMap::COL_LICENSEID, LicenseTableMap::COL_LICENSENUMBER, LicenseTableMap::COL_SERVICE, LicenseTableMap::COL_USER, LicenseTableMap::COL_LASTUPDATE, ),
-        self::TYPE_FIELDNAME     => array('licenseId', 'licenseNumber', 'service', 'user', 'lastUpdate', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Licenseid', 'Licensenumber', 'LicenseService', 'LicenseUser', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('licenseid', 'licensenumber', 'licenseService', 'licenseUser', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(LicenseTableMap::COL_LICENSEID, LicenseTableMap::COL_LICENSENUMBER, LicenseTableMap::COL_SERVICE, LicenseTableMap::COL_USER, LicenseTableMap::COL_CREATED_AT, LicenseTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('licenseId', 'licenseNumber', 'service', 'user', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class LicenseTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Licenseid' => 0, 'Licensenumber' => 1, 'LicenseService' => 2, 'LicenseUser' => 3, 'Lastupdate' => 4, ),
-        self::TYPE_CAMELNAME     => array('licenseid' => 0, 'licensenumber' => 1, 'licenseService' => 2, 'licenseUser' => 3, 'lastupdate' => 4, ),
-        self::TYPE_COLNAME       => array(LicenseTableMap::COL_LICENSEID => 0, LicenseTableMap::COL_LICENSENUMBER => 1, LicenseTableMap::COL_SERVICE => 2, LicenseTableMap::COL_USER => 3, LicenseTableMap::COL_LASTUPDATE => 4, ),
-        self::TYPE_FIELDNAME     => array('licenseId' => 0, 'licenseNumber' => 1, 'service' => 2, 'user' => 3, 'lastUpdate' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Licenseid' => 0, 'Licensenumber' => 1, 'LicenseService' => 2, 'LicenseUser' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
+        self::TYPE_CAMELNAME     => array('licenseid' => 0, 'licensenumber' => 1, 'licenseService' => 2, 'licenseUser' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
+        self::TYPE_COLNAME       => array(LicenseTableMap::COL_LICENSEID => 0, LicenseTableMap::COL_LICENSENUMBER => 1, LicenseTableMap::COL_SERVICE => 2, LicenseTableMap::COL_USER => 3, LicenseTableMap::COL_CREATED_AT => 4, LicenseTableMap::COL_UPDATED_AT => 5, ),
+        self::TYPE_FIELDNAME     => array('licenseId' => 0, 'licenseNumber' => 1, 'service' => 2, 'user' => 3, 'created_at' => 4, 'updated_at' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -150,7 +155,8 @@ class LicenseTableMap extends TableMap
         $this->addColumn('licenseNumber', 'Licensenumber', 'VARCHAR', true, 32, null);
         $this->addForeignKey('service', 'LicenseService', 'INTEGER', 'service', 'serviceId', true, 32, null);
         $this->addForeignKey('user', 'LicenseUser', 'INTEGER', 'user', 'userId', true, 32, null);
-        $this->addColumn('lastUpdate', 'Lastupdate', 'TIMESTAMP', true, null, null);
+        $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**
@@ -173,6 +179,19 @@ class LicenseTableMap extends TableMap
   ),
 ), null, 'CASCADE', null, false);
     } // buildRelations()
+
+    /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+        );
+    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -319,13 +338,15 @@ class LicenseTableMap extends TableMap
             $criteria->addSelectColumn(LicenseTableMap::COL_LICENSENUMBER);
             $criteria->addSelectColumn(LicenseTableMap::COL_SERVICE);
             $criteria->addSelectColumn(LicenseTableMap::COL_USER);
-            $criteria->addSelectColumn(LicenseTableMap::COL_LASTUPDATE);
+            $criteria->addSelectColumn(LicenseTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(LicenseTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.licenseId');
             $criteria->addSelectColumn($alias . '.licenseNumber');
             $criteria->addSelectColumn($alias . '.service');
             $criteria->addSelectColumn($alias . '.user');
-            $criteria->addSelectColumn($alias . '.lastUpdate');
+            $criteria->addSelectColumn($alias . '.created_at');
+            $criteria->addSelectColumn($alias . '.updated_at');
         }
     }
 

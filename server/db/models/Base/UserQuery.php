@@ -29,7 +29,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderByAddress($order = Criteria::ASC) Order by the address column
  * @method     ChildUserQuery orderByPhonenumber($order = Criteria::ASC) Order by the phoneNumber column
  * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
- * @method     ChildUserQuery orderByLastupdate($order = Criteria::ASC) Order by the lastUpdate column
+ * @method     ChildUserQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
+ * @method     ChildUserQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildUserQuery groupByUserid() Group by the userId column
  * @method     ChildUserQuery groupByIsprovider() Group by the isProvider column
@@ -40,7 +41,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery groupByAddress() Group by the address column
  * @method     ChildUserQuery groupByPhonenumber() Group by the phoneNumber column
  * @method     ChildUserQuery groupByEmail() Group by the email column
- * @method     ChildUserQuery groupByLastupdate() Group by the lastUpdate column
+ * @method     ChildUserQuery groupByCreatedAt() Group by the created_at column
+ * @method     ChildUserQuery groupByUpdatedAt() Group by the updated_at column
  *
  * @method     ChildUserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUserQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -94,7 +96,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneByAddress(string $address) Return the first ChildUser filtered by the address column
  * @method     ChildUser findOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column
  * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
- * @method     ChildUser findOneByLastupdate(string $lastUpdate) Return the first ChildUser filtered by the lastUpdate column *
+ * @method     ChildUser findOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column
+ * @method     ChildUser findOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column *
 
  * @method     ChildUser requirePk($key, ConnectionInterface $con = null) Return the ChildUser by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOne(ConnectionInterface $con = null) Return the first ChildUser matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -108,7 +111,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneByAddress(string $address) Return the first ChildUser filtered by the address column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUser requireOneByLastupdate(string $lastUpdate) Return the first ChildUser filtered by the lastUpdate column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUser objects based on current ModelCriteria
  * @method     ChildUser[]|ObjectCollection findByUserid(int $userId) Return ChildUser objects filtered by the userId column
@@ -120,7 +124,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser[]|ObjectCollection findByAddress(string $address) Return ChildUser objects filtered by the address column
  * @method     ChildUser[]|ObjectCollection findByPhonenumber(string $phoneNumber) Return ChildUser objects filtered by the phoneNumber column
  * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
- * @method     ChildUser[]|ObjectCollection findByLastupdate(string $lastUpdate) Return ChildUser objects filtered by the lastUpdate column
+ * @method     ChildUser[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildUser objects filtered by the created_at column
+ * @method     ChildUser[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildUser objects filtered by the updated_at column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -213,7 +218,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT userId, isProvider, userName, firstName, lastName, suffix, address, phoneNumber, email, lastUpdate FROM user WHERE userId = :p0';
+        $sql = 'SELECT userId, isProvider, userName, firstName, lastName, suffix, address, phoneNumber, email, created_at, updated_at FROM user WHERE userId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -575,16 +580,16 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the lastUpdate column
+     * Filter the query on the created_at column
      *
      * Example usage:
      * <code>
-     * $query->filterByLastupdate('2011-03-14'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate('now'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate(array('max' => 'yesterday')); // WHERE lastUpdate > '2011-03-13'
+     * $query->filterByCreatedAt('2011-03-14'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt('now'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt(array('max' => 'yesterday')); // WHERE created_at > '2011-03-13'
      * </code>
      *
-     * @param     mixed $lastupdate The value to use as filter.
+     * @param     mixed $createdAt The value to use as filter.
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
@@ -594,16 +599,16 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function filterByLastupdate($lastupdate = null, $comparison = null)
+    public function filterByCreatedAt($createdAt = null, $comparison = null)
     {
-        if (is_array($lastupdate)) {
+        if (is_array($createdAt)) {
             $useMinMax = false;
-            if (isset($lastupdate['min'])) {
-                $this->addUsingAlias(UserTableMap::COL_LASTUPDATE, $lastupdate['min'], Criteria::GREATER_EQUAL);
+            if (isset($createdAt['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($lastupdate['max'])) {
-                $this->addUsingAlias(UserTableMap::COL_LASTUPDATE, $lastupdate['max'], Criteria::LESS_EQUAL);
+            if (isset($createdAt['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -614,7 +619,50 @@ abstract class UserQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserTableMap::COL_LASTUPDATE, $lastupdate, $comparison);
+        return $this->addUsingAlias(UserTableMap::COL_CREATED_AT, $createdAt, $comparison);
+    }
+
+    /**
+     * Filter the query on the updated_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUpdatedAt('2011-03-14'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt('now'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt(array('max' => 'yesterday')); // WHERE updated_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $updatedAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByUpdatedAt($updatedAt = null, $comparison = null)
+    {
+        if (is_array($updatedAt)) {
+            $useMinMax = false;
+            if (isset($updatedAt['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($updatedAt['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
     }
 
     /**
@@ -911,6 +959,72 @@ abstract class UserQuery extends ModelCriteria
 
             return $affectedRows;
         });
+    }
+
+    // timestampable behavior
+
+    /**
+     * Filter by the latest updated
+     *
+     * @param      int $nbDays Maximum age of the latest update in days
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function recentlyUpdated($nbDays = 7)
+    {
+        return $this->addUsingAlias(UserTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by update date desc
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function lastUpdatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(UserTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by update date asc
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function firstUpdatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(UserTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by create date desc
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function lastCreatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(UserTableMap::COL_CREATED_AT);
+    }
+
+    /**
+     * Filter by the latest created
+     *
+     * @param      int $nbDays Maximum age of in days
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function recentlyCreated($nbDays = 7)
+    {
+        return $this->addUsingAlias(UserTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by create date asc
+     *
+     * @return     $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function firstCreatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(UserTableMap::COL_CREATED_AT);
     }
 
 } // UserQuery

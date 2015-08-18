@@ -5,7 +5,7 @@
     <column name="licenseNumber" phpName="Licensenumber" type="VARCHAR" size="32" required="true"/>
     <column name="service" phpName="LicenseService" type="INTEGER" size="32" required="true"/>
     <column name="user" phpName="LicenseUser" type="INTEGER" size="32" required="true"/>
-    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+  	<behavior name="timestampable" />
     <foreign-key foreignTable="user" name="license_uid_fk" onUpdate="CASCADE">
       <reference local="user" foreign="userId"/>
     </foreign-key>
@@ -33,7 +33,7 @@
     <column name="user" phpName="LocationUser" type="INTEGER" size="32" required="true"/>
     <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
     <column name="latitude" phpName="Latitude" type="DOUBLE" required="true"/>
-    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+  	<behavior name="timestampable" />
     <foreign-key foreignTable="user" name="location_fk" onUpdate="CASCADE">
       <reference local="user" foreign="userId"/>
     </foreign-key>
@@ -67,7 +67,7 @@
     <column name="address" phpName="Address" type="VARCHAR" size="64" required="true"/>
     <column name="phoneNumber" phpName="Phonenumber" type="VARCHAR" size="20" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="50" required="true"/>
-    <column name="lastUpdate" phpName="Lastupdate" type="TIMESTAMP" required="true"/>
+  	<behavior name="timestampable" />
     <unique name="typeId_UNIQUE">
       <unique-column name="userId"/>
     </unique>
@@ -98,6 +98,7 @@
     <column name="saturdayEnd" phpName="Saturdayend" type="TIMESTAMP"/>
     <column name="sundayStart" phpName="Sundaystart" type="TIMESTAMP"/>
     <column name="sundayEnd" phpName="Sundayend" type="TIMESTAMP"/>
+  	<behavior name="timestampable" />
     <foreign-key foreignTable="user" name="usersettings_fk" onUpdate="CASCADE">
       <reference local="user" foreign="userId"/>
     </foreign-key>

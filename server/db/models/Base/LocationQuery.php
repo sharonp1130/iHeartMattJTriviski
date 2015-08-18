@@ -24,13 +24,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLocationQuery orderByLocationUser($order = Criteria::ASC) Order by the user column
  * @method     ChildLocationQuery orderByLongitude($order = Criteria::ASC) Order by the longitude column
  * @method     ChildLocationQuery orderByLatitude($order = Criteria::ASC) Order by the latitude column
- * @method     ChildLocationQuery orderByLastupdate($order = Criteria::ASC) Order by the lastUpdate column
+ * @method     ChildLocationQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
+ * @method     ChildLocationQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildLocationQuery groupByLocationid() Group by the locationId column
  * @method     ChildLocationQuery groupByLocationUser() Group by the user column
  * @method     ChildLocationQuery groupByLongitude() Group by the longitude column
  * @method     ChildLocationQuery groupByLatitude() Group by the latitude column
- * @method     ChildLocationQuery groupByLastupdate() Group by the lastUpdate column
+ * @method     ChildLocationQuery groupByCreatedAt() Group by the created_at column
+ * @method     ChildLocationQuery groupByUpdatedAt() Group by the updated_at column
  *
  * @method     ChildLocationQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildLocationQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -59,7 +61,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLocation findOneByLocationUser(int $user) Return the first ChildLocation filtered by the user column
  * @method     ChildLocation findOneByLongitude(double $longitude) Return the first ChildLocation filtered by the longitude column
  * @method     ChildLocation findOneByLatitude(double $latitude) Return the first ChildLocation filtered by the latitude column
- * @method     ChildLocation findOneByLastupdate(string $lastUpdate) Return the first ChildLocation filtered by the lastUpdate column *
+ * @method     ChildLocation findOneByCreatedAt(string $created_at) Return the first ChildLocation filtered by the created_at column
+ * @method     ChildLocation findOneByUpdatedAt(string $updated_at) Return the first ChildLocation filtered by the updated_at column *
 
  * @method     ChildLocation requirePk($key, ConnectionInterface $con = null) Return the ChildLocation by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOne(ConnectionInterface $con = null) Return the first ChildLocation matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -68,14 +71,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLocation requireOneByLocationUser(int $user) Return the first ChildLocation filtered by the user column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOneByLongitude(double $longitude) Return the first ChildLocation filtered by the longitude column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOneByLatitude(double $latitude) Return the first ChildLocation filtered by the latitude column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildLocation requireOneByLastupdate(string $lastUpdate) Return the first ChildLocation filtered by the lastUpdate column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildLocation requireOneByCreatedAt(string $created_at) Return the first ChildLocation filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildLocation requireOneByUpdatedAt(string $updated_at) Return the first ChildLocation filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildLocation[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildLocation objects based on current ModelCriteria
  * @method     ChildLocation[]|ObjectCollection findByLocationid(int $locationId) Return ChildLocation objects filtered by the locationId column
  * @method     ChildLocation[]|ObjectCollection findByLocationUser(int $user) Return ChildLocation objects filtered by the user column
  * @method     ChildLocation[]|ObjectCollection findByLongitude(double $longitude) Return ChildLocation objects filtered by the longitude column
  * @method     ChildLocation[]|ObjectCollection findByLatitude(double $latitude) Return ChildLocation objects filtered by the latitude column
- * @method     ChildLocation[]|ObjectCollection findByLastupdate(string $lastUpdate) Return ChildLocation objects filtered by the lastUpdate column
+ * @method     ChildLocation[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildLocation objects filtered by the created_at column
+ * @method     ChildLocation[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildLocation objects filtered by the updated_at column
  * @method     ChildLocation[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -168,7 +173,7 @@ abstract class LocationQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT locationId, user, longitude, latitude, lastUpdate FROM location WHERE locationId = :p0';
+        $sql = 'SELECT locationId, user, longitude, latitude, created_at, updated_at FROM location WHERE locationId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -425,16 +430,16 @@ abstract class LocationQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the lastUpdate column
+     * Filter the query on the created_at column
      *
      * Example usage:
      * <code>
-     * $query->filterByLastupdate('2011-03-14'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate('now'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate(array('max' => 'yesterday')); // WHERE lastUpdate > '2011-03-13'
+     * $query->filterByCreatedAt('2011-03-14'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt('now'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt(array('max' => 'yesterday')); // WHERE created_at > '2011-03-13'
      * </code>
      *
-     * @param     mixed $lastupdate The value to use as filter.
+     * @param     mixed $createdAt The value to use as filter.
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
@@ -444,16 +449,16 @@ abstract class LocationQuery extends ModelCriteria
      *
      * @return $this|ChildLocationQuery The current query, for fluid interface
      */
-    public function filterByLastupdate($lastupdate = null, $comparison = null)
+    public function filterByCreatedAt($createdAt = null, $comparison = null)
     {
-        if (is_array($lastupdate)) {
+        if (is_array($createdAt)) {
             $useMinMax = false;
-            if (isset($lastupdate['min'])) {
-                $this->addUsingAlias(LocationTableMap::COL_LASTUPDATE, $lastupdate['min'], Criteria::GREATER_EQUAL);
+            if (isset($createdAt['min'])) {
+                $this->addUsingAlias(LocationTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($lastupdate['max'])) {
-                $this->addUsingAlias(LocationTableMap::COL_LASTUPDATE, $lastupdate['max'], Criteria::LESS_EQUAL);
+            if (isset($createdAt['max'])) {
+                $this->addUsingAlias(LocationTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -464,7 +469,50 @@ abstract class LocationQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(LocationTableMap::COL_LASTUPDATE, $lastupdate, $comparison);
+        return $this->addUsingAlias(LocationTableMap::COL_CREATED_AT, $createdAt, $comparison);
+    }
+
+    /**
+     * Filter the query on the updated_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUpdatedAt('2011-03-14'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt('now'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt(array('max' => 'yesterday')); // WHERE updated_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $updatedAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function filterByUpdatedAt($updatedAt = null, $comparison = null)
+    {
+        if (is_array($updatedAt)) {
+            $useMinMax = false;
+            if (isset($updatedAt['min'])) {
+                $this->addUsingAlias(LocationTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($updatedAt['max'])) {
+                $this->addUsingAlias(LocationTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(LocationTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
     }
 
     /**
@@ -619,6 +667,72 @@ abstract class LocationQuery extends ModelCriteria
 
             return $affectedRows;
         });
+    }
+
+    // timestampable behavior
+
+    /**
+     * Filter by the latest updated
+     *
+     * @param      int $nbDays Maximum age of the latest update in days
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function recentlyUpdated($nbDays = 7)
+    {
+        return $this->addUsingAlias(LocationTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by update date desc
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function lastUpdatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(LocationTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by update date asc
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function firstUpdatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(LocationTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by create date desc
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function lastCreatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(LocationTableMap::COL_CREATED_AT);
+    }
+
+    /**
+     * Filter by the latest created
+     *
+     * @param      int $nbDays Maximum age of in days
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function recentlyCreated($nbDays = 7)
+    {
+        return $this->addUsingAlias(LocationTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by create date asc
+     *
+     * @return     $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function firstCreatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(LocationTableMap::COL_CREATED_AT);
     }
 
 } // LocationQuery

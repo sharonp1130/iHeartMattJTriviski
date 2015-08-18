@@ -2,6 +2,7 @@
 
 namespace Base;
 
+use \Location as ChildLocation;
 use \LocationQuery as ChildLocationQuery;
 use \User as ChildUser;
 use \UserQuery as ChildUserQuery;
@@ -88,10 +89,16 @@ abstract class Location implements ActiveRecordInterface
     protected $latitude;
 
     /**
-     * The value for the lastupdate field.
+     * The value for the created_at field.
      * @var        \DateTime
      */
-    protected $lastupdate;
+    protected $created_at;
+
+    /**
+     * The value for the updated_at field.
+     * @var        \DateTime
+     */
+    protected $updated_at;
 
     /**
      * @var        ChildUser
@@ -364,7 +371,7 @@ abstract class Location implements ActiveRecordInterface
     }
 
     /**
-     * Get the [optionally formatted] temporal [lastupdate] column value.
+     * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -374,12 +381,32 @@ abstract class Location implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getLastupdate($format = NULL)
+    public function getCreatedAt($format = NULL)
     {
         if ($format === null) {
-            return $this->lastupdate;
+            return $this->created_at;
         } else {
-            return $this->lastupdate instanceof \DateTime ? $this->lastupdate->format($format) : null;
+            return $this->created_at instanceof \DateTime ? $this->created_at->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [updated_at] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getUpdatedAt($format = NULL)
+    {
+        if ($format === null) {
+            return $this->updated_at;
+        } else {
+            return $this->updated_at instanceof \DateTime ? $this->updated_at->format($format) : null;
         }
     }
 
@@ -468,24 +495,44 @@ abstract class Location implements ActiveRecordInterface
     } // setLatitude()
 
     /**
-     * Sets the value of [lastupdate] column to a normalized version of the date/time value specified.
+     * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Location The current object (for fluent API support)
      */
-    public function setLastupdate($v)
+    public function setCreatedAt($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->lastupdate !== null || $dt !== null) {
-            if ($this->lastupdate === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->lastupdate->format("Y-m-d H:i:s")) {
-                $this->lastupdate = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[LocationTableMap::COL_LASTUPDATE] = true;
+        if ($this->created_at !== null || $dt !== null) {
+            if ($this->created_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->created_at->format("Y-m-d H:i:s")) {
+                $this->created_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[LocationTableMap::COL_CREATED_AT] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setLastupdate()
+    } // setCreatedAt()
+
+    /**
+     * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\Location The current object (for fluent API support)
+     */
+    public function setUpdatedAt($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->updated_at !== null || $dt !== null) {
+            if ($this->updated_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->updated_at->format("Y-m-d H:i:s")) {
+                $this->updated_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[LocationTableMap::COL_UPDATED_AT] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setUpdatedAt()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -535,11 +582,17 @@ abstract class Location implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : LocationTableMap::translateFieldName('Latitude', TableMap::TYPE_PHPNAME, $indexType)];
             $this->latitude = (null !== $col) ? (double) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : LocationTableMap::translateFieldName('Lastupdate', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : LocationTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->lastupdate = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : LocationTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -548,7 +601,7 @@ abstract class Location implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = LocationTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = LocationTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Location'), 0, $e);
@@ -675,8 +728,20 @@ abstract class Location implements ActiveRecordInterface
             $ret = $this->preSave($con);
             if ($isInsert) {
                 $ret = $ret && $this->preInsert($con);
+                // timestampable behavior
+
+                if (!$this->isColumnModified(LocationTableMap::COL_CREATED_AT)) {
+                    $this->setCreatedAt(time());
+                }
+                if (!$this->isColumnModified(LocationTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             } else {
                 $ret = $ret && $this->preUpdate($con);
+                // timestampable behavior
+                if ($this->isModified() && !$this->isColumnModified(LocationTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             }
             if ($ret) {
                 $affectedRows = $this->doSave($con);
@@ -769,8 +834,11 @@ abstract class Location implements ActiveRecordInterface
         if ($this->isColumnModified(LocationTableMap::COL_LATITUDE)) {
             $modifiedColumns[':p' . $index++]  = 'latitude';
         }
-        if ($this->isColumnModified(LocationTableMap::COL_LASTUPDATE)) {
-            $modifiedColumns[':p' . $index++]  = 'lastUpdate';
+        if ($this->isColumnModified(LocationTableMap::COL_CREATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'created_at';
+        }
+        if ($this->isColumnModified(LocationTableMap::COL_UPDATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'updated_at';
         }
 
         $sql = sprintf(
@@ -795,8 +863,11 @@ abstract class Location implements ActiveRecordInterface
                     case 'latitude':
                         $stmt->bindValue($identifier, $this->latitude, PDO::PARAM_STR);
                         break;
-                    case 'lastUpdate':
-                        $stmt->bindValue($identifier, $this->lastupdate ? $this->lastupdate->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'created_at':
+                        $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'updated_at':
+                        $stmt->bindValue($identifier, $this->updated_at ? $this->updated_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -866,7 +937,10 @@ abstract class Location implements ActiveRecordInterface
                 return $this->getLatitude();
                 break;
             case 4:
-                return $this->getLastupdate();
+                return $this->getCreatedAt();
+                break;
+            case 5:
+                return $this->getUpdatedAt();
                 break;
             default:
                 return null;
@@ -902,7 +976,8 @@ abstract class Location implements ActiveRecordInterface
             $keys[1] => $this->getLocationUser(),
             $keys[2] => $this->getLongitude(),
             $keys[3] => $this->getLatitude(),
-            $keys[4] => $this->getLastupdate(),
+            $keys[4] => $this->getCreatedAt(),
+            $keys[5] => $this->getUpdatedAt(),
         );
 
         $utc = new \DateTimeZone('utc');
@@ -910,6 +985,12 @@ abstract class Location implements ActiveRecordInterface
             // When changing timezone we don't want to change existing instances
             $dateTime = clone $result[$keys[4]];
             $result[$keys[4]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[5]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[5]];
+            $result[$keys[5]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -980,7 +1061,10 @@ abstract class Location implements ActiveRecordInterface
                 $this->setLatitude($value);
                 break;
             case 4:
-                $this->setLastupdate($value);
+                $this->setCreatedAt($value);
+                break;
+            case 5:
+                $this->setUpdatedAt($value);
                 break;
         } // switch()
 
@@ -1021,7 +1105,10 @@ abstract class Location implements ActiveRecordInterface
             $this->setLatitude($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setLastupdate($arr[$keys[4]]);
+            $this->setCreatedAt($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdatedAt($arr[$keys[5]]);
         }
     }
 
@@ -1076,8 +1163,11 @@ abstract class Location implements ActiveRecordInterface
         if ($this->isColumnModified(LocationTableMap::COL_LATITUDE)) {
             $criteria->add(LocationTableMap::COL_LATITUDE, $this->latitude);
         }
-        if ($this->isColumnModified(LocationTableMap::COL_LASTUPDATE)) {
-            $criteria->add(LocationTableMap::COL_LASTUPDATE, $this->lastupdate);
+        if ($this->isColumnModified(LocationTableMap::COL_CREATED_AT)) {
+            $criteria->add(LocationTableMap::COL_CREATED_AT, $this->created_at);
+        }
+        if ($this->isColumnModified(LocationTableMap::COL_UPDATED_AT)) {
+            $criteria->add(LocationTableMap::COL_UPDATED_AT, $this->updated_at);
         }
 
         return $criteria;
@@ -1169,7 +1259,8 @@ abstract class Location implements ActiveRecordInterface
         $copyObj->setLocationUser($this->getLocationUser());
         $copyObj->setLongitude($this->getLongitude());
         $copyObj->setLatitude($this->getLatitude());
-        $copyObj->setLastupdate($this->getLastupdate());
+        $copyObj->setCreatedAt($this->getCreatedAt());
+        $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1262,7 +1353,8 @@ abstract class Location implements ActiveRecordInterface
         $this->user = null;
         $this->longitude = null;
         $this->latitude = null;
-        $this->lastupdate = null;
+        $this->created_at = null;
+        $this->updated_at = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1294,6 +1386,20 @@ abstract class Location implements ActiveRecordInterface
     public function __toString()
     {
         return (string) $this->exportTo(LocationTableMap::DEFAULT_STRING_FORMAT);
+    }
+
+    // timestampable behavior
+
+    /**
+     * Mark the current object so that the update date doesn't get updated during next save
+     *
+     * @return     $this|ChildLocation The current object (for fluent API support)
+     */
+    public function keepUpdateDateUnchanged()
+    {
+        $this->modifiedColumns[LocationTableMap::COL_UPDATED_AT] = true;
+
+        return $this;
     }
 
     /**

@@ -59,7 +59,7 @@ class UserTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class UserTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the userId field
@@ -117,9 +117,14 @@ class UserTableMap extends TableMap
     const COL_EMAIL = 'user.email';
 
     /**
-     * the column name for the lastUpdate field
+     * the column name for the created_at field
      */
-    const COL_LASTUPDATE = 'user.lastUpdate';
+    const COL_CREATED_AT = 'user.created_at';
+
+    /**
+     * the column name for the updated_at field
+     */
+    const COL_UPDATED_AT = 'user.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -133,11 +138,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Userid', 'Isprovider', 'Username', 'Firstname', 'Lastname', 'Suffix', 'Address', 'Phonenumber', 'Email', 'Lastupdate', ),
-        self::TYPE_CAMELNAME     => array('userid', 'isprovider', 'username', 'firstname', 'lastname', 'suffix', 'address', 'phonenumber', 'email', 'lastupdate', ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_USERID, UserTableMap::COL_ISPROVIDER, UserTableMap::COL_USERNAME, UserTableMap::COL_FIRSTNAME, UserTableMap::COL_LASTNAME, UserTableMap::COL_SUFFIX, UserTableMap::COL_ADDRESS, UserTableMap::COL_PHONENUMBER, UserTableMap::COL_EMAIL, UserTableMap::COL_LASTUPDATE, ),
-        self::TYPE_FIELDNAME     => array('userId', 'isProvider', 'userName', 'firstName', 'lastName', 'suffix', 'address', 'phoneNumber', 'email', 'lastUpdate', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('Userid', 'Isprovider', 'Username', 'Firstname', 'Lastname', 'Suffix', 'Address', 'Phonenumber', 'Email', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('userid', 'isprovider', 'username', 'firstname', 'lastname', 'suffix', 'address', 'phonenumber', 'email', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_USERID, UserTableMap::COL_ISPROVIDER, UserTableMap::COL_USERNAME, UserTableMap::COL_FIRSTNAME, UserTableMap::COL_LASTNAME, UserTableMap::COL_SUFFIX, UserTableMap::COL_ADDRESS, UserTableMap::COL_PHONENUMBER, UserTableMap::COL_EMAIL, UserTableMap::COL_CREATED_AT, UserTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('userId', 'isProvider', 'userName', 'firstName', 'lastName', 'suffix', 'address', 'phoneNumber', 'email', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -147,11 +152,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Userid' => 0, 'Isprovider' => 1, 'Username' => 2, 'Firstname' => 3, 'Lastname' => 4, 'Suffix' => 5, 'Address' => 6, 'Phonenumber' => 7, 'Email' => 8, 'Lastupdate' => 9, ),
-        self::TYPE_CAMELNAME     => array('userid' => 0, 'isprovider' => 1, 'username' => 2, 'firstname' => 3, 'lastname' => 4, 'suffix' => 5, 'address' => 6, 'phonenumber' => 7, 'email' => 8, 'lastupdate' => 9, ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_USERID => 0, UserTableMap::COL_ISPROVIDER => 1, UserTableMap::COL_USERNAME => 2, UserTableMap::COL_FIRSTNAME => 3, UserTableMap::COL_LASTNAME => 4, UserTableMap::COL_SUFFIX => 5, UserTableMap::COL_ADDRESS => 6, UserTableMap::COL_PHONENUMBER => 7, UserTableMap::COL_EMAIL => 8, UserTableMap::COL_LASTUPDATE => 9, ),
-        self::TYPE_FIELDNAME     => array('userId' => 0, 'isProvider' => 1, 'userName' => 2, 'firstName' => 3, 'lastName' => 4, 'suffix' => 5, 'address' => 6, 'phoneNumber' => 7, 'email' => 8, 'lastUpdate' => 9, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('Userid' => 0, 'Isprovider' => 1, 'Username' => 2, 'Firstname' => 3, 'Lastname' => 4, 'Suffix' => 5, 'Address' => 6, 'Phonenumber' => 7, 'Email' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, ),
+        self::TYPE_CAMELNAME     => array('userid' => 0, 'isprovider' => 1, 'username' => 2, 'firstname' => 3, 'lastname' => 4, 'suffix' => 5, 'address' => 6, 'phonenumber' => 7, 'email' => 8, 'createdAt' => 9, 'updatedAt' => 10, ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_USERID => 0, UserTableMap::COL_ISPROVIDER => 1, UserTableMap::COL_USERNAME => 2, UserTableMap::COL_FIRSTNAME => 3, UserTableMap::COL_LASTNAME => 4, UserTableMap::COL_SUFFIX => 5, UserTableMap::COL_ADDRESS => 6, UserTableMap::COL_PHONENUMBER => 7, UserTableMap::COL_EMAIL => 8, UserTableMap::COL_CREATED_AT => 9, UserTableMap::COL_UPDATED_AT => 10, ),
+        self::TYPE_FIELDNAME     => array('userId' => 0, 'isProvider' => 1, 'userName' => 2, 'firstName' => 3, 'lastName' => 4, 'suffix' => 5, 'address' => 6, 'phoneNumber' => 7, 'email' => 8, 'created_at' => 9, 'updated_at' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -180,7 +185,8 @@ class UserTableMap extends TableMap
         $this->addColumn('address', 'Address', 'VARCHAR', true, 64, null);
         $this->addColumn('phoneNumber', 'Phonenumber', 'VARCHAR', true, 20, null);
         $this->addColumn('email', 'Email', 'VARCHAR', true, 50, null);
-        $this->addColumn('lastUpdate', 'Lastupdate', 'TIMESTAMP', true, null, null);
+        $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**
@@ -210,6 +216,19 @@ class UserTableMap extends TableMap
   ),
 ), null, 'CASCADE', 'Usersettingss', false);
     } // buildRelations()
+
+    /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+        );
+    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -361,7 +380,8 @@ class UserTableMap extends TableMap
             $criteria->addSelectColumn(UserTableMap::COL_ADDRESS);
             $criteria->addSelectColumn(UserTableMap::COL_PHONENUMBER);
             $criteria->addSelectColumn(UserTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(UserTableMap::COL_LASTUPDATE);
+            $criteria->addSelectColumn(UserTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(UserTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.userId');
             $criteria->addSelectColumn($alias . '.isProvider');
@@ -372,7 +392,8 @@ class UserTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.address');
             $criteria->addSelectColumn($alias . '.phoneNumber');
             $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.lastUpdate');
+            $criteria->addSelectColumn($alias . '.created_at');
+            $criteria->addSelectColumn($alias . '.updated_at');
         }
     }
 

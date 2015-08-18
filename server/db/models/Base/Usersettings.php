@@ -4,6 +4,7 @@ namespace Base;
 
 use \User as ChildUser;
 use \UserQuery as ChildUserQuery;
+use \Usersettings as ChildUsersettings;
 use \UsersettingsQuery as ChildUsersettingsQuery;
 use \DateTime;
 use \Exception;
@@ -179,6 +180,18 @@ abstract class Usersettings implements ActiveRecordInterface
      * @var        \DateTime
      */
     protected $sundayend;
+
+    /**
+     * The value for the created_at field.
+     * @var        \DateTime
+     */
+    protected $created_at;
+
+    /**
+     * The value for the updated_at field.
+     * @var        \DateTime
+     */
+    protected $updated_at;
 
     /**
      * @var        ChildUser
@@ -786,6 +799,46 @@ abstract class Usersettings implements ActiveRecordInterface
     }
 
     /**
+     * Get the [optionally formatted] temporal [created_at] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getCreatedAt($format = NULL)
+    {
+        if ($format === null) {
+            return $this->created_at;
+        } else {
+            return $this->created_at instanceof \DateTime ? $this->created_at->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [updated_at] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getUpdatedAt($format = NULL)
+    {
+        if ($format === null) {
+            return $this->updated_at;
+        } else {
+            return $this->updated_at instanceof \DateTime ? $this->updated_at->format($format) : null;
+        }
+    }
+
+    /**
      * Set the value of [settingsid] column.
      *
      * @param int $v new value
@@ -1194,6 +1247,46 @@ abstract class Usersettings implements ActiveRecordInterface
     } // setSundayend()
 
     /**
+     * Sets the value of [created_at] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\Usersettings The current object (for fluent API support)
+     */
+    public function setCreatedAt($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->created_at !== null || $dt !== null) {
+            if ($this->created_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->created_at->format("Y-m-d H:i:s")) {
+                $this->created_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UsersettingsTableMap::COL_CREATED_AT] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setCreatedAt()
+
+    /**
+     * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\Usersettings The current object (for fluent API support)
+     */
+    public function setUpdatedAt($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->updated_at !== null || $dt !== null) {
+            if ($this->updated_at === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->updated_at->format("Y-m-d H:i:s")) {
+                $this->updated_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UsersettingsTableMap::COL_UPDATED_AT] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setUpdatedAt()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1339,6 +1432,18 @@ abstract class Usersettings implements ActiveRecordInterface
                 $col = null;
             }
             $this->sundayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : UsersettingsTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : UsersettingsTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1347,7 +1452,7 @@ abstract class Usersettings implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 19; // 19 = UsersettingsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 21; // 21 = UsersettingsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Usersettings'), 0, $e);
@@ -1474,8 +1579,20 @@ abstract class Usersettings implements ActiveRecordInterface
             $ret = $this->preSave($con);
             if ($isInsert) {
                 $ret = $ret && $this->preInsert($con);
+                // timestampable behavior
+
+                if (!$this->isColumnModified(UsersettingsTableMap::COL_CREATED_AT)) {
+                    $this->setCreatedAt(time());
+                }
+                if (!$this->isColumnModified(UsersettingsTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             } else {
                 $ret = $ret && $this->preUpdate($con);
+                // timestampable behavior
+                if ($this->isModified() && !$this->isColumnModified(UsersettingsTableMap::COL_UPDATED_AT)) {
+                    $this->setUpdatedAt(time());
+                }
             }
             if ($ret) {
                 $affectedRows = $this->doSave($con);
@@ -1617,6 +1734,12 @@ abstract class Usersettings implements ActiveRecordInterface
         if ($this->isColumnModified(UsersettingsTableMap::COL_SUNDAYEND)) {
             $modifiedColumns[':p' . $index++]  = 'sundayEnd';
         }
+        if ($this->isColumnModified(UsersettingsTableMap::COL_CREATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'created_at';
+        }
+        if ($this->isColumnModified(UsersettingsTableMap::COL_UPDATED_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'updated_at';
+        }
 
         $sql = sprintf(
             'INSERT INTO userSettings (%s) VALUES (%s)',
@@ -1684,6 +1807,12 @@ abstract class Usersettings implements ActiveRecordInterface
                         break;
                     case 'sundayEnd':
                         $stmt->bindValue($identifier, $this->sundayend ? $this->sundayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'created_at':
+                        $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'updated_at':
+                        $stmt->bindValue($identifier, $this->updated_at ? $this->updated_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1804,6 +1933,12 @@ abstract class Usersettings implements ActiveRecordInterface
             case 18:
                 return $this->getSundayend();
                 break;
+            case 19:
+                return $this->getCreatedAt();
+                break;
+            case 20:
+                return $this->getUpdatedAt();
+                break;
             default:
                 return null;
                 break;
@@ -1853,6 +1988,8 @@ abstract class Usersettings implements ActiveRecordInterface
             $keys[16] => $this->getSaturdayend(),
             $keys[17] => $this->getSundaystart(),
             $keys[18] => $this->getSundayend(),
+            $keys[19] => $this->getCreatedAt(),
+            $keys[20] => $this->getUpdatedAt(),
         );
 
         $utc = new \DateTimeZone('utc');
@@ -1938,6 +2075,18 @@ abstract class Usersettings implements ActiveRecordInterface
             // When changing timezone we don't want to change existing instances
             $dateTime = clone $result[$keys[18]];
             $result[$keys[18]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[19]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[19]];
+            $result[$keys[19]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[20]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[20]];
+            $result[$keys[20]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -2052,6 +2201,12 @@ abstract class Usersettings implements ActiveRecordInterface
             case 18:
                 $this->setSundayend($value);
                 break;
+            case 19:
+                $this->setCreatedAt($value);
+                break;
+            case 20:
+                $this->setUpdatedAt($value);
+                break;
         } // switch()
 
         return $this;
@@ -2134,6 +2289,12 @@ abstract class Usersettings implements ActiveRecordInterface
         }
         if (array_key_exists($keys[18], $arr)) {
             $this->setSundayend($arr[$keys[18]]);
+        }
+        if (array_key_exists($keys[19], $arr)) {
+            $this->setCreatedAt($arr[$keys[19]]);
+        }
+        if (array_key_exists($keys[20], $arr)) {
+            $this->setUpdatedAt($arr[$keys[20]]);
         }
     }
 
@@ -2232,6 +2393,12 @@ abstract class Usersettings implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UsersettingsTableMap::COL_SUNDAYEND)) {
             $criteria->add(UsersettingsTableMap::COL_SUNDAYEND, $this->sundayend);
+        }
+        if ($this->isColumnModified(UsersettingsTableMap::COL_CREATED_AT)) {
+            $criteria->add(UsersettingsTableMap::COL_CREATED_AT, $this->created_at);
+        }
+        if ($this->isColumnModified(UsersettingsTableMap::COL_UPDATED_AT)) {
+            $criteria->add(UsersettingsTableMap::COL_UPDATED_AT, $this->updated_at);
         }
 
         return $criteria;
@@ -2337,6 +2504,8 @@ abstract class Usersettings implements ActiveRecordInterface
         $copyObj->setSaturdayend($this->getSaturdayend());
         $copyObj->setSundaystart($this->getSundaystart());
         $copyObj->setSundayend($this->getSundayend());
+        $copyObj->setCreatedAt($this->getCreatedAt());
+        $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setSettingsid(NULL); // this is a auto-increment column, so set to default value
@@ -2445,6 +2614,8 @@ abstract class Usersettings implements ActiveRecordInterface
         $this->saturdayend = null;
         $this->sundaystart = null;
         $this->sundayend = null;
+        $this->created_at = null;
+        $this->updated_at = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();
@@ -2477,6 +2648,20 @@ abstract class Usersettings implements ActiveRecordInterface
     public function __toString()
     {
         return (string) $this->exportTo(UsersettingsTableMap::DEFAULT_STRING_FORMAT);
+    }
+
+    // timestampable behavior
+
+    /**
+     * Mark the current object so that the update date doesn't get updated during next save
+     *
+     * @return     $this|ChildUsersettings The current object (for fluent API support)
+     */
+    public function keepUpdateDateUnchanged()
+    {
+        $this->modifiedColumns[UsersettingsTableMap::COL_UPDATED_AT] = true;
+
+        return $this;
     }
 
     /**

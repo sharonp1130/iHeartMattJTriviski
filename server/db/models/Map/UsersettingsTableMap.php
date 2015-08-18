@@ -59,7 +59,7 @@ class UsersettingsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 19;
+    const NUM_COLUMNS = 21;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class UsersettingsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 19;
+    const NUM_HYDRATE_COLUMNS = 21;
 
     /**
      * the column name for the settingsId field
@@ -167,6 +167,16 @@ class UsersettingsTableMap extends TableMap
     const COL_SUNDAYEND = 'userSettings.sundayEnd';
 
     /**
+     * the column name for the created_at field
+     */
+    const COL_CREATED_AT = 'userSettings.created_at';
+
+    /**
+     * the column name for the updated_at field
+     */
+    const COL_UPDATED_AT = 'userSettings.updated_at';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -178,11 +188,11 @@ class UsersettingsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Settingsid', 'SettingsUser', 'Phoneok', 'Textok', 'Emailok', 'Mondaystart', 'Mondayend', 'Tuesdaystart', 'Tuesdayend', 'Wednesdaystart', 'Wednesdayend', 'Thursdaystart', 'Thursdayend', 'Fridaystart', 'Fridayend', 'Saturdaystart', 'Saturdayend', 'Sundaystart', 'Sundayend', ),
-        self::TYPE_CAMELNAME     => array('settingsid', 'settingsUser', 'phoneok', 'textok', 'emailok', 'mondaystart', 'mondayend', 'tuesdaystart', 'tuesdayend', 'wednesdaystart', 'wednesdayend', 'thursdaystart', 'thursdayend', 'fridaystart', 'fridayend', 'saturdaystart', 'saturdayend', 'sundaystart', 'sundayend', ),
-        self::TYPE_COLNAME       => array(UsersettingsTableMap::COL_SETTINGSID, UsersettingsTableMap::COL_USER, UsersettingsTableMap::COL_PHONEOK, UsersettingsTableMap::COL_TEXTOK, UsersettingsTableMap::COL_EMAILOK, UsersettingsTableMap::COL_MONDAYSTART, UsersettingsTableMap::COL_MONDAYEND, UsersettingsTableMap::COL_TUESDAYSTART, UsersettingsTableMap::COL_TUESDAYEND, UsersettingsTableMap::COL_WEDNESDAYSTART, UsersettingsTableMap::COL_WEDNESDAYEND, UsersettingsTableMap::COL_THURSDAYSTART, UsersettingsTableMap::COL_THURSDAYEND, UsersettingsTableMap::COL_FRIDAYSTART, UsersettingsTableMap::COL_FRIDAYEND, UsersettingsTableMap::COL_SATURDAYSTART, UsersettingsTableMap::COL_SATURDAYEND, UsersettingsTableMap::COL_SUNDAYSTART, UsersettingsTableMap::COL_SUNDAYEND, ),
-        self::TYPE_FIELDNAME     => array('settingsId', 'user', 'phoneOk', 'textOk', 'emailOk', 'mondayStart', 'mondayEnd', 'tuesdayStart', 'tuesdayEnd', 'wednesdayStart', 'wednesdayEnd', 'thursdayStart', 'thursdayEnd', 'fridayStart', 'fridayEnd', 'saturdayStart', 'saturdayEnd', 'sundayStart', 'sundayEnd', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+        self::TYPE_PHPNAME       => array('Settingsid', 'SettingsUser', 'Phoneok', 'Textok', 'Emailok', 'Mondaystart', 'Mondayend', 'Tuesdaystart', 'Tuesdayend', 'Wednesdaystart', 'Wednesdayend', 'Thursdaystart', 'Thursdayend', 'Fridaystart', 'Fridayend', 'Saturdaystart', 'Saturdayend', 'Sundaystart', 'Sundayend', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('settingsid', 'settingsUser', 'phoneok', 'textok', 'emailok', 'mondaystart', 'mondayend', 'tuesdaystart', 'tuesdayend', 'wednesdaystart', 'wednesdayend', 'thursdaystart', 'thursdayend', 'fridaystart', 'fridayend', 'saturdaystart', 'saturdayend', 'sundaystart', 'sundayend', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(UsersettingsTableMap::COL_SETTINGSID, UsersettingsTableMap::COL_USER, UsersettingsTableMap::COL_PHONEOK, UsersettingsTableMap::COL_TEXTOK, UsersettingsTableMap::COL_EMAILOK, UsersettingsTableMap::COL_MONDAYSTART, UsersettingsTableMap::COL_MONDAYEND, UsersettingsTableMap::COL_TUESDAYSTART, UsersettingsTableMap::COL_TUESDAYEND, UsersettingsTableMap::COL_WEDNESDAYSTART, UsersettingsTableMap::COL_WEDNESDAYEND, UsersettingsTableMap::COL_THURSDAYSTART, UsersettingsTableMap::COL_THURSDAYEND, UsersettingsTableMap::COL_FRIDAYSTART, UsersettingsTableMap::COL_FRIDAYEND, UsersettingsTableMap::COL_SATURDAYSTART, UsersettingsTableMap::COL_SATURDAYEND, UsersettingsTableMap::COL_SUNDAYSTART, UsersettingsTableMap::COL_SUNDAYEND, UsersettingsTableMap::COL_CREATED_AT, UsersettingsTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('settingsId', 'user', 'phoneOk', 'textOk', 'emailOk', 'mondayStart', 'mondayEnd', 'tuesdayStart', 'tuesdayEnd', 'wednesdayStart', 'wednesdayEnd', 'thursdayStart', 'thursdayEnd', 'fridayStart', 'fridayEnd', 'saturdayStart', 'saturdayEnd', 'sundayStart', 'sundayEnd', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
     );
 
     /**
@@ -192,11 +202,11 @@ class UsersettingsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Settingsid' => 0, 'SettingsUser' => 1, 'Phoneok' => 2, 'Textok' => 3, 'Emailok' => 4, 'Mondaystart' => 5, 'Mondayend' => 6, 'Tuesdaystart' => 7, 'Tuesdayend' => 8, 'Wednesdaystart' => 9, 'Wednesdayend' => 10, 'Thursdaystart' => 11, 'Thursdayend' => 12, 'Fridaystart' => 13, 'Fridayend' => 14, 'Saturdaystart' => 15, 'Saturdayend' => 16, 'Sundaystart' => 17, 'Sundayend' => 18, ),
-        self::TYPE_CAMELNAME     => array('settingsid' => 0, 'settingsUser' => 1, 'phoneok' => 2, 'textok' => 3, 'emailok' => 4, 'mondaystart' => 5, 'mondayend' => 6, 'tuesdaystart' => 7, 'tuesdayend' => 8, 'wednesdaystart' => 9, 'wednesdayend' => 10, 'thursdaystart' => 11, 'thursdayend' => 12, 'fridaystart' => 13, 'fridayend' => 14, 'saturdaystart' => 15, 'saturdayend' => 16, 'sundaystart' => 17, 'sundayend' => 18, ),
-        self::TYPE_COLNAME       => array(UsersettingsTableMap::COL_SETTINGSID => 0, UsersettingsTableMap::COL_USER => 1, UsersettingsTableMap::COL_PHONEOK => 2, UsersettingsTableMap::COL_TEXTOK => 3, UsersettingsTableMap::COL_EMAILOK => 4, UsersettingsTableMap::COL_MONDAYSTART => 5, UsersettingsTableMap::COL_MONDAYEND => 6, UsersettingsTableMap::COL_TUESDAYSTART => 7, UsersettingsTableMap::COL_TUESDAYEND => 8, UsersettingsTableMap::COL_WEDNESDAYSTART => 9, UsersettingsTableMap::COL_WEDNESDAYEND => 10, UsersettingsTableMap::COL_THURSDAYSTART => 11, UsersettingsTableMap::COL_THURSDAYEND => 12, UsersettingsTableMap::COL_FRIDAYSTART => 13, UsersettingsTableMap::COL_FRIDAYEND => 14, UsersettingsTableMap::COL_SATURDAYSTART => 15, UsersettingsTableMap::COL_SATURDAYEND => 16, UsersettingsTableMap::COL_SUNDAYSTART => 17, UsersettingsTableMap::COL_SUNDAYEND => 18, ),
-        self::TYPE_FIELDNAME     => array('settingsId' => 0, 'user' => 1, 'phoneOk' => 2, 'textOk' => 3, 'emailOk' => 4, 'mondayStart' => 5, 'mondayEnd' => 6, 'tuesdayStart' => 7, 'tuesdayEnd' => 8, 'wednesdayStart' => 9, 'wednesdayEnd' => 10, 'thursdayStart' => 11, 'thursdayEnd' => 12, 'fridayStart' => 13, 'fridayEnd' => 14, 'saturdayStart' => 15, 'saturdayEnd' => 16, 'sundayStart' => 17, 'sundayEnd' => 18, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+        self::TYPE_PHPNAME       => array('Settingsid' => 0, 'SettingsUser' => 1, 'Phoneok' => 2, 'Textok' => 3, 'Emailok' => 4, 'Mondaystart' => 5, 'Mondayend' => 6, 'Tuesdaystart' => 7, 'Tuesdayend' => 8, 'Wednesdaystart' => 9, 'Wednesdayend' => 10, 'Thursdaystart' => 11, 'Thursdayend' => 12, 'Fridaystart' => 13, 'Fridayend' => 14, 'Saturdaystart' => 15, 'Saturdayend' => 16, 'Sundaystart' => 17, 'Sundayend' => 18, 'CreatedAt' => 19, 'UpdatedAt' => 20, ),
+        self::TYPE_CAMELNAME     => array('settingsid' => 0, 'settingsUser' => 1, 'phoneok' => 2, 'textok' => 3, 'emailok' => 4, 'mondaystart' => 5, 'mondayend' => 6, 'tuesdaystart' => 7, 'tuesdayend' => 8, 'wednesdaystart' => 9, 'wednesdayend' => 10, 'thursdaystart' => 11, 'thursdayend' => 12, 'fridaystart' => 13, 'fridayend' => 14, 'saturdaystart' => 15, 'saturdayend' => 16, 'sundaystart' => 17, 'sundayend' => 18, 'createdAt' => 19, 'updatedAt' => 20, ),
+        self::TYPE_COLNAME       => array(UsersettingsTableMap::COL_SETTINGSID => 0, UsersettingsTableMap::COL_USER => 1, UsersettingsTableMap::COL_PHONEOK => 2, UsersettingsTableMap::COL_TEXTOK => 3, UsersettingsTableMap::COL_EMAILOK => 4, UsersettingsTableMap::COL_MONDAYSTART => 5, UsersettingsTableMap::COL_MONDAYEND => 6, UsersettingsTableMap::COL_TUESDAYSTART => 7, UsersettingsTableMap::COL_TUESDAYEND => 8, UsersettingsTableMap::COL_WEDNESDAYSTART => 9, UsersettingsTableMap::COL_WEDNESDAYEND => 10, UsersettingsTableMap::COL_THURSDAYSTART => 11, UsersettingsTableMap::COL_THURSDAYEND => 12, UsersettingsTableMap::COL_FRIDAYSTART => 13, UsersettingsTableMap::COL_FRIDAYEND => 14, UsersettingsTableMap::COL_SATURDAYSTART => 15, UsersettingsTableMap::COL_SATURDAYEND => 16, UsersettingsTableMap::COL_SUNDAYSTART => 17, UsersettingsTableMap::COL_SUNDAYEND => 18, UsersettingsTableMap::COL_CREATED_AT => 19, UsersettingsTableMap::COL_UPDATED_AT => 20, ),
+        self::TYPE_FIELDNAME     => array('settingsId' => 0, 'user' => 1, 'phoneOk' => 2, 'textOk' => 3, 'emailOk' => 4, 'mondayStart' => 5, 'mondayEnd' => 6, 'tuesdayStart' => 7, 'tuesdayEnd' => 8, 'wednesdayStart' => 9, 'wednesdayEnd' => 10, 'thursdayStart' => 11, 'thursdayEnd' => 12, 'fridayStart' => 13, 'fridayEnd' => 14, 'saturdayStart' => 15, 'saturdayEnd' => 16, 'sundayStart' => 17, 'sundayEnd' => 18, 'created_at' => 19, 'updated_at' => 20, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
     );
 
     /**
@@ -235,6 +245,8 @@ class UsersettingsTableMap extends TableMap
         $this->addColumn('saturdayEnd', 'Saturdayend', 'TIMESTAMP', false, null, null);
         $this->addColumn('sundayStart', 'Sundaystart', 'TIMESTAMP', false, null, null);
         $this->addColumn('sundayEnd', 'Sundayend', 'TIMESTAMP', false, null, null);
+        $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**
@@ -250,6 +262,19 @@ class UsersettingsTableMap extends TableMap
   ),
 ), null, 'CASCADE', null, false);
     } // buildRelations()
+
+    /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+        );
+    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -411,6 +436,8 @@ class UsersettingsTableMap extends TableMap
             $criteria->addSelectColumn(UsersettingsTableMap::COL_SATURDAYEND);
             $criteria->addSelectColumn(UsersettingsTableMap::COL_SUNDAYSTART);
             $criteria->addSelectColumn(UsersettingsTableMap::COL_SUNDAYEND);
+            $criteria->addSelectColumn(UsersettingsTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(UsersettingsTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.settingsId');
             $criteria->addSelectColumn($alias . '.user');
@@ -431,6 +458,8 @@ class UsersettingsTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.saturdayEnd');
             $criteria->addSelectColumn($alias . '.sundayStart');
             $criteria->addSelectColumn($alias . '.sundayEnd');
+            $criteria->addSelectColumn($alias . '.created_at');
+            $criteria->addSelectColumn($alias . '.updated_at');
         }
     }
 

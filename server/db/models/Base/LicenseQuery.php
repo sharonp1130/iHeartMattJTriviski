@@ -24,13 +24,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLicenseQuery orderByLicensenumber($order = Criteria::ASC) Order by the licenseNumber column
  * @method     ChildLicenseQuery orderByLicenseService($order = Criteria::ASC) Order by the service column
  * @method     ChildLicenseQuery orderByLicenseUser($order = Criteria::ASC) Order by the user column
- * @method     ChildLicenseQuery orderByLastupdate($order = Criteria::ASC) Order by the lastUpdate column
+ * @method     ChildLicenseQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
+ * @method     ChildLicenseQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildLicenseQuery groupByLicenseid() Group by the licenseId column
  * @method     ChildLicenseQuery groupByLicensenumber() Group by the licenseNumber column
  * @method     ChildLicenseQuery groupByLicenseService() Group by the service column
  * @method     ChildLicenseQuery groupByLicenseUser() Group by the user column
- * @method     ChildLicenseQuery groupByLastupdate() Group by the lastUpdate column
+ * @method     ChildLicenseQuery groupByCreatedAt() Group by the created_at column
+ * @method     ChildLicenseQuery groupByUpdatedAt() Group by the updated_at column
  *
  * @method     ChildLicenseQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildLicenseQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -69,7 +71,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLicense findOneByLicensenumber(string $licenseNumber) Return the first ChildLicense filtered by the licenseNumber column
  * @method     ChildLicense findOneByLicenseService(int $service) Return the first ChildLicense filtered by the service column
  * @method     ChildLicense findOneByLicenseUser(int $user) Return the first ChildLicense filtered by the user column
- * @method     ChildLicense findOneByLastupdate(string $lastUpdate) Return the first ChildLicense filtered by the lastUpdate column *
+ * @method     ChildLicense findOneByCreatedAt(string $created_at) Return the first ChildLicense filtered by the created_at column
+ * @method     ChildLicense findOneByUpdatedAt(string $updated_at) Return the first ChildLicense filtered by the updated_at column *
 
  * @method     ChildLicense requirePk($key, ConnectionInterface $con = null) Return the ChildLicense by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLicense requireOne(ConnectionInterface $con = null) Return the first ChildLicense matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -78,14 +81,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildLicense requireOneByLicensenumber(string $licenseNumber) Return the first ChildLicense filtered by the licenseNumber column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLicense requireOneByLicenseService(int $service) Return the first ChildLicense filtered by the service column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLicense requireOneByLicenseUser(int $user) Return the first ChildLicense filtered by the user column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildLicense requireOneByLastupdate(string $lastUpdate) Return the first ChildLicense filtered by the lastUpdate column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildLicense requireOneByCreatedAt(string $created_at) Return the first ChildLicense filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildLicense requireOneByUpdatedAt(string $updated_at) Return the first ChildLicense filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildLicense[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildLicense objects based on current ModelCriteria
  * @method     ChildLicense[]|ObjectCollection findByLicenseid(int $licenseId) Return ChildLicense objects filtered by the licenseId column
  * @method     ChildLicense[]|ObjectCollection findByLicensenumber(string $licenseNumber) Return ChildLicense objects filtered by the licenseNumber column
  * @method     ChildLicense[]|ObjectCollection findByLicenseService(int $service) Return ChildLicense objects filtered by the service column
  * @method     ChildLicense[]|ObjectCollection findByLicenseUser(int $user) Return ChildLicense objects filtered by the user column
- * @method     ChildLicense[]|ObjectCollection findByLastupdate(string $lastUpdate) Return ChildLicense objects filtered by the lastUpdate column
+ * @method     ChildLicense[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildLicense objects filtered by the created_at column
+ * @method     ChildLicense[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildLicense objects filtered by the updated_at column
  * @method     ChildLicense[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -178,7 +183,7 @@ abstract class LicenseQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT licenseId, licenseNumber, service, user, lastUpdate FROM license WHERE licenseId = :p0';
+        $sql = 'SELECT licenseId, licenseNumber, service, user, created_at, updated_at FROM license WHERE licenseId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -425,16 +430,16 @@ abstract class LicenseQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the lastUpdate column
+     * Filter the query on the created_at column
      *
      * Example usage:
      * <code>
-     * $query->filterByLastupdate('2011-03-14'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate('now'); // WHERE lastUpdate = '2011-03-14'
-     * $query->filterByLastupdate(array('max' => 'yesterday')); // WHERE lastUpdate > '2011-03-13'
+     * $query->filterByCreatedAt('2011-03-14'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt('now'); // WHERE created_at = '2011-03-14'
+     * $query->filterByCreatedAt(array('max' => 'yesterday')); // WHERE created_at > '2011-03-13'
      * </code>
      *
-     * @param     mixed $lastupdate The value to use as filter.
+     * @param     mixed $createdAt The value to use as filter.
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
@@ -444,16 +449,16 @@ abstract class LicenseQuery extends ModelCriteria
      *
      * @return $this|ChildLicenseQuery The current query, for fluid interface
      */
-    public function filterByLastupdate($lastupdate = null, $comparison = null)
+    public function filterByCreatedAt($createdAt = null, $comparison = null)
     {
-        if (is_array($lastupdate)) {
+        if (is_array($createdAt)) {
             $useMinMax = false;
-            if (isset($lastupdate['min'])) {
-                $this->addUsingAlias(LicenseTableMap::COL_LASTUPDATE, $lastupdate['min'], Criteria::GREATER_EQUAL);
+            if (isset($createdAt['min'])) {
+                $this->addUsingAlias(LicenseTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($lastupdate['max'])) {
-                $this->addUsingAlias(LicenseTableMap::COL_LASTUPDATE, $lastupdate['max'], Criteria::LESS_EQUAL);
+            if (isset($createdAt['max'])) {
+                $this->addUsingAlias(LicenseTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -464,7 +469,50 @@ abstract class LicenseQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(LicenseTableMap::COL_LASTUPDATE, $lastupdate, $comparison);
+        return $this->addUsingAlias(LicenseTableMap::COL_CREATED_AT, $createdAt, $comparison);
+    }
+
+    /**
+     * Filter the query on the updated_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUpdatedAt('2011-03-14'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt('now'); // WHERE updated_at = '2011-03-14'
+     * $query->filterByUpdatedAt(array('max' => 'yesterday')); // WHERE updated_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $updatedAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function filterByUpdatedAt($updatedAt = null, $comparison = null)
+    {
+        if (is_array($updatedAt)) {
+            $useMinMax = false;
+            if (isset($updatedAt['min'])) {
+                $this->addUsingAlias(LicenseTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($updatedAt['max'])) {
+                $this->addUsingAlias(LicenseTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(LicenseTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
     }
 
     /**
@@ -696,6 +744,72 @@ abstract class LicenseQuery extends ModelCriteria
 
             return $affectedRows;
         });
+    }
+
+    // timestampable behavior
+
+    /**
+     * Filter by the latest updated
+     *
+     * @param      int $nbDays Maximum age of the latest update in days
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function recentlyUpdated($nbDays = 7)
+    {
+        return $this->addUsingAlias(LicenseTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by update date desc
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function lastUpdatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(LicenseTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by update date asc
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function firstUpdatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(LicenseTableMap::COL_UPDATED_AT);
+    }
+
+    /**
+     * Order by create date desc
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function lastCreatedFirst()
+    {
+        return $this->addDescendingOrderByColumn(LicenseTableMap::COL_CREATED_AT);
+    }
+
+    /**
+     * Filter by the latest created
+     *
+     * @param      int $nbDays Maximum age of in days
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function recentlyCreated($nbDays = 7)
+    {
+        return $this->addUsingAlias(LicenseTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * Order by create date asc
+     *
+     * @return     $this|ChildLicenseQuery The current query, for fluid interface
+     */
+    public function firstCreatedFirst()
+    {
+        return $this->addAscendingOrderByColumn(LicenseTableMap::COL_CREATED_AT);
     }
 
 } // LicenseQuery
