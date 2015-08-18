@@ -14,5 +14,14 @@ use Base\License as BaseLicense;
  */
 class License extends BaseLicense
 {
-	
+    /* (non-PHPdoc)
+     * @see \Base\License::setLicensenumber()
+     */
+    public function setLicensenumber($l) {
+		if (strlen($l) == 0) {
+			throw new Exception("License number cannot be null or empty");
+		} else {
+			parent::setLicensenumber($l);
+		}
+	}
 }
