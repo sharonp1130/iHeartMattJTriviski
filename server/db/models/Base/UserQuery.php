@@ -30,6 +30,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderByCity($order = Criteria::ASC) Order by the city column
  * @method     ChildUserQuery orderByZipcode($order = Criteria::ASC) Order by the zipcode column
  * @method     ChildUserQuery orderByPhonenumber($order = Criteria::ASC) Order by the phoneNumber column
+ * @method     ChildUserQuery orderByPhoneok($order = Criteria::ASC) Order by the phoneOk column
+ * @method     ChildUserQuery orderByTextok($order = Criteria::ASC) Order by the textOk column
+ * @method     ChildUserQuery orderByEmailok($order = Criteria::ASC) Order by the emailOk column
+ * @method     ChildUserQuery orderByMondaystart($order = Criteria::ASC) Order by the mondayStart column
+ * @method     ChildUserQuery orderByMondayend($order = Criteria::ASC) Order by the mondayEnd column
+ * @method     ChildUserQuery orderByTuesdaystart($order = Criteria::ASC) Order by the tuesdayStart column
+ * @method     ChildUserQuery orderByTuesdayend($order = Criteria::ASC) Order by the tuesdayEnd column
+ * @method     ChildUserQuery orderByWednesdaystart($order = Criteria::ASC) Order by the wednesdayStart column
+ * @method     ChildUserQuery orderByWednesdayend($order = Criteria::ASC) Order by the wednesdayEnd column
+ * @method     ChildUserQuery orderByThursdaystart($order = Criteria::ASC) Order by the thursdayStart column
+ * @method     ChildUserQuery orderByThursdayend($order = Criteria::ASC) Order by the thursdayEnd column
+ * @method     ChildUserQuery orderByFridaystart($order = Criteria::ASC) Order by the fridayStart column
+ * @method     ChildUserQuery orderByFridayend($order = Criteria::ASC) Order by the fridayEnd column
+ * @method     ChildUserQuery orderBySaturdaystart($order = Criteria::ASC) Order by the saturdayStart column
+ * @method     ChildUserQuery orderBySaturdayend($order = Criteria::ASC) Order by the saturdayEnd column
+ * @method     ChildUserQuery orderBySundaystart($order = Criteria::ASC) Order by the sundayStart column
+ * @method     ChildUserQuery orderBySundayend($order = Criteria::ASC) Order by the sundayEnd column
  * @method     ChildUserQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildUserQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -43,6 +60,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery groupByCity() Group by the city column
  * @method     ChildUserQuery groupByZipcode() Group by the zipcode column
  * @method     ChildUserQuery groupByPhonenumber() Group by the phoneNumber column
+ * @method     ChildUserQuery groupByPhoneok() Group by the phoneOk column
+ * @method     ChildUserQuery groupByTextok() Group by the textOk column
+ * @method     ChildUserQuery groupByEmailok() Group by the emailOk column
+ * @method     ChildUserQuery groupByMondaystart() Group by the mondayStart column
+ * @method     ChildUserQuery groupByMondayend() Group by the mondayEnd column
+ * @method     ChildUserQuery groupByTuesdaystart() Group by the tuesdayStart column
+ * @method     ChildUserQuery groupByTuesdayend() Group by the tuesdayEnd column
+ * @method     ChildUserQuery groupByWednesdaystart() Group by the wednesdayStart column
+ * @method     ChildUserQuery groupByWednesdayend() Group by the wednesdayEnd column
+ * @method     ChildUserQuery groupByThursdaystart() Group by the thursdayStart column
+ * @method     ChildUserQuery groupByThursdayend() Group by the thursdayEnd column
+ * @method     ChildUserQuery groupByFridaystart() Group by the fridayStart column
+ * @method     ChildUserQuery groupByFridayend() Group by the fridayEnd column
+ * @method     ChildUserQuery groupBySaturdaystart() Group by the saturdayStart column
+ * @method     ChildUserQuery groupBySaturdayend() Group by the saturdayEnd column
+ * @method     ChildUserQuery groupBySundaystart() Group by the sundayStart column
+ * @method     ChildUserQuery groupBySundayend() Group by the sundayEnd column
  * @method     ChildUserQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildUserQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -74,17 +108,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery rightJoinWithLocation() Adds a RIGHT JOIN clause and with to the query using the Location relation
  * @method     ChildUserQuery innerJoinWithLocation() Adds a INNER JOIN clause and with to the query using the Location relation
  *
- * @method     ChildUserQuery leftJoinUsersettings($relationAlias = null) Adds a LEFT JOIN clause to the query using the Usersettings relation
- * @method     ChildUserQuery rightJoinUsersettings($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Usersettings relation
- * @method     ChildUserQuery innerJoinUsersettings($relationAlias = null) Adds a INNER JOIN clause to the query using the Usersettings relation
- *
- * @method     ChildUserQuery joinWithUsersettings($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Usersettings relation
- *
- * @method     ChildUserQuery leftJoinWithUsersettings() Adds a LEFT JOIN clause and with to the query using the Usersettings relation
- * @method     ChildUserQuery rightJoinWithUsersettings() Adds a RIGHT JOIN clause and with to the query using the Usersettings relation
- * @method     ChildUserQuery innerJoinWithUsersettings() Adds a INNER JOIN clause and with to the query using the Usersettings relation
- *
- * @method     \LicenseQuery|\LocationQuery|\UsersettingsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \LicenseQuery|\LocationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUser findOne(ConnectionInterface $con = null) Return the first ChildUser matching the query
  * @method     ChildUser findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUser matching the query, or a new ChildUser object populated from the query conditions when no match is found
@@ -99,6 +123,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneByCity(string $city) Return the first ChildUser filtered by the city column
  * @method     ChildUser findOneByZipcode(string $zipcode) Return the first ChildUser filtered by the zipcode column
  * @method     ChildUser findOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column
+ * @method     ChildUser findOneByPhoneok(boolean $phoneOk) Return the first ChildUser filtered by the phoneOk column
+ * @method     ChildUser findOneByTextok(boolean $textOk) Return the first ChildUser filtered by the textOk column
+ * @method     ChildUser findOneByEmailok(boolean $emailOk) Return the first ChildUser filtered by the emailOk column
+ * @method     ChildUser findOneByMondaystart(string $mondayStart) Return the first ChildUser filtered by the mondayStart column
+ * @method     ChildUser findOneByMondayend(string $mondayEnd) Return the first ChildUser filtered by the mondayEnd column
+ * @method     ChildUser findOneByTuesdaystart(string $tuesdayStart) Return the first ChildUser filtered by the tuesdayStart column
+ * @method     ChildUser findOneByTuesdayend(string $tuesdayEnd) Return the first ChildUser filtered by the tuesdayEnd column
+ * @method     ChildUser findOneByWednesdaystart(string $wednesdayStart) Return the first ChildUser filtered by the wednesdayStart column
+ * @method     ChildUser findOneByWednesdayend(string $wednesdayEnd) Return the first ChildUser filtered by the wednesdayEnd column
+ * @method     ChildUser findOneByThursdaystart(string $thursdayStart) Return the first ChildUser filtered by the thursdayStart column
+ * @method     ChildUser findOneByThursdayend(string $thursdayEnd) Return the first ChildUser filtered by the thursdayEnd column
+ * @method     ChildUser findOneByFridaystart(string $fridayStart) Return the first ChildUser filtered by the fridayStart column
+ * @method     ChildUser findOneByFridayend(string $fridayEnd) Return the first ChildUser filtered by the fridayEnd column
+ * @method     ChildUser findOneBySaturdaystart(string $saturdayStart) Return the first ChildUser filtered by the saturdayStart column
+ * @method     ChildUser findOneBySaturdayend(string $saturdayEnd) Return the first ChildUser filtered by the saturdayEnd column
+ * @method     ChildUser findOneBySundaystart(string $sundayStart) Return the first ChildUser filtered by the sundayStart column
+ * @method     ChildUser findOneBySundayend(string $sundayEnd) Return the first ChildUser filtered by the sundayEnd column
  * @method     ChildUser findOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column
  * @method     ChildUser findOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column *
 
@@ -115,6 +156,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneByCity(string $city) Return the first ChildUser filtered by the city column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByZipcode(string $zipcode) Return the first ChildUser filtered by the zipcode column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPhonenumber(string $phoneNumber) Return the first ChildUser filtered by the phoneNumber column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByPhoneok(boolean $phoneOk) Return the first ChildUser filtered by the phoneOk column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByTextok(boolean $textOk) Return the first ChildUser filtered by the textOk column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByEmailok(boolean $emailOk) Return the first ChildUser filtered by the emailOk column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByMondaystart(string $mondayStart) Return the first ChildUser filtered by the mondayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByMondayend(string $mondayEnd) Return the first ChildUser filtered by the mondayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByTuesdaystart(string $tuesdayStart) Return the first ChildUser filtered by the tuesdayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByTuesdayend(string $tuesdayEnd) Return the first ChildUser filtered by the tuesdayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByWednesdaystart(string $wednesdayStart) Return the first ChildUser filtered by the wednesdayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByWednesdayend(string $wednesdayEnd) Return the first ChildUser filtered by the wednesdayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByThursdaystart(string $thursdayStart) Return the first ChildUser filtered by the thursdayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByThursdayend(string $thursdayEnd) Return the first ChildUser filtered by the thursdayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByFridaystart(string $fridayStart) Return the first ChildUser filtered by the fridayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByFridayend(string $fridayEnd) Return the first ChildUser filtered by the fridayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneBySaturdaystart(string $saturdayStart) Return the first ChildUser filtered by the saturdayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneBySaturdayend(string $saturdayEnd) Return the first ChildUser filtered by the saturdayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneBySundaystart(string $sundayStart) Return the first ChildUser filtered by the sundayStart column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneBySundayend(string $sundayEnd) Return the first ChildUser filtered by the sundayEnd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByCreatedAt(string $created_at) Return the first ChildUser filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByUpdatedAt(string $updated_at) Return the first ChildUser filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
@@ -129,6 +187,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser[]|ObjectCollection findByCity(string $city) Return ChildUser objects filtered by the city column
  * @method     ChildUser[]|ObjectCollection findByZipcode(string $zipcode) Return ChildUser objects filtered by the zipcode column
  * @method     ChildUser[]|ObjectCollection findByPhonenumber(string $phoneNumber) Return ChildUser objects filtered by the phoneNumber column
+ * @method     ChildUser[]|ObjectCollection findByPhoneok(boolean $phoneOk) Return ChildUser objects filtered by the phoneOk column
+ * @method     ChildUser[]|ObjectCollection findByTextok(boolean $textOk) Return ChildUser objects filtered by the textOk column
+ * @method     ChildUser[]|ObjectCollection findByEmailok(boolean $emailOk) Return ChildUser objects filtered by the emailOk column
+ * @method     ChildUser[]|ObjectCollection findByMondaystart(string $mondayStart) Return ChildUser objects filtered by the mondayStart column
+ * @method     ChildUser[]|ObjectCollection findByMondayend(string $mondayEnd) Return ChildUser objects filtered by the mondayEnd column
+ * @method     ChildUser[]|ObjectCollection findByTuesdaystart(string $tuesdayStart) Return ChildUser objects filtered by the tuesdayStart column
+ * @method     ChildUser[]|ObjectCollection findByTuesdayend(string $tuesdayEnd) Return ChildUser objects filtered by the tuesdayEnd column
+ * @method     ChildUser[]|ObjectCollection findByWednesdaystart(string $wednesdayStart) Return ChildUser objects filtered by the wednesdayStart column
+ * @method     ChildUser[]|ObjectCollection findByWednesdayend(string $wednesdayEnd) Return ChildUser objects filtered by the wednesdayEnd column
+ * @method     ChildUser[]|ObjectCollection findByThursdaystart(string $thursdayStart) Return ChildUser objects filtered by the thursdayStart column
+ * @method     ChildUser[]|ObjectCollection findByThursdayend(string $thursdayEnd) Return ChildUser objects filtered by the thursdayEnd column
+ * @method     ChildUser[]|ObjectCollection findByFridaystart(string $fridayStart) Return ChildUser objects filtered by the fridayStart column
+ * @method     ChildUser[]|ObjectCollection findByFridayend(string $fridayEnd) Return ChildUser objects filtered by the fridayEnd column
+ * @method     ChildUser[]|ObjectCollection findBySaturdaystart(string $saturdayStart) Return ChildUser objects filtered by the saturdayStart column
+ * @method     ChildUser[]|ObjectCollection findBySaturdayend(string $saturdayEnd) Return ChildUser objects filtered by the saturdayEnd column
+ * @method     ChildUser[]|ObjectCollection findBySundaystart(string $sundayStart) Return ChildUser objects filtered by the sundayStart column
+ * @method     ChildUser[]|ObjectCollection findBySundayend(string $sundayEnd) Return ChildUser objects filtered by the sundayEnd column
  * @method     ChildUser[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildUser objects filtered by the created_at column
  * @method     ChildUser[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildUser objects filtered by the updated_at column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -223,7 +298,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT userId, email, isProvider, firstName, lastName, suffix, address, city, zipcode, phoneNumber, created_at, updated_at FROM user WHERE userId = :p0';
+        $sql = 'SELECT userId, email, isProvider, firstName, lastName, suffix, address, city, zipcode, phoneNumber, phoneOk, textOk, emailOk, mondayStart, mondayEnd, tuesdayStart, tuesdayEnd, wednesdayStart, wednesdayEnd, thursdayStart, thursdayEnd, fridayStart, fridayEnd, saturdayStart, saturdayEnd, sundayStart, sundayEnd, created_at, updated_at FROM user WHERE userId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -614,6 +689,689 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the phoneOk column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPhoneok(true); // WHERE phoneOk = true
+     * $query->filterByPhoneok('yes'); // WHERE phoneOk = true
+     * </code>
+     *
+     * @param     boolean|string $phoneok The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByPhoneok($phoneok = null, $comparison = null)
+    {
+        if (is_string($phoneok)) {
+            $phoneok = in_array(strtolower($phoneok), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_PHONEOK, $phoneok, $comparison);
+    }
+
+    /**
+     * Filter the query on the textOk column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTextok(true); // WHERE textOk = true
+     * $query->filterByTextok('yes'); // WHERE textOk = true
+     * </code>
+     *
+     * @param     boolean|string $textok The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByTextok($textok = null, $comparison = null)
+    {
+        if (is_string($textok)) {
+            $textok = in_array(strtolower($textok), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_TEXTOK, $textok, $comparison);
+    }
+
+    /**
+     * Filter the query on the emailOk column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByEmailok(true); // WHERE emailOk = true
+     * $query->filterByEmailok('yes'); // WHERE emailOk = true
+     * </code>
+     *
+     * @param     boolean|string $emailok The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByEmailok($emailok = null, $comparison = null)
+    {
+        if (is_string($emailok)) {
+            $emailok = in_array(strtolower($emailok), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_EMAILOK, $emailok, $comparison);
+    }
+
+    /**
+     * Filter the query on the mondayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMondaystart('2011-03-14'); // WHERE mondayStart = '2011-03-14'
+     * $query->filterByMondaystart('now'); // WHERE mondayStart = '2011-03-14'
+     * $query->filterByMondaystart(array('max' => 'yesterday')); // WHERE mondayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $mondaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByMondaystart($mondaystart = null, $comparison = null)
+    {
+        if (is_array($mondaystart)) {
+            $useMinMax = false;
+            if (isset($mondaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_MONDAYSTART, $mondaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($mondaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_MONDAYSTART, $mondaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_MONDAYSTART, $mondaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the mondayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMondayend('2011-03-14'); // WHERE mondayEnd = '2011-03-14'
+     * $query->filterByMondayend('now'); // WHERE mondayEnd = '2011-03-14'
+     * $query->filterByMondayend(array('max' => 'yesterday')); // WHERE mondayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $mondayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByMondayend($mondayend = null, $comparison = null)
+    {
+        if (is_array($mondayend)) {
+            $useMinMax = false;
+            if (isset($mondayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_MONDAYEND, $mondayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($mondayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_MONDAYEND, $mondayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_MONDAYEND, $mondayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the tuesdayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTuesdaystart('2011-03-14'); // WHERE tuesdayStart = '2011-03-14'
+     * $query->filterByTuesdaystart('now'); // WHERE tuesdayStart = '2011-03-14'
+     * $query->filterByTuesdaystart(array('max' => 'yesterday')); // WHERE tuesdayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $tuesdaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByTuesdaystart($tuesdaystart = null, $comparison = null)
+    {
+        if (is_array($tuesdaystart)) {
+            $useMinMax = false;
+            if (isset($tuesdaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_TUESDAYSTART, $tuesdaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($tuesdaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_TUESDAYSTART, $tuesdaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_TUESDAYSTART, $tuesdaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the tuesdayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTuesdayend('2011-03-14'); // WHERE tuesdayEnd = '2011-03-14'
+     * $query->filterByTuesdayend('now'); // WHERE tuesdayEnd = '2011-03-14'
+     * $query->filterByTuesdayend(array('max' => 'yesterday')); // WHERE tuesdayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $tuesdayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByTuesdayend($tuesdayend = null, $comparison = null)
+    {
+        if (is_array($tuesdayend)) {
+            $useMinMax = false;
+            if (isset($tuesdayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_TUESDAYEND, $tuesdayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($tuesdayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_TUESDAYEND, $tuesdayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_TUESDAYEND, $tuesdayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the wednesdayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByWednesdaystart('2011-03-14'); // WHERE wednesdayStart = '2011-03-14'
+     * $query->filterByWednesdaystart('now'); // WHERE wednesdayStart = '2011-03-14'
+     * $query->filterByWednesdaystart(array('max' => 'yesterday')); // WHERE wednesdayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $wednesdaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByWednesdaystart($wednesdaystart = null, $comparison = null)
+    {
+        if (is_array($wednesdaystart)) {
+            $useMinMax = false;
+            if (isset($wednesdaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_WEDNESDAYSTART, $wednesdaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($wednesdaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_WEDNESDAYSTART, $wednesdaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_WEDNESDAYSTART, $wednesdaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the wednesdayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByWednesdayend('2011-03-14'); // WHERE wednesdayEnd = '2011-03-14'
+     * $query->filterByWednesdayend('now'); // WHERE wednesdayEnd = '2011-03-14'
+     * $query->filterByWednesdayend(array('max' => 'yesterday')); // WHERE wednesdayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $wednesdayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByWednesdayend($wednesdayend = null, $comparison = null)
+    {
+        if (is_array($wednesdayend)) {
+            $useMinMax = false;
+            if (isset($wednesdayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_WEDNESDAYEND, $wednesdayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($wednesdayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_WEDNESDAYEND, $wednesdayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_WEDNESDAYEND, $wednesdayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the thursdayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByThursdaystart('2011-03-14'); // WHERE thursdayStart = '2011-03-14'
+     * $query->filterByThursdaystart('now'); // WHERE thursdayStart = '2011-03-14'
+     * $query->filterByThursdaystart(array('max' => 'yesterday')); // WHERE thursdayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $thursdaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByThursdaystart($thursdaystart = null, $comparison = null)
+    {
+        if (is_array($thursdaystart)) {
+            $useMinMax = false;
+            if (isset($thursdaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_THURSDAYSTART, $thursdaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($thursdaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_THURSDAYSTART, $thursdaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_THURSDAYSTART, $thursdaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the thursdayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByThursdayend('2011-03-14'); // WHERE thursdayEnd = '2011-03-14'
+     * $query->filterByThursdayend('now'); // WHERE thursdayEnd = '2011-03-14'
+     * $query->filterByThursdayend(array('max' => 'yesterday')); // WHERE thursdayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $thursdayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByThursdayend($thursdayend = null, $comparison = null)
+    {
+        if (is_array($thursdayend)) {
+            $useMinMax = false;
+            if (isset($thursdayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_THURSDAYEND, $thursdayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($thursdayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_THURSDAYEND, $thursdayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_THURSDAYEND, $thursdayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the fridayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFridaystart('2011-03-14'); // WHERE fridayStart = '2011-03-14'
+     * $query->filterByFridaystart('now'); // WHERE fridayStart = '2011-03-14'
+     * $query->filterByFridaystart(array('max' => 'yesterday')); // WHERE fridayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $fridaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByFridaystart($fridaystart = null, $comparison = null)
+    {
+        if (is_array($fridaystart)) {
+            $useMinMax = false;
+            if (isset($fridaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_FRIDAYSTART, $fridaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($fridaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_FRIDAYSTART, $fridaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_FRIDAYSTART, $fridaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the fridayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFridayend('2011-03-14'); // WHERE fridayEnd = '2011-03-14'
+     * $query->filterByFridayend('now'); // WHERE fridayEnd = '2011-03-14'
+     * $query->filterByFridayend(array('max' => 'yesterday')); // WHERE fridayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $fridayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByFridayend($fridayend = null, $comparison = null)
+    {
+        if (is_array($fridayend)) {
+            $useMinMax = false;
+            if (isset($fridayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_FRIDAYEND, $fridayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($fridayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_FRIDAYEND, $fridayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_FRIDAYEND, $fridayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the saturdayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySaturdaystart('2011-03-14'); // WHERE saturdayStart = '2011-03-14'
+     * $query->filterBySaturdaystart('now'); // WHERE saturdayStart = '2011-03-14'
+     * $query->filterBySaturdaystart(array('max' => 'yesterday')); // WHERE saturdayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $saturdaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterBySaturdaystart($saturdaystart = null, $comparison = null)
+    {
+        if (is_array($saturdaystart)) {
+            $useMinMax = false;
+            if (isset($saturdaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_SATURDAYSTART, $saturdaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($saturdaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_SATURDAYSTART, $saturdaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_SATURDAYSTART, $saturdaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the saturdayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySaturdayend('2011-03-14'); // WHERE saturdayEnd = '2011-03-14'
+     * $query->filterBySaturdayend('now'); // WHERE saturdayEnd = '2011-03-14'
+     * $query->filterBySaturdayend(array('max' => 'yesterday')); // WHERE saturdayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $saturdayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterBySaturdayend($saturdayend = null, $comparison = null)
+    {
+        if (is_array($saturdayend)) {
+            $useMinMax = false;
+            if (isset($saturdayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_SATURDAYEND, $saturdayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($saturdayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_SATURDAYEND, $saturdayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_SATURDAYEND, $saturdayend, $comparison);
+    }
+
+    /**
+     * Filter the query on the sundayStart column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySundaystart('2011-03-14'); // WHERE sundayStart = '2011-03-14'
+     * $query->filterBySundaystart('now'); // WHERE sundayStart = '2011-03-14'
+     * $query->filterBySundaystart(array('max' => 'yesterday')); // WHERE sundayStart > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $sundaystart The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterBySundaystart($sundaystart = null, $comparison = null)
+    {
+        if (is_array($sundaystart)) {
+            $useMinMax = false;
+            if (isset($sundaystart['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_SUNDAYSTART, $sundaystart['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($sundaystart['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_SUNDAYSTART, $sundaystart['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_SUNDAYSTART, $sundaystart, $comparison);
+    }
+
+    /**
+     * Filter the query on the sundayEnd column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySundayend('2011-03-14'); // WHERE sundayEnd = '2011-03-14'
+     * $query->filterBySundayend('now'); // WHERE sundayEnd = '2011-03-14'
+     * $query->filterBySundayend(array('max' => 'yesterday')); // WHERE sundayEnd > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $sundayend The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterBySundayend($sundayend = null, $comparison = null)
+    {
+        if (is_array($sundayend)) {
+            $useMinMax = false;
+            if (isset($sundayend['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_SUNDAYEND, $sundayend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($sundayend['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_SUNDAYEND, $sundayend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_SUNDAYEND, $sundayend, $comparison);
+    }
+
+    /**
      * Filter the query on the created_at column
      *
      * Example usage:
@@ -843,79 +1601,6 @@ abstract class UserQuery extends ModelCriteria
         return $this
             ->joinLocation($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Location', '\LocationQuery');
-    }
-
-    /**
-     * Filter the query by a related \Usersettings object
-     *
-     * @param \Usersettings|ObjectCollection $usersettings the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByUsersettings($usersettings, $comparison = null)
-    {
-        if ($usersettings instanceof \Usersettings) {
-            return $this
-                ->addUsingAlias(UserTableMap::COL_USERID, $usersettings->getSettingsUser(), $comparison);
-        } elseif ($usersettings instanceof ObjectCollection) {
-            return $this
-                ->useUsersettingsQuery()
-                ->filterByPrimaryKeys($usersettings->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByUsersettings() only accepts arguments of type \Usersettings or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Usersettings relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function joinUsersettings($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Usersettings');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Usersettings');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Usersettings relation Usersettings object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \UsersettingsQuery A secondary query class using the current class as primary query
-     */
-    public function useUsersettingsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinUsersettings($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Usersettings', '\UsersettingsQuery');
     }
 
     /**

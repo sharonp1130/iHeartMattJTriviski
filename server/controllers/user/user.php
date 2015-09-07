@@ -5,6 +5,10 @@ require_once 'db/propel-bootstrap.php';
 include 'utils/sanitize_phone.php';
 
 use Base\UserQuery;
+use Base\UsersettingsQuery;
+use Propel\Runtime\Map\TableMap;
+use Base\User;
+use Map\UserTableMap;
 
 
 /**
@@ -131,9 +135,9 @@ function update_user_and_get($email, $isProvider=null, $firstName=null, $lastNam
 }
 
 /**
- * @param unknown $email
- * @param unknown $licenseNumber
- * @param unknown $serviceDescription
+ * @param string $email
+ * @param string $licenseNumber
+ * @param string $serviceDescription
  * @return ChildUser
  */
 function add_license($email, $licenseNumber, $serviceDescription) {
@@ -160,22 +164,61 @@ function add_license($email, $licenseNumber, $serviceDescription) {
 	return $user;
 }
 
-function add_settings() {
-	
+/**
+ * 
+ * @param unknown $user
+ * @param unknown $name
+ * @param unknown $value
+ * @param string $type If not set expects the name to be the column name.  
+ * @return boolean
+ */
+function _update_user_setting($user, $name, $value, $type=null) {
+	$_type = $type == null ? TableMap::TYPE_COLNAME : $type;
+	$user->setByName($name, $value, $_type);
 }
 
-function update_settings() {
+/**
+ * Sets the values for the user.  This can be any column however is really meant to set the settings like the start and
+ * end times for a day.  
+ * 
+ * @param string $email
+ * @param array $values array of values to set.
+ * @return ChildUser - Updated user object.
+ */
+function update_settings_and_get($email, $values) {
+	# Get user and fail if there is not one.
+	$user = get_user_with_error($email);
 	
+	$keys = UserTableMap::getFieldNames(UserTableMap::TABLE_NAME);
+
+	foreach ($keys as $key) {
+		$value = $values[$key];
+		
+		if ($value != null) {
+			_update_user_setting($user, $key, $value);
+		}
+	}
+	
+	$user->save();
+	
+	return $user;
 }
 
+/**
+ * Adds a new location to the user keyed by email.  The user must exists and will error
+ * if it is not found.
+ * 
+ * @param string $email
+ * @param double $longitude
+ * @param double $latitude
+ */
 function check_in_location($email, $longitude, $latitude) {
-
+	$user = get_user_with_error($email);
+	$user->addLocation($longitude, $latitude);
+	$user->save();
+	
+	return $user;
 }
-
-print "Hello";
-$em = "matt@balls.com";
-$user = add_license($em, "eatadickk", "pooping");
-print $user;
 
 
 ?>

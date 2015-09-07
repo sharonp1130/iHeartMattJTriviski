@@ -8,8 +8,6 @@ use \Location as ChildLocation;
 use \LocationQuery as ChildLocationQuery;
 use \User as ChildUser;
 use \UserQuery as ChildUserQuery;
-use \Usersettings as ChildUsersettings;
-use \UsersettingsQuery as ChildUsersettingsQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -131,6 +129,111 @@ abstract class User implements ActiveRecordInterface
     protected $phonenumber;
 
     /**
+     * The value for the phoneok field.
+     * Note: this column has a database default value of: true
+     * @var        boolean
+     */
+    protected $phoneok;
+
+    /**
+     * The value for the textok field.
+     * Note: this column has a database default value of: true
+     * @var        boolean
+     */
+    protected $textok;
+
+    /**
+     * The value for the emailok field.
+     * Note: this column has a database default value of: true
+     * @var        boolean
+     */
+    protected $emailok;
+
+    /**
+     * The value for the mondaystart field.
+     * @var        \DateTime
+     */
+    protected $mondaystart;
+
+    /**
+     * The value for the mondayend field.
+     * @var        \DateTime
+     */
+    protected $mondayend;
+
+    /**
+     * The value for the tuesdaystart field.
+     * @var        \DateTime
+     */
+    protected $tuesdaystart;
+
+    /**
+     * The value for the tuesdayend field.
+     * @var        \DateTime
+     */
+    protected $tuesdayend;
+
+    /**
+     * The value for the wednesdaystart field.
+     * @var        \DateTime
+     */
+    protected $wednesdaystart;
+
+    /**
+     * The value for the wednesdayend field.
+     * @var        \DateTime
+     */
+    protected $wednesdayend;
+
+    /**
+     * The value for the thursdaystart field.
+     * @var        \DateTime
+     */
+    protected $thursdaystart;
+
+    /**
+     * The value for the thursdayend field.
+     * @var        \DateTime
+     */
+    protected $thursdayend;
+
+    /**
+     * The value for the fridaystart field.
+     * @var        \DateTime
+     */
+    protected $fridaystart;
+
+    /**
+     * The value for the fridayend field.
+     * @var        \DateTime
+     */
+    protected $fridayend;
+
+    /**
+     * The value for the saturdaystart field.
+     * @var        \DateTime
+     */
+    protected $saturdaystart;
+
+    /**
+     * The value for the saturdayend field.
+     * @var        \DateTime
+     */
+    protected $saturdayend;
+
+    /**
+     * The value for the sundaystart field.
+     * @var        \DateTime
+     */
+    protected $sundaystart;
+
+    /**
+     * The value for the sundayend field.
+     * @var        \DateTime
+     */
+    protected $sundayend;
+
+    /**
      * The value for the created_at field.
      * @var        \DateTime
      */
@@ -155,12 +258,6 @@ abstract class User implements ActiveRecordInterface
     protected $collLocationsPartial;
 
     /**
-     * @var        ObjectCollection|ChildUsersettings[] Collection to store aggregation of ChildUsersettings objects.
-     */
-    protected $collUsersettingss;
-    protected $collUsersettingssPartial;
-
-    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -181,12 +278,6 @@ abstract class User implements ActiveRecordInterface
     protected $locationsScheduledForDeletion = null;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildUsersettings[]
-     */
-    protected $usersettingssScheduledForDeletion = null;
-
-    /**
      * Applies default values to this object.
      * This method should be called from the object's constructor (or
      * equivalent initialization method).
@@ -195,6 +286,9 @@ abstract class User implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->isprovider = false;
+        $this->phoneok = true;
+        $this->textok = true;
+        $this->emailok = true;
     }
 
     /**
@@ -527,6 +621,346 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [phoneok] column value.
+     *
+     * @return boolean
+     */
+    public function getPhoneok()
+    {
+        return $this->phoneok;
+    }
+
+    /**
+     * Get the [phoneok] column value.
+     *
+     * @return boolean
+     */
+    public function isPhoneok()
+    {
+        return $this->getPhoneok();
+    }
+
+    /**
+     * Get the [textok] column value.
+     *
+     * @return boolean
+     */
+    public function getTextok()
+    {
+        return $this->textok;
+    }
+
+    /**
+     * Get the [textok] column value.
+     *
+     * @return boolean
+     */
+    public function isTextok()
+    {
+        return $this->getTextok();
+    }
+
+    /**
+     * Get the [emailok] column value.
+     *
+     * @return boolean
+     */
+    public function getEmailok()
+    {
+        return $this->emailok;
+    }
+
+    /**
+     * Get the [emailok] column value.
+     *
+     * @return boolean
+     */
+    public function isEmailok()
+    {
+        return $this->getEmailok();
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [mondaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getMondaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->mondaystart;
+        } else {
+            return $this->mondaystart instanceof \DateTime ? $this->mondaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [mondayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getMondayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->mondayend;
+        } else {
+            return $this->mondayend instanceof \DateTime ? $this->mondayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [tuesdaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getTuesdaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->tuesdaystart;
+        } else {
+            return $this->tuesdaystart instanceof \DateTime ? $this->tuesdaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [tuesdayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getTuesdayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->tuesdayend;
+        } else {
+            return $this->tuesdayend instanceof \DateTime ? $this->tuesdayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [wednesdaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getWednesdaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->wednesdaystart;
+        } else {
+            return $this->wednesdaystart instanceof \DateTime ? $this->wednesdaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [wednesdayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getWednesdayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->wednesdayend;
+        } else {
+            return $this->wednesdayend instanceof \DateTime ? $this->wednesdayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [thursdaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getThursdaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->thursdaystart;
+        } else {
+            return $this->thursdaystart instanceof \DateTime ? $this->thursdaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [thursdayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getThursdayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->thursdayend;
+        } else {
+            return $this->thursdayend instanceof \DateTime ? $this->thursdayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [fridaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getFridaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->fridaystart;
+        } else {
+            return $this->fridaystart instanceof \DateTime ? $this->fridaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [fridayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getFridayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->fridayend;
+        } else {
+            return $this->fridayend instanceof \DateTime ? $this->fridayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [saturdaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getSaturdaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->saturdaystart;
+        } else {
+            return $this->saturdaystart instanceof \DateTime ? $this->saturdaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [saturdayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getSaturdayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->saturdayend;
+        } else {
+            return $this->saturdayend instanceof \DateTime ? $this->saturdayend->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [sundaystart] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getSundaystart($format = NULL)
+    {
+        if ($format === null) {
+            return $this->sundaystart;
+        } else {
+            return $this->sundaystart instanceof \DateTime ? $this->sundaystart->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [sundayend] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getSundayend($format = NULL)
+    {
+        if ($format === null) {
+            return $this->sundayend;
+        } else {
+            return $this->sundayend instanceof \DateTime ? $this->sundayend->format($format) : null;
+        }
+    }
+
+    /**
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
@@ -775,6 +1209,370 @@ abstract class User implements ActiveRecordInterface
     } // setPhonenumber()
 
     /**
+     * Sets the value of the [phoneok] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param  boolean|integer|string $v The new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setPhoneok($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->phoneok !== $v) {
+            $this->phoneok = $v;
+            $this->modifiedColumns[UserTableMap::COL_PHONEOK] = true;
+        }
+
+        return $this;
+    } // setPhoneok()
+
+    /**
+     * Sets the value of the [textok] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param  boolean|integer|string $v The new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setTextok($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->textok !== $v) {
+            $this->textok = $v;
+            $this->modifiedColumns[UserTableMap::COL_TEXTOK] = true;
+        }
+
+        return $this;
+    } // setTextok()
+
+    /**
+     * Sets the value of the [emailok] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param  boolean|integer|string $v The new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setEmailok($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->emailok !== $v) {
+            $this->emailok = $v;
+            $this->modifiedColumns[UserTableMap::COL_EMAILOK] = true;
+        }
+
+        return $this;
+    } // setEmailok()
+
+    /**
+     * Sets the value of [mondaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setMondaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->mondaystart !== null || $dt !== null) {
+            if ($this->mondaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->mondaystart->format("Y-m-d H:i:s")) {
+                $this->mondaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_MONDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setMondaystart()
+
+    /**
+     * Sets the value of [mondayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setMondayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->mondayend !== null || $dt !== null) {
+            if ($this->mondayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->mondayend->format("Y-m-d H:i:s")) {
+                $this->mondayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_MONDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setMondayend()
+
+    /**
+     * Sets the value of [tuesdaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setTuesdaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->tuesdaystart !== null || $dt !== null) {
+            if ($this->tuesdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->tuesdaystart->format("Y-m-d H:i:s")) {
+                $this->tuesdaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_TUESDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setTuesdaystart()
+
+    /**
+     * Sets the value of [tuesdayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setTuesdayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->tuesdayend !== null || $dt !== null) {
+            if ($this->tuesdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->tuesdayend->format("Y-m-d H:i:s")) {
+                $this->tuesdayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_TUESDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setTuesdayend()
+
+    /**
+     * Sets the value of [wednesdaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setWednesdaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->wednesdaystart !== null || $dt !== null) {
+            if ($this->wednesdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->wednesdaystart->format("Y-m-d H:i:s")) {
+                $this->wednesdaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_WEDNESDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setWednesdaystart()
+
+    /**
+     * Sets the value of [wednesdayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setWednesdayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->wednesdayend !== null || $dt !== null) {
+            if ($this->wednesdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->wednesdayend->format("Y-m-d H:i:s")) {
+                $this->wednesdayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_WEDNESDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setWednesdayend()
+
+    /**
+     * Sets the value of [thursdaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setThursdaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->thursdaystart !== null || $dt !== null) {
+            if ($this->thursdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->thursdaystart->format("Y-m-d H:i:s")) {
+                $this->thursdaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_THURSDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setThursdaystart()
+
+    /**
+     * Sets the value of [thursdayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setThursdayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->thursdayend !== null || $dt !== null) {
+            if ($this->thursdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->thursdayend->format("Y-m-d H:i:s")) {
+                $this->thursdayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_THURSDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setThursdayend()
+
+    /**
+     * Sets the value of [fridaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setFridaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->fridaystart !== null || $dt !== null) {
+            if ($this->fridaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->fridaystart->format("Y-m-d H:i:s")) {
+                $this->fridaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_FRIDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setFridaystart()
+
+    /**
+     * Sets the value of [fridayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setFridayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->fridayend !== null || $dt !== null) {
+            if ($this->fridayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->fridayend->format("Y-m-d H:i:s")) {
+                $this->fridayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_FRIDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setFridayend()
+
+    /**
+     * Sets the value of [saturdaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setSaturdaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->saturdaystart !== null || $dt !== null) {
+            if ($this->saturdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->saturdaystart->format("Y-m-d H:i:s")) {
+                $this->saturdaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_SATURDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setSaturdaystart()
+
+    /**
+     * Sets the value of [saturdayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setSaturdayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->saturdayend !== null || $dt !== null) {
+            if ($this->saturdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->saturdayend->format("Y-m-d H:i:s")) {
+                $this->saturdayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_SATURDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setSaturdayend()
+
+    /**
+     * Sets the value of [sundaystart] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setSundaystart($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->sundaystart !== null || $dt !== null) {
+            if ($this->sundaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->sundaystart->format("Y-m-d H:i:s")) {
+                $this->sundaystart = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_SUNDAYSTART] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setSundaystart()
+
+    /**
+     * Sets the value of [sundayend] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setSundayend($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->sundayend !== null || $dt !== null) {
+            if ($this->sundayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->sundayend->format("Y-m-d H:i:s")) {
+                $this->sundayend = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_SUNDAYEND] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setSundayend()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -825,6 +1623,18 @@ abstract class User implements ActiveRecordInterface
     public function hasOnlyDefaultValues()
     {
             if ($this->isprovider !== false) {
+                return false;
+            }
+
+            if ($this->phoneok !== true) {
+                return false;
+            }
+
+            if ($this->textok !== true) {
+                return false;
+            }
+
+            if ($this->emailok !== true) {
                 return false;
             }
 
@@ -884,13 +1694,106 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('Phonenumber', TableMap::TYPE_PHPNAME, $indexType)];
             $this->phonenumber = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('Phoneok', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->phoneok = (null !== $col) ? (boolean) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : UserTableMap::translateFieldName('Textok', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->textok = (null !== $col) ? (boolean) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : UserTableMap::translateFieldName('Emailok', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->emailok = (null !== $col) ? (boolean) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : UserTableMap::translateFieldName('Mondaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->mondaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : UserTableMap::translateFieldName('Mondayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->mondayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : UserTableMap::translateFieldName('Tuesdaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->tuesdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : UserTableMap::translateFieldName('Tuesdayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->tuesdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : UserTableMap::translateFieldName('Wednesdaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->wednesdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : UserTableMap::translateFieldName('Wednesdayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->wednesdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : UserTableMap::translateFieldName('Thursdaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->thursdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : UserTableMap::translateFieldName('Thursdayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->thursdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : UserTableMap::translateFieldName('Fridaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->fridaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : UserTableMap::translateFieldName('Fridayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->fridayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 23 + $startcol : UserTableMap::translateFieldName('Saturdaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->saturdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 24 + $startcol : UserTableMap::translateFieldName('Saturdayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->saturdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 25 + $startcol : UserTableMap::translateFieldName('Sundaystart', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->sundaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 26 + $startcol : UserTableMap::translateFieldName('Sundayend', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->sundayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 27 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : UserTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 28 + $startcol : UserTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -903,7 +1806,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 12; // 12 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 29; // 29 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -967,8 +1870,6 @@ abstract class User implements ActiveRecordInterface
             $this->collLicenses = null;
 
             $this->collLocations = null;
-
-            $this->collUsersettingss = null;
 
         } // if (deep)
     }
@@ -1126,23 +2027,6 @@ abstract class User implements ActiveRecordInterface
                 }
             }
 
-            if ($this->usersettingssScheduledForDeletion !== null) {
-                if (!$this->usersettingssScheduledForDeletion->isEmpty()) {
-                    \UsersettingsQuery::create()
-                        ->filterByPrimaryKeys($this->usersettingssScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->usersettingssScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collUsersettingss !== null) {
-                foreach ($this->collUsersettingss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             $this->alreadyInSave = false;
 
         }
@@ -1199,6 +2083,57 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_PHONENUMBER)) {
             $modifiedColumns[':p' . $index++]  = 'phoneNumber';
         }
+        if ($this->isColumnModified(UserTableMap::COL_PHONEOK)) {
+            $modifiedColumns[':p' . $index++]  = 'phoneOk';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TEXTOK)) {
+            $modifiedColumns[':p' . $index++]  = 'textOk';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_EMAILOK)) {
+            $modifiedColumns[':p' . $index++]  = 'emailOk';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_MONDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'mondayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_MONDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'mondayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TUESDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'tuesdayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TUESDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'tuesdayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_WEDNESDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'wednesdayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_WEDNESDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'wednesdayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_THURSDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'thursdayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_THURSDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'thursdayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_FRIDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'fridayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_FRIDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'fridayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SATURDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'saturdayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SATURDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'saturdayEnd';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SUNDAYSTART)) {
+            $modifiedColumns[':p' . $index++]  = 'sundayStart';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SUNDAYEND)) {
+            $modifiedColumns[':p' . $index++]  = 'sundayEnd';
+        }
         if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
         }
@@ -1245,6 +2180,57 @@ abstract class User implements ActiveRecordInterface
                         break;
                     case 'phoneNumber':
                         $stmt->bindValue($identifier, $this->phonenumber, PDO::PARAM_STR);
+                        break;
+                    case 'phoneOk':
+                        $stmt->bindValue($identifier, (int) $this->phoneok, PDO::PARAM_INT);
+                        break;
+                    case 'textOk':
+                        $stmt->bindValue($identifier, (int) $this->textok, PDO::PARAM_INT);
+                        break;
+                    case 'emailOk':
+                        $stmt->bindValue($identifier, (int) $this->emailok, PDO::PARAM_INT);
+                        break;
+                    case 'mondayStart':
+                        $stmt->bindValue($identifier, $this->mondaystart ? $this->mondaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'mondayEnd':
+                        $stmt->bindValue($identifier, $this->mondayend ? $this->mondayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'tuesdayStart':
+                        $stmt->bindValue($identifier, $this->tuesdaystart ? $this->tuesdaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'tuesdayEnd':
+                        $stmt->bindValue($identifier, $this->tuesdayend ? $this->tuesdayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'wednesdayStart':
+                        $stmt->bindValue($identifier, $this->wednesdaystart ? $this->wednesdaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'wednesdayEnd':
+                        $stmt->bindValue($identifier, $this->wednesdayend ? $this->wednesdayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'thursdayStart':
+                        $stmt->bindValue($identifier, $this->thursdaystart ? $this->thursdaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'thursdayEnd':
+                        $stmt->bindValue($identifier, $this->thursdayend ? $this->thursdayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'fridayStart':
+                        $stmt->bindValue($identifier, $this->fridaystart ? $this->fridaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'fridayEnd':
+                        $stmt->bindValue($identifier, $this->fridayend ? $this->fridayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'saturdayStart':
+                        $stmt->bindValue($identifier, $this->saturdaystart ? $this->saturdaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'saturdayEnd':
+                        $stmt->bindValue($identifier, $this->saturdayend ? $this->saturdayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'sundayStart':
+                        $stmt->bindValue($identifier, $this->sundaystart ? $this->sundaystart->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'sundayEnd':
+                        $stmt->bindValue($identifier, $this->sundayend ? $this->sundayend->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1345,9 +2331,60 @@ abstract class User implements ActiveRecordInterface
                 return $this->getPhonenumber();
                 break;
             case 10:
-                return $this->getCreatedAt();
+                return $this->getPhoneok();
                 break;
             case 11:
+                return $this->getTextok();
+                break;
+            case 12:
+                return $this->getEmailok();
+                break;
+            case 13:
+                return $this->getMondaystart();
+                break;
+            case 14:
+                return $this->getMondayend();
+                break;
+            case 15:
+                return $this->getTuesdaystart();
+                break;
+            case 16:
+                return $this->getTuesdayend();
+                break;
+            case 17:
+                return $this->getWednesdaystart();
+                break;
+            case 18:
+                return $this->getWednesdayend();
+                break;
+            case 19:
+                return $this->getThursdaystart();
+                break;
+            case 20:
+                return $this->getThursdayend();
+                break;
+            case 21:
+                return $this->getFridaystart();
+                break;
+            case 22:
+                return $this->getFridayend();
+                break;
+            case 23:
+                return $this->getSaturdaystart();
+                break;
+            case 24:
+                return $this->getSaturdayend();
+                break;
+            case 25:
+                return $this->getSundaystart();
+                break;
+            case 26:
+                return $this->getSundayend();
+                break;
+            case 27:
+                return $this->getCreatedAt();
+                break;
+            case 28:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1390,21 +2427,122 @@ abstract class User implements ActiveRecordInterface
             $keys[7] => $this->getCity(),
             $keys[8] => $this->getZipcode(),
             $keys[9] => $this->getPhonenumber(),
-            $keys[10] => $this->getCreatedAt(),
-            $keys[11] => $this->getUpdatedAt(),
+            $keys[10] => $this->getPhoneok(),
+            $keys[11] => $this->getTextok(),
+            $keys[12] => $this->getEmailok(),
+            $keys[13] => $this->getMondaystart(),
+            $keys[14] => $this->getMondayend(),
+            $keys[15] => $this->getTuesdaystart(),
+            $keys[16] => $this->getTuesdayend(),
+            $keys[17] => $this->getWednesdaystart(),
+            $keys[18] => $this->getWednesdayend(),
+            $keys[19] => $this->getThursdaystart(),
+            $keys[20] => $this->getThursdayend(),
+            $keys[21] => $this->getFridaystart(),
+            $keys[22] => $this->getFridayend(),
+            $keys[23] => $this->getSaturdaystart(),
+            $keys[24] => $this->getSaturdayend(),
+            $keys[25] => $this->getSundaystart(),
+            $keys[26] => $this->getSundayend(),
+            $keys[27] => $this->getCreatedAt(),
+            $keys[28] => $this->getUpdatedAt(),
         );
 
         $utc = new \DateTimeZone('utc');
-        if ($result[$keys[10]] instanceof \DateTime) {
+        if ($result[$keys[13]] instanceof \DateTime) {
             // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[10]];
-            $result[$keys[10]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+            $dateTime = clone $result[$keys[13]];
+            $result[$keys[13]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
-        if ($result[$keys[11]] instanceof \DateTime) {
+        if ($result[$keys[14]] instanceof \DateTime) {
             // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[11]];
-            $result[$keys[11]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+            $dateTime = clone $result[$keys[14]];
+            $result[$keys[14]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[15]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[15]];
+            $result[$keys[15]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[16]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[16]];
+            $result[$keys[16]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[17]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[17]];
+            $result[$keys[17]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[18]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[18]];
+            $result[$keys[18]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[19]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[19]];
+            $result[$keys[19]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[20]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[20]];
+            $result[$keys[20]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[21]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[21]];
+            $result[$keys[21]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[22]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[22]];
+            $result[$keys[22]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[23]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[23]];
+            $result[$keys[23]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[24]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[24]];
+            $result[$keys[24]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[25]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[25]];
+            $result[$keys[25]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[26]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[26]];
+            $result[$keys[26]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[27]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[27]];
+            $result[$keys[27]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[28]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[28]];
+            $result[$keys[28]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1442,21 +2580,6 @@ abstract class User implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collLocations->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collUsersettingss) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'usersettingss';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'userSettingss';
-                        break;
-                    default:
-                        $key = 'Usersettingss';
-                }
-
-                $result[$key] = $this->collUsersettingss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1523,9 +2646,60 @@ abstract class User implements ActiveRecordInterface
                 $this->setPhonenumber($value);
                 break;
             case 10:
-                $this->setCreatedAt($value);
+                $this->setPhoneok($value);
                 break;
             case 11:
+                $this->setTextok($value);
+                break;
+            case 12:
+                $this->setEmailok($value);
+                break;
+            case 13:
+                $this->setMondaystart($value);
+                break;
+            case 14:
+                $this->setMondayend($value);
+                break;
+            case 15:
+                $this->setTuesdaystart($value);
+                break;
+            case 16:
+                $this->setTuesdayend($value);
+                break;
+            case 17:
+                $this->setWednesdaystart($value);
+                break;
+            case 18:
+                $this->setWednesdayend($value);
+                break;
+            case 19:
+                $this->setThursdaystart($value);
+                break;
+            case 20:
+                $this->setThursdayend($value);
+                break;
+            case 21:
+                $this->setFridaystart($value);
+                break;
+            case 22:
+                $this->setFridayend($value);
+                break;
+            case 23:
+                $this->setSaturdaystart($value);
+                break;
+            case 24:
+                $this->setSaturdayend($value);
+                break;
+            case 25:
+                $this->setSundaystart($value);
+                break;
+            case 26:
+                $this->setSundayend($value);
+                break;
+            case 27:
+                $this->setCreatedAt($value);
+                break;
+            case 28:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1585,10 +2759,61 @@ abstract class User implements ActiveRecordInterface
             $this->setPhonenumber($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setCreatedAt($arr[$keys[10]]);
+            $this->setPhoneok($arr[$keys[10]]);
         }
         if (array_key_exists($keys[11], $arr)) {
-            $this->setUpdatedAt($arr[$keys[11]]);
+            $this->setTextok($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setEmailok($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setMondaystart($arr[$keys[13]]);
+        }
+        if (array_key_exists($keys[14], $arr)) {
+            $this->setMondayend($arr[$keys[14]]);
+        }
+        if (array_key_exists($keys[15], $arr)) {
+            $this->setTuesdaystart($arr[$keys[15]]);
+        }
+        if (array_key_exists($keys[16], $arr)) {
+            $this->setTuesdayend($arr[$keys[16]]);
+        }
+        if (array_key_exists($keys[17], $arr)) {
+            $this->setWednesdaystart($arr[$keys[17]]);
+        }
+        if (array_key_exists($keys[18], $arr)) {
+            $this->setWednesdayend($arr[$keys[18]]);
+        }
+        if (array_key_exists($keys[19], $arr)) {
+            $this->setThursdaystart($arr[$keys[19]]);
+        }
+        if (array_key_exists($keys[20], $arr)) {
+            $this->setThursdayend($arr[$keys[20]]);
+        }
+        if (array_key_exists($keys[21], $arr)) {
+            $this->setFridaystart($arr[$keys[21]]);
+        }
+        if (array_key_exists($keys[22], $arr)) {
+            $this->setFridayend($arr[$keys[22]]);
+        }
+        if (array_key_exists($keys[23], $arr)) {
+            $this->setSaturdaystart($arr[$keys[23]]);
+        }
+        if (array_key_exists($keys[24], $arr)) {
+            $this->setSaturdayend($arr[$keys[24]]);
+        }
+        if (array_key_exists($keys[25], $arr)) {
+            $this->setSundaystart($arr[$keys[25]]);
+        }
+        if (array_key_exists($keys[26], $arr)) {
+            $this->setSundayend($arr[$keys[26]]);
+        }
+        if (array_key_exists($keys[27], $arr)) {
+            $this->setCreatedAt($arr[$keys[27]]);
+        }
+        if (array_key_exists($keys[28], $arr)) {
+            $this->setUpdatedAt($arr[$keys[28]]);
         }
     }
 
@@ -1660,6 +2885,57 @@ abstract class User implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UserTableMap::COL_PHONENUMBER)) {
             $criteria->add(UserTableMap::COL_PHONENUMBER, $this->phonenumber);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_PHONEOK)) {
+            $criteria->add(UserTableMap::COL_PHONEOK, $this->phoneok);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TEXTOK)) {
+            $criteria->add(UserTableMap::COL_TEXTOK, $this->textok);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_EMAILOK)) {
+            $criteria->add(UserTableMap::COL_EMAILOK, $this->emailok);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_MONDAYSTART)) {
+            $criteria->add(UserTableMap::COL_MONDAYSTART, $this->mondaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_MONDAYEND)) {
+            $criteria->add(UserTableMap::COL_MONDAYEND, $this->mondayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TUESDAYSTART)) {
+            $criteria->add(UserTableMap::COL_TUESDAYSTART, $this->tuesdaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TUESDAYEND)) {
+            $criteria->add(UserTableMap::COL_TUESDAYEND, $this->tuesdayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_WEDNESDAYSTART)) {
+            $criteria->add(UserTableMap::COL_WEDNESDAYSTART, $this->wednesdaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_WEDNESDAYEND)) {
+            $criteria->add(UserTableMap::COL_WEDNESDAYEND, $this->wednesdayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_THURSDAYSTART)) {
+            $criteria->add(UserTableMap::COL_THURSDAYSTART, $this->thursdaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_THURSDAYEND)) {
+            $criteria->add(UserTableMap::COL_THURSDAYEND, $this->thursdayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_FRIDAYSTART)) {
+            $criteria->add(UserTableMap::COL_FRIDAYSTART, $this->fridaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_FRIDAYEND)) {
+            $criteria->add(UserTableMap::COL_FRIDAYEND, $this->fridayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SATURDAYSTART)) {
+            $criteria->add(UserTableMap::COL_SATURDAYSTART, $this->saturdaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SATURDAYEND)) {
+            $criteria->add(UserTableMap::COL_SATURDAYEND, $this->saturdayend);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SUNDAYSTART)) {
+            $criteria->add(UserTableMap::COL_SUNDAYSTART, $this->sundaystart);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_SUNDAYEND)) {
+            $criteria->add(UserTableMap::COL_SUNDAYEND, $this->sundayend);
         }
         if ($this->isColumnModified(UserTableMap::COL_CREATED_AT)) {
             $criteria->add(UserTableMap::COL_CREATED_AT, $this->created_at);
@@ -1762,6 +3038,23 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setCity($this->getCity());
         $copyObj->setZipcode($this->getZipcode());
         $copyObj->setPhonenumber($this->getPhonenumber());
+        $copyObj->setPhoneok($this->getPhoneok());
+        $copyObj->setTextok($this->getTextok());
+        $copyObj->setEmailok($this->getEmailok());
+        $copyObj->setMondaystart($this->getMondaystart());
+        $copyObj->setMondayend($this->getMondayend());
+        $copyObj->setTuesdaystart($this->getTuesdaystart());
+        $copyObj->setTuesdayend($this->getTuesdayend());
+        $copyObj->setWednesdaystart($this->getWednesdaystart());
+        $copyObj->setWednesdayend($this->getWednesdayend());
+        $copyObj->setThursdaystart($this->getThursdaystart());
+        $copyObj->setThursdayend($this->getThursdayend());
+        $copyObj->setFridaystart($this->getFridaystart());
+        $copyObj->setFridayend($this->getFridayend());
+        $copyObj->setSaturdaystart($this->getSaturdaystart());
+        $copyObj->setSaturdayend($this->getSaturdayend());
+        $copyObj->setSundaystart($this->getSundaystart());
+        $copyObj->setSundayend($this->getSundayend());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1779,12 +3072,6 @@ abstract class User implements ActiveRecordInterface
             foreach ($this->getLocations() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addLocation($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getUsersettingss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addUsersettings($relObj->copy($deepCopy));
                 }
             }
 
@@ -1834,9 +3121,6 @@ abstract class User implements ActiveRecordInterface
         }
         if ('Location' == $relationName) {
             return $this->initLocations();
-        }
-        if ('Usersettings' == $relationName) {
-            return $this->initUsersettingss();
         }
     }
 
@@ -2302,224 +3586,6 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collUsersettingss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addUsersettingss()
-     */
-    public function clearUsersettingss()
-    {
-        $this->collUsersettingss = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collUsersettingss collection loaded partially.
-     */
-    public function resetPartialUsersettingss($v = true)
-    {
-        $this->collUsersettingssPartial = $v;
-    }
-
-    /**
-     * Initializes the collUsersettingss collection.
-     *
-     * By default this just sets the collUsersettingss collection to an empty array (like clearcollUsersettingss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initUsersettingss($overrideExisting = true)
-    {
-        if (null !== $this->collUsersettingss && !$overrideExisting) {
-            return;
-        }
-        $this->collUsersettingss = new ObjectCollection();
-        $this->collUsersettingss->setModel('\Usersettings');
-    }
-
-    /**
-     * Gets an array of ChildUsersettings objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildUsersettings[] List of ChildUsersettings objects
-     * @throws PropelException
-     */
-    public function getUsersettingss(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collUsersettingssPartial && !$this->isNew();
-        if (null === $this->collUsersettingss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collUsersettingss) {
-                // return empty collection
-                $this->initUsersettingss();
-            } else {
-                $collUsersettingss = ChildUsersettingsQuery::create(null, $criteria)
-                    ->filterByUser($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collUsersettingssPartial && count($collUsersettingss)) {
-                        $this->initUsersettingss(false);
-
-                        foreach ($collUsersettingss as $obj) {
-                            if (false == $this->collUsersettingss->contains($obj)) {
-                                $this->collUsersettingss->append($obj);
-                            }
-                        }
-
-                        $this->collUsersettingssPartial = true;
-                    }
-
-                    return $collUsersettingss;
-                }
-
-                if ($partial && $this->collUsersettingss) {
-                    foreach ($this->collUsersettingss as $obj) {
-                        if ($obj->isNew()) {
-                            $collUsersettingss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collUsersettingss = $collUsersettingss;
-                $this->collUsersettingssPartial = false;
-            }
-        }
-
-        return $this->collUsersettingss;
-    }
-
-    /**
-     * Sets a collection of ChildUsersettings objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $usersettingss A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function setUsersettingss(Collection $usersettingss, ConnectionInterface $con = null)
-    {
-        /** @var ChildUsersettings[] $usersettingssToDelete */
-        $usersettingssToDelete = $this->getUsersettingss(new Criteria(), $con)->diff($usersettingss);
-
-
-        $this->usersettingssScheduledForDeletion = $usersettingssToDelete;
-
-        foreach ($usersettingssToDelete as $usersettingsRemoved) {
-            $usersettingsRemoved->setUser(null);
-        }
-
-        $this->collUsersettingss = null;
-        foreach ($usersettingss as $usersettings) {
-            $this->addUsersettings($usersettings);
-        }
-
-        $this->collUsersettingss = $usersettingss;
-        $this->collUsersettingssPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Usersettings objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Usersettings objects.
-     * @throws PropelException
-     */
-    public function countUsersettingss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collUsersettingssPartial && !$this->isNew();
-        if (null === $this->collUsersettingss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collUsersettingss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getUsersettingss());
-            }
-
-            $query = ChildUsersettingsQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUser($this)
-                ->count($con);
-        }
-
-        return count($this->collUsersettingss);
-    }
-
-    /**
-     * Method called to associate a ChildUsersettings object to this object
-     * through the ChildUsersettings foreign key attribute.
-     *
-     * @param  ChildUsersettings $l ChildUsersettings
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function addUsersettings(ChildUsersettings $l)
-    {
-        if ($this->collUsersettingss === null) {
-            $this->initUsersettingss();
-            $this->collUsersettingssPartial = true;
-        }
-
-        if (!$this->collUsersettingss->contains($l)) {
-            $this->doAddUsersettings($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildUsersettings $usersettings The ChildUsersettings object to add.
-     */
-    protected function doAddUsersettings(ChildUsersettings $usersettings)
-    {
-        $this->collUsersettingss[]= $usersettings;
-        $usersettings->setUser($this);
-    }
-
-    /**
-     * @param  ChildUsersettings $usersettings The ChildUsersettings object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function removeUsersettings(ChildUsersettings $usersettings)
-    {
-        if ($this->getUsersettingss()->contains($usersettings)) {
-            $pos = $this->collUsersettingss->search($usersettings);
-            $this->collUsersettingss->remove($pos);
-            if (null === $this->usersettingssScheduledForDeletion) {
-                $this->usersettingssScheduledForDeletion = clone $this->collUsersettingss;
-                $this->usersettingssScheduledForDeletion->clear();
-            }
-            $this->usersettingssScheduledForDeletion[]= clone $usersettings;
-            $usersettings->setUser(null);
-        }
-
-        return $this;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2536,6 +3602,23 @@ abstract class User implements ActiveRecordInterface
         $this->city = null;
         $this->zipcode = null;
         $this->phonenumber = null;
+        $this->phoneok = null;
+        $this->textok = null;
+        $this->emailok = null;
+        $this->mondaystart = null;
+        $this->mondayend = null;
+        $this->tuesdaystart = null;
+        $this->tuesdayend = null;
+        $this->wednesdaystart = null;
+        $this->wednesdayend = null;
+        $this->thursdaystart = null;
+        $this->thursdayend = null;
+        $this->fridaystart = null;
+        $this->fridayend = null;
+        $this->saturdaystart = null;
+        $this->saturdayend = null;
+        $this->sundaystart = null;
+        $this->sundayend = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
@@ -2567,16 +3650,10 @@ abstract class User implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collUsersettingss) {
-                foreach ($this->collUsersettingss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
         $this->collLicenses = null;
         $this->collLocations = null;
-        $this->collUsersettingss = null;
     }
 
     /**

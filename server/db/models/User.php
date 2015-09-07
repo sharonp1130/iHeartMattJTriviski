@@ -14,5 +14,17 @@ use Base\User as BaseUser;
  */
 class User extends BaseUser
 {
-
+	/**
+	 * Creates a new location and adds it to this.
+	 * 
+	 * @param double $longitude
+	 * @param double $latitude
+	 */
+	function addLocationCoordinates($longitude, $latitude) {
+		$location = new Location();
+		$location->setLongitude($longitude);
+		$location->setLatitude($latitude);
+		
+		parent::addLocation($location);
+	}
 }

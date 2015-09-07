@@ -68,20 +68,6 @@
     <column name="city" phpName="City" type="VARCHAR" size="64" required="true"/>
     <column name="zipcode" phpName="Zipcode" type="VARCHAR" size="5" required="true"/>
     <column name="phoneNumber" phpName="Phonenumber" type="VARCHAR" size="20" required="true"/>
-  	<behavior name="timestampable" />
-    <unique name="typeId_UNIQUE">
-      <unique-column name="userId"/>
-    </unique>
-    <unique name="email_UNIQUE">
-      <unique-column name="email"/>
-    </unique>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
-  </table>
-  <table name="userSettings" idMethod="native" phpName="Usersettings">
-    <column name="settingsId" phpName="Settingsid" type="INTEGER" size="32" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="user" phpName="SettingsUser" type="INTEGER" size="32" required="true"/>
     <column name="phoneOk" phpName="Phoneok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
     <column name="textOk" phpName="Textok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
     <column name="emailOk" phpName="Emailok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
@@ -100,12 +86,12 @@
     <column name="sundayStart" phpName="Sundaystart" type="TIMESTAMP"/>
     <column name="sundayEnd" phpName="Sundayend" type="TIMESTAMP"/>
   	<behavior name="timestampable" />
-    <foreign-key foreignTable="user" name="usersettings_fk" onUpdate="CASCADE">
-      <reference local="user" foreign="userId"/>
-    </foreign-key>
-    <index name="nhh_idx">
-      <index-column name="user"/>
-    </index>
+    <unique name="typeId_UNIQUE">
+      <unique-column name="userId"/>
+    </unique>
+    <unique name="email_UNIQUE">
+      <unique-column name="email"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
