@@ -687,7 +687,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -707,7 +707,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -727,7 +727,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -747,7 +747,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -767,7 +767,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -787,7 +787,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -807,7 +807,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -827,7 +827,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -847,7 +847,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -867,7 +867,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -887,7 +887,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -907,7 +907,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -927,7 +927,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -947,7 +947,7 @@ abstract class User implements ActiveRecordInterface
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -1303,7 +1303,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->mondaystart !== null || $dt !== null) {
-            if ($this->mondaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->mondaystart->format("Y-m-d H:i:s")) {
+            if ($this->mondaystart === null || $dt === null || $dt->format("H:i:s") !== $this->mondaystart->format("H:i:s")) {
                 $this->mondaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_MONDAYSTART] = true;
             }
@@ -1323,7 +1323,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->mondayend !== null || $dt !== null) {
-            if ($this->mondayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->mondayend->format("Y-m-d H:i:s")) {
+            if ($this->mondayend === null || $dt === null || $dt->format("H:i:s") !== $this->mondayend->format("H:i:s")) {
                 $this->mondayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_MONDAYEND] = true;
             }
@@ -1343,7 +1343,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->tuesdaystart !== null || $dt !== null) {
-            if ($this->tuesdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->tuesdaystart->format("Y-m-d H:i:s")) {
+            if ($this->tuesdaystart === null || $dt === null || $dt->format("H:i:s") !== $this->tuesdaystart->format("H:i:s")) {
                 $this->tuesdaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_TUESDAYSTART] = true;
             }
@@ -1363,7 +1363,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->tuesdayend !== null || $dt !== null) {
-            if ($this->tuesdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->tuesdayend->format("Y-m-d H:i:s")) {
+            if ($this->tuesdayend === null || $dt === null || $dt->format("H:i:s") !== $this->tuesdayend->format("H:i:s")) {
                 $this->tuesdayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_TUESDAYEND] = true;
             }
@@ -1383,7 +1383,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->wednesdaystart !== null || $dt !== null) {
-            if ($this->wednesdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->wednesdaystart->format("Y-m-d H:i:s")) {
+            if ($this->wednesdaystart === null || $dt === null || $dt->format("H:i:s") !== $this->wednesdaystart->format("H:i:s")) {
                 $this->wednesdaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_WEDNESDAYSTART] = true;
             }
@@ -1403,7 +1403,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->wednesdayend !== null || $dt !== null) {
-            if ($this->wednesdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->wednesdayend->format("Y-m-d H:i:s")) {
+            if ($this->wednesdayend === null || $dt === null || $dt->format("H:i:s") !== $this->wednesdayend->format("H:i:s")) {
                 $this->wednesdayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_WEDNESDAYEND] = true;
             }
@@ -1423,7 +1423,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->thursdaystart !== null || $dt !== null) {
-            if ($this->thursdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->thursdaystart->format("Y-m-d H:i:s")) {
+            if ($this->thursdaystart === null || $dt === null || $dt->format("H:i:s") !== $this->thursdaystart->format("H:i:s")) {
                 $this->thursdaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_THURSDAYSTART] = true;
             }
@@ -1443,7 +1443,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->thursdayend !== null || $dt !== null) {
-            if ($this->thursdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->thursdayend->format("Y-m-d H:i:s")) {
+            if ($this->thursdayend === null || $dt === null || $dt->format("H:i:s") !== $this->thursdayend->format("H:i:s")) {
                 $this->thursdayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_THURSDAYEND] = true;
             }
@@ -1463,7 +1463,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->fridaystart !== null || $dt !== null) {
-            if ($this->fridaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->fridaystart->format("Y-m-d H:i:s")) {
+            if ($this->fridaystart === null || $dt === null || $dt->format("H:i:s") !== $this->fridaystart->format("H:i:s")) {
                 $this->fridaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_FRIDAYSTART] = true;
             }
@@ -1483,7 +1483,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->fridayend !== null || $dt !== null) {
-            if ($this->fridayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->fridayend->format("Y-m-d H:i:s")) {
+            if ($this->fridayend === null || $dt === null || $dt->format("H:i:s") !== $this->fridayend->format("H:i:s")) {
                 $this->fridayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_FRIDAYEND] = true;
             }
@@ -1503,7 +1503,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->saturdaystart !== null || $dt !== null) {
-            if ($this->saturdaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->saturdaystart->format("Y-m-d H:i:s")) {
+            if ($this->saturdaystart === null || $dt === null || $dt->format("H:i:s") !== $this->saturdaystart->format("H:i:s")) {
                 $this->saturdaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_SATURDAYSTART] = true;
             }
@@ -1523,7 +1523,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->saturdayend !== null || $dt !== null) {
-            if ($this->saturdayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->saturdayend->format("Y-m-d H:i:s")) {
+            if ($this->saturdayend === null || $dt === null || $dt->format("H:i:s") !== $this->saturdayend->format("H:i:s")) {
                 $this->saturdayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_SATURDAYEND] = true;
             }
@@ -1543,7 +1543,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->sundaystart !== null || $dt !== null) {
-            if ($this->sundaystart === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->sundaystart->format("Y-m-d H:i:s")) {
+            if ($this->sundaystart === null || $dt === null || $dt->format("H:i:s") !== $this->sundaystart->format("H:i:s")) {
                 $this->sundaystart = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_SUNDAYSTART] = true;
             }
@@ -1563,7 +1563,7 @@ abstract class User implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->sundayend !== null || $dt !== null) {
-            if ($this->sundayend === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->sundayend->format("Y-m-d H:i:s")) {
+            if ($this->sundayend === null || $dt === null || $dt->format("H:i:s") !== $this->sundayend->format("H:i:s")) {
                 $this->sundayend = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[UserTableMap::COL_SUNDAYEND] = true;
             }
@@ -1704,87 +1704,45 @@ abstract class User implements ActiveRecordInterface
             $this->emailok = (null !== $col) ? (boolean) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : UserTableMap::translateFieldName('Mondaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->mondaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : UserTableMap::translateFieldName('Mondayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->mondayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : UserTableMap::translateFieldName('Tuesdaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->tuesdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : UserTableMap::translateFieldName('Tuesdayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->tuesdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : UserTableMap::translateFieldName('Wednesdaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->wednesdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : UserTableMap::translateFieldName('Wednesdayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->wednesdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : UserTableMap::translateFieldName('Thursdaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->thursdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : UserTableMap::translateFieldName('Thursdayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->thursdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : UserTableMap::translateFieldName('Fridaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->fridaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : UserTableMap::translateFieldName('Fridayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->fridayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 23 + $startcol : UserTableMap::translateFieldName('Saturdaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->saturdaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 24 + $startcol : UserTableMap::translateFieldName('Saturdayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->saturdayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 25 + $startcol : UserTableMap::translateFieldName('Sundaystart', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->sundaystart = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 26 + $startcol : UserTableMap::translateFieldName('Sundayend', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
             $this->sundayend = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 27 + $startcol : UserTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];

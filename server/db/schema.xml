@@ -71,20 +71,20 @@
     <column name="phoneOk" phpName="Phoneok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
     <column name="textOk" phpName="Textok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
     <column name="emailOk" phpName="Emailok" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
-    <column name="mondayStart" phpName="Mondaystart" type="TIMESTAMP"/>
-    <column name="mondayEnd" phpName="Mondayend" type="TIMESTAMP"/>
-    <column name="tuesdayStart" phpName="Tuesdaystart" type="TIMESTAMP"/>
-    <column name="tuesdayEnd" phpName="Tuesdayend" type="TIMESTAMP"/>
-    <column name="wednesdayStart" phpName="Wednesdaystart" type="TIMESTAMP"/>
-    <column name="wednesdayEnd" phpName="Wednesdayend" type="TIMESTAMP"/>
-    <column name="thursdayStart" phpName="Thursdaystart" type="TIMESTAMP"/>
-    <column name="thursdayEnd" phpName="Thursdayend" type="TIMESTAMP"/>
-    <column name="fridayStart" phpName="Fridaystart" type="TIMESTAMP"/>
-    <column name="fridayEnd" phpName="Fridayend" type="TIMESTAMP"/>
-    <column name="saturdayStart" phpName="Saturdaystart" type="TIMESTAMP"/>
-    <column name="saturdayEnd" phpName="Saturdayend" type="TIMESTAMP"/>
-    <column name="sundayStart" phpName="Sundaystart" type="TIMESTAMP"/>
-    <column name="sundayEnd" phpName="Sundayend" type="TIMESTAMP"/>
+    <column name="mondayStart" phpName="Mondaystart" type="TIME"/>
+    <column name="mondayEnd" phpName="Mondayend" type="TIME"/>
+    <column name="tuesdayStart" phpName="Tuesdaystart" type="TIME"/>
+    <column name="tuesdayEnd" phpName="Tuesdayend" type="TIME"/>
+    <column name="wednesdayStart" phpName="Wednesdaystart" type="TIME"/>
+    <column name="wednesdayEnd" phpName="Wednesdayend" type="TIME"/>
+    <column name="thursdayStart" phpName="Thursdaystart" type="TIME"/>
+    <column name="thursdayEnd" phpName="Thursdayend" type="TIME"/>
+    <column name="fridayStart" phpName="Fridaystart" type="TIME"/>
+    <column name="fridayEnd" phpName="Fridayend" type="TIME"/>
+    <column name="saturdayStart" phpName="Saturdaystart" type="TIME"/>
+    <column name="saturdayEnd" phpName="Saturdayend" type="TIME"/>
+    <column name="sundayStart" phpName="Sundaystart" type="TIME"/>
+    <column name="sundayEnd" phpName="Sundayend" type="TIME"/>
   	<behavior name="timestampable" />
     <unique name="typeId_UNIQUE">
       <unique-column name="userId"/>
