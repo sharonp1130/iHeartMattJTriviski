@@ -188,13 +188,23 @@ function _update_user_setting($user, $name, $value, $type=null) {
 function update_settings_and_get($email, $values) {
 	# Get user and fail if there is not one.
 	$user = get_user_with_error($email);
+	return update_settings($user, $values);
+}
 	
-	$keys = UserTableMap::getFieldNames(UserTableMap::TABLE_NAME);
-
+/**
+ * @param User $user
+ * @param array $values
+ * @return ChildUser
+ */
+function update_settings($user, $values) { 
+	$keys = UserTableMap::getFieldNames(TableMap::TYPE_COLNAME);
+	$table_name = "user.";
+	
 	foreach ($keys as $key) {
-		$value = $values[$key];
+		$k = explode(".", $key);
 		
-		if ($value != null) {
+		if (array_key_exists($k[1], $values)) {
+			$value = $values[$k[1]];
 			_update_user_setting($user, $key, $value);
 		}
 	}
@@ -214,7 +224,7 @@ function update_settings_and_get($email, $values) {
  */
 function check_in_location($email, $longitude, $latitude) {
 	$user = get_user_with_error($email);
-	$user->addLocation($longitude, $latitude);
+	$user->addLocationCoordinates($longitude, $latitude);
 	$user->save();
 	
 	return $user;
