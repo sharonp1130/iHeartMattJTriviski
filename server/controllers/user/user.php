@@ -192,8 +192,11 @@ function update_settings_and_get($email, $values) {
 }
 	
 /**
+ * Updates the user setting fields of the user.  The column name should be the key.
+ * Extra fields that are not column names will be ignored.
+ * 
  * @param User $user
- * @param array $values
+ * @param array $values Key should be the column name from the database.  
  * @return ChildUser
  */
 function update_settings($user, $values) { 
