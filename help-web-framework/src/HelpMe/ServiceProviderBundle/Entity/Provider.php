@@ -10,8 +10,6 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @PHPCR/Document(
- *   mixins={"mix:created", "mix:lastModified"} 
  *    
  */
 class Provider
@@ -19,11 +17,11 @@ class Provider
     /**
      * @var integer
      *
-     * @ORM\Column(name="providerId", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $providerId;
+    private $id;
 
     /**
      * @var string
@@ -91,14 +89,14 @@ class Provider
     /**
      * @var \DateTime
      *
-     * @Date(property="jcr:created")
+     * @ORM\Column(name="created", type="date")
      */
     private $created;
 
     /**
      * @var \DateTime
      *
-     * @Date(property="jcr:lastModified") 
+     * @ORM\Column(name="lastModified", type="date")
      */
     private $lastModified;
 
@@ -110,7 +108,7 @@ class Provider
      */
     public function getId()
     {
-        return $this->providerId;
+        return $this->id;
     }
 
     /**
