@@ -2,9 +2,17 @@ package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +33,10 @@ public class User implements java.io.Serializable {
 	private Info info;
 	private Settings settings;
 	private String email;
+    private Set<Location> locations = new HashSet<Location>(0);
+    private Set<License> licenses = new HashSet<License>(0);
+
+	
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -47,8 +59,8 @@ public class User implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@Id
-
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userId", unique = true, nullable = false)
 	public int getUserId() {
 		return this.userId;
@@ -85,6 +97,26 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
+    @JoinColumn(name = "locationId")
+    @OneToMany(fetch=FetchType.LAZY)
+    public Set<Location> getLocations() {
+        return this.locations;
+    }
+    
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
+
+    @JoinColumn(name = "licenseId")
+    @OneToMany(fetch=FetchType.LAZY)
+    public Set<License> getLicenses() {
+        return this.licenses;
+    }
+    
+    public void setLicenses(Set<License> licenses) {
+        this.licenses = licenses;
+    }
+	
 	@Generated(GenerationTime.INSERT) 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
