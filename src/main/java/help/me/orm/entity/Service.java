@@ -1,15 +1,9 @@
 package help.me.orm.entity;
-// Generated Nov 26, 2015 3:23:57 PM by Hibernate Tools 4.3.1.Final
+// Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -21,31 +15,25 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "service", uniqueConstraints = @UniqueConstraint(columnNames = "description") )
 public class Service implements java.io.Serializable {
 
-	private Integer serviceId;
+	private int serviceId;
 	private String description;
-	private Set<License> licenses = new HashSet<License>(0);
 
 	public Service() {
 	}
 
-	public Service(String description) {
+	public Service(int serviceId, String description) {
+		this.serviceId = serviceId;
 		this.description = description;
-	}
-
-	public Service(String description, Set<License> licenses) {
-		this.description = description;
-		this.licenses = licenses;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "serviceId", unique = true, nullable = false)
-	public Integer getServiceId() {
+	public int getServiceId() {
 		return this.serviceId;
 	}
 
-	public void setServiceId(Integer serviceId) {
+	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
 	}
 
@@ -56,15 +44,6 @@ public class Service implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "service")
-	public Set<License> getLicenses() {
-		return this.licenses;
-	}
-
-	public void setLicenses(Set<License> licenses) {
-		this.licenses = licenses;
 	}
 
 }
