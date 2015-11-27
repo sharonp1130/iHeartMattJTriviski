@@ -2,8 +2,12 @@ package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
+import java.util.regex.Pattern;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,7 +23,14 @@ import org.hibernate.annotations.GenerationTime;
 @Entity
 @Table(name = "info")
 public class Info implements java.io.Serializable {
+	private static final Pattern PHONE_PATTERN = 
+			Pattern.compile("\\(\\d{3}\\) \\d{3}-\\d{4}");
+	private static final Pattern CITY_NOT_MATCH_PATTERN = 
+			Pattern.compile(".+\\d.+");
+	private static final Pattern ZIP_PATTERN = 
+			Pattern.compile("^\\d{5}(-\\d{4})*?$");
 
+	
 	private int infoId;
 	private User user;
 	private String address;
@@ -45,18 +56,20 @@ public class Info implements java.io.Serializable {
 	 * @param phoneOk
 	 * @param textOk
 	 * @param emailOk
+	 * @throws Exception - Telephone, city or zipcode is invalid.
 	 */
 	public Info(int infoId, User user, String address, String city, String zipcode, String phoneNumber, boolean phoneOk,
-			boolean textOk, boolean emailOk) {
+			boolean textOk, boolean emailOk) throws Exception {
 		this.infoId = infoId;
 		this.user = user;
 		this.address = address;
-		this.city = city;
-		this.zipcode = zipcode;
-		this.phoneNumber = phoneNumber;
 		this.phoneOk = phoneOk;
 		this.textOk = textOk;
 		this.emailOk = emailOk;
+		
+		this.setCity(city);
+		this.setZipcode(zipcode);
+		this.setPhoneNumber(phoneNumber);
 	}
 
 	/**
@@ -71,23 +84,26 @@ public class Info implements java.io.Serializable {
 	 * @param emailOk
 	 * @param createdAt
 	 * @param updatedAt
+	 * @throws Exception - Telephone number format is invalid.
 	 */
 	public Info(int infoId, User user, String address, String city, String zipcode, String phoneNumber, boolean phoneOk,
-			boolean textOk, boolean emailOk, Date createdAt, Date updatedAt) {
+			boolean textOk, boolean emailOk, Date createdAt, Date updatedAt) throws Exception {
 		this.infoId = infoId;
 		this.user = user;
 		this.address = address;
-		this.city = city;
-		this.zipcode = zipcode;
-		this.phoneNumber = phoneNumber;
 		this.phoneOk = phoneOk;
 		this.textOk = textOk;
 		this.emailOk = emailOk;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		
+		this.setCity(city);
+		this.setZipcode(zipcode);
+		this.setPhoneNumber(phoneNumber);
 	}
 
-	@Id
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "infoId", unique = true, nullable = false)
 	public int getInfoId() {
 		return this.infoId;
@@ -120,7 +136,16 @@ public class Info implements java.io.Serializable {
 		return this.city;
 	}
 
-	public void setCity(String city) {
+	/**
+	 * Verifies the city does not have any numbers in it.  Not sure if there is any other validation we can do.
+	 * 
+	 * @param city
+	 * @throws Exception
+	 */
+	public void setCity(String city) throws Exception {
+		if (CITY_NOT_MATCH_PATTERN.matcher(city).matches()) {
+			throw new Exception(String.format("City '%s' should not contain any numbers: %s", city, CITY_NOT_MATCH_PATTERN));
+		}
 		this.city = city;
 	}
 
@@ -129,7 +154,15 @@ public class Info implements java.io.Serializable {
 		return this.zipcode;
 	}
 
-	public void setZipcode(String zipcode) {
+	/**
+	 * Verifies the zip code.
+	 * @param zipcode
+	 * @throws Exception
+	 */
+	public void setZipcode(String zipcode) throws Exception {
+		if (!ZIP_PATTERN.matcher(zipcode).matches()) {
+			throw new Exception(String.format("Zip code '%s' does not match the expected format: %s", zipcode, ZIP_PATTERN));
+		}
 		this.zipcode = zipcode;
 	}
 
@@ -138,7 +171,16 @@ public class Info implements java.io.Serializable {
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	/**
+	 * Verifies the phone number format before setting it.
+	 * 
+	 * @param phoneNumber
+	 * @throws Exception
+	 */
+	public void setPhoneNumber(String phoneNumber) throws Exception {
+		if (!PHONE_PATTERN.matcher(phoneNumber).matches()) {
+			throw new Exception(String.format("Telephone number '%s' does not match the expected format: %s", phoneNumber, PHONE_PATTERN));
+		}
 		this.phoneNumber = phoneNumber;
 	}
 
