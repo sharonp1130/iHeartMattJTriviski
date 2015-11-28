@@ -3,28 +3,12 @@ package help.me.orm.dao;
 import help.me.orm.entity.User;
 
 /**
+ * DAO interface for user.
+ * 
  * @author triviski
  *
  */
 public interface IUserDao {
 	
-	/**
-	 * @param user
-	 */
-	void save(User user);
-	/**
-	 * @param user
-	 */
-	void update(User user);
-	/**
-	 * @param user
-	 */
-	void delete(User user);
-	
-	/**
-	 * @param user
-	 */
-	void saveOrUpdate(User user);
-	
-	User findByEmail(String email);
+	public User findByEmail(String email);
 }

@@ -5,3 +5,4 @@
 .mvn
 *.swp
 target
+last_run.log

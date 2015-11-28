@@ -6,9 +6,12 @@ import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +34,7 @@ public class Info implements java.io.Serializable {
 			Pattern.compile("^\\d{5}(-\\d{4})*?$");
 
 	
-	private int infoId;
+	private Integer infoId;
 	private User user;
 	private String address;
 	private String city;
@@ -105,7 +108,7 @@ public class Info implements java.io.Serializable {
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "infoId", unique = true, nullable = false)
-	public int getInfoId() {
+	public Integer getInfoId() {
 		return this.infoId;
 	}
 
@@ -113,7 +116,8 @@ public class Info implements java.io.Serializable {
 		this.infoId = infoId;
 	}
 
-	@Column(name = "user", nullable = false)
+	@JoinColumn(name="user", nullable=true)
+	@OneToOne(fetch=FetchType.LAZY)
 	public User getUser() {
 		return this.user;
 	}
@@ -142,9 +146,9 @@ public class Info implements java.io.Serializable {
 	 * @param city
 	 * @throws Exception
 	 */
-	public void setCity(String city) throws Exception {
+	public void setCity(String city) {
 		if (CITY_NOT_MATCH_PATTERN.matcher(city).matches()) {
-			throw new Exception(String.format("City '%s' should not contain any numbers: %s", city, CITY_NOT_MATCH_PATTERN));
+			throw new IllegalStateException(String.format("City '%s' should not contain any numbers: %s", city, CITY_NOT_MATCH_PATTERN));
 		}
 		this.city = city;
 	}
@@ -159,9 +163,9 @@ public class Info implements java.io.Serializable {
 	 * @param zipcode
 	 * @throws Exception
 	 */
-	public void setZipcode(String zipcode) throws Exception {
+	public void setZipcode(String zipcode) {
 		if (!ZIP_PATTERN.matcher(zipcode).matches()) {
-			throw new Exception(String.format("Zip code '%s' does not match the expected format: %s", zipcode, ZIP_PATTERN));
+			throw new IllegalStateException(String.format("Zip code '%s' does not match the expected format: %s", zipcode, ZIP_PATTERN));
 		}
 		this.zipcode = zipcode;
 	}
@@ -177,9 +181,9 @@ public class Info implements java.io.Serializable {
 	 * @param phoneNumber
 	 * @throws Exception
 	 */
-	public void setPhoneNumber(String phoneNumber) throws Exception {
+	public void setPhoneNumber(String phoneNumber) {
 		if (!PHONE_PATTERN.matcher(phoneNumber).matches()) {
-			throw new Exception(String.format("Telephone number '%s' does not match the expected format: %s", phoneNumber, PHONE_PATTERN));
+			throw new IllegalStateException(String.format("Telephone number '%s' does not match the expected format: %s", phoneNumber, PHONE_PATTERN));
 		}
 		this.phoneNumber = phoneNumber;
 	}

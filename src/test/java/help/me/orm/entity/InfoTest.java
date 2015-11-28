@@ -1,15 +1,40 @@
 package help.me.orm.entity;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import org.hibernate.SessionFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import junit.framework.TestCase;
 
-public class InfoTest extends TestCase {
-	Info info;
+@ContextConfiguration(locations="classpath:spring/InfoTest-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+public class InfoTest {
 	
-	@Override
-	public void setUp() {
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	Info info;
+
+	@Before
+	public void setUp() throws Exception {
 		info = new Info();
+		info.setAddress("Some address");
+		info.setCity("St. Paul");
+		info.setZipcode("91001");
+		info.setPhoneNumber("(612) 888-5555");
+		
 	}
 	
+	@Test
+	@Transactional
 	public void testCity() {
 		for (String city : new String[] 
 				{

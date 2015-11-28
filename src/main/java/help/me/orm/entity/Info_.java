@@ -5,10 +5,9 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-11-26T18:29:50.411-0800")
+@Generated(value="Dali", date="2015-11-27T13:12:26.176-0800")
 @StaticMetamodel(Info.class)
 public class Info_ {
-	public static volatile SingularAttribute<Info, Integer> infoId;
 	public static volatile SingularAttribute<Info, String> address;
 	public static volatile SingularAttribute<Info, String> city;
 	public static volatile SingularAttribute<Info, String> zipcode;
@@ -19,4 +18,5 @@ public class Info_ {
 	public static volatile SingularAttribute<Info, Date> createdAt;
 	public static volatile SingularAttribute<Info, Date> updatedAt;
 	public static volatile SingularAttribute<Info, User> user;
+	public static volatile SingularAttribute<Info, Integer> infoId;
 }

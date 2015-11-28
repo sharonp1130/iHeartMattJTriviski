@@ -6,16 +6,14 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
 <!-- Hibernate session factory -->
 <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-<!-- <bean id="sessionFactory" 
-class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
- -->
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
 
     <property name="hibernateProperties">
        <props>
-         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
+         <prop key="hibernate.format_sql">false</prop>
          <prop key="hibernate.show_sql">false</prop>
          <prop key="hibernate.ddl-auto">create</prop>
        </props>
@@ -31,6 +29,11 @@ class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
 			<value>help.me.orm.entity.License</value>
 		</list>
     </property>
-
+    </bean>
+    
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>    

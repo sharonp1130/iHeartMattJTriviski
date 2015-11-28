@@ -3,7 +3,7 @@ package help.me.orm.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import help.me.orm.dao.UserDaoImpl;
+import help.me.orm.dao.impl.UserDaoImpl;
 import help.me.orm.entity.User;
 
 @Service("userBo")

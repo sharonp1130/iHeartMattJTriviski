@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -98,7 +100,8 @@ public class User implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	@Column(name = "info", nullable = false)
+	@JoinColumn(name = "info")
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Info getInfo() {
 		return this.info;
 	}
@@ -107,7 +110,8 @@ public class User implements java.io.Serializable {
 		this.info = info;
 	}
 
-	@Column(name = "settings", nullable = false)
+	@JoinColumn(name = "settings")
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Settings getSettings() {
 		return this.settings;
 	}
@@ -134,7 +138,7 @@ public class User implements java.io.Serializable {
 	}
 
     @JoinColumn(name = "locationId")
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     public Set<Location> getLocations() {
         return this.locations;
     }
@@ -144,7 +148,7 @@ public class User implements java.io.Serializable {
     }
 
     @JoinColumn(name = "licenseId")
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     public Set<License> getLicenses() {
         return this.licenses;
     }
