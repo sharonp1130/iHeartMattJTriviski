@@ -2,31 +2,11 @@ package help.me.orm.bo;
 
 import help.me.orm.entity.User;
 
-public interface IUserBo {
-
-	/**
-	 * @param user
-	 */
-	void save(User user);
-	
-	/**
-	 * @param user
-	 */
-	void update(User user);
-	
-	/**
-	 * @param user
-	 */
-	void delete(User user);
-	
-	/**
-	 * @param user
-	 */
-	void saveOrUpdate(User user);
+public interface IUserBo extends IBo<User>{
 	
 	/**
 	 * @param email
 	 * @return
 	 */
-	User findByEmail(String email);
+	public User findByEmail(String email);
 }

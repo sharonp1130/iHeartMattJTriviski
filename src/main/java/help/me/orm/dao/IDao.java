@@ -36,4 +36,10 @@ public interface IDao<T> {
 	 * @param entity
 	 */
 	public void saveOrUpdate(T entity);
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	public T findById(Integer id);
 }

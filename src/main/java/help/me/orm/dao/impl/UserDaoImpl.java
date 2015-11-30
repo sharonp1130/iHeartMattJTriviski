@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
-import help.me.orm.dao.CustomHibernateDAOSupport;
 import help.me.orm.dao.IUserDao;
 import help.me.orm.entity.User;
 
@@ -18,7 +18,7 @@ import help.me.orm.entity.User;
  */
 @Repository("userDao")
 public class UserDaoImpl extends CustomHibernateDAOSupport<User> implements IUserDao {
-
+	
 	@Override
 	public User findByEmail(String email) {
 		DetachedCriteria crit = DetachedCriteria.forClass(User.class)

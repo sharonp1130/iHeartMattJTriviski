@@ -8,7 +8,7 @@
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-//import org.springframework.orm.hibernate3.HibernateTransactionManager;
+//import org.springframework.orm.hibernate4.HibernateTransactionManager;
 //import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 //
 //import help.me.orm.entity.Info;
@@ -24,7 +24,7 @@
 //	@Value("#{dataSource}")
 //	private DataSource dataSource;
 //
-//	@Bean
+//	@Bean(name="sessionFactory")
 //	public LocalSessionFactoryBean sessionFactoryBean() {
 //		Properties props = new Properties();
 //		// TODO this is for test, needs to be updated at some point.

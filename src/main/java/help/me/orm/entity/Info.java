@@ -37,7 +37,7 @@ public class Info implements java.io.Serializable {
 	private Integer infoId;
 	private User user;
 	private String address;
-	private String city;
+	private String city; // Should zipcode be used to look up the city / state?
 	private String zipcode;
 	private String phoneNumber;
 	private boolean phoneOk;

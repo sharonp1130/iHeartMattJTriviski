@@ -2,18 +2,29 @@ package help.me;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
-import help.me.orm.bo.IUserBo;
+import help.me.orm.dao.IServiceDao;
+import help.me.orm.entity.Service;
+
 
 public class RunApp {
-
+	
+	
+	
 	public static void main(String[] args) {
 	    	ApplicationContext appContext = 
 	    	    	  new ClassPathXmlApplicationContext("config/BeanLocations.xml");
 	    		
-	    	    	IUserBo stockBo = (IUserBo)appContext.getBean("userBo");
+	    	Bunk b =  (Bunk)appContext.getBean("bunk");
+	    	b.balls();
+//    	    	IServiceDao stockBo = (IServiceDao)appContext.getBean("serviceDao");
+	    	    	
+	    	    	
     	    	
 	}
+	
+
 }
     	    	/** insert **/
 //    	    	Stock stock = new Stock();

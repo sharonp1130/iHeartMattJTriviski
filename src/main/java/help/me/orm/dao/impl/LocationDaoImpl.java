@@ -2,7 +2,6 @@ package help.me.orm.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import help.me.orm.dao.CustomHibernateDAOSupport;
 import help.me.orm.dao.ILocationDao;
 import help.me.orm.entity.Location;
 

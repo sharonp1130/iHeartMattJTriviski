@@ -29,7 +29,7 @@ public class Service implements java.io.Serializable {
 	}
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "serviceId", unique = true, nullable = false)
 	public int getServiceId() {
 		return this.serviceId;
