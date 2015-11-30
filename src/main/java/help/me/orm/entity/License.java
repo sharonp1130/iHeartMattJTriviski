@@ -3,6 +3,7 @@ package help.me.orm.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -65,7 +66,7 @@ public class License implements java.io.Serializable {
 	}
 
 	@JoinColumn(name = "user")
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public User getUser() {
 		return this.user;
 	}
@@ -112,6 +113,25 @@ public class License implements java.io.Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("License [licenseId=");
+		builder.append(licenseId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", licenseNumber=");
+		builder.append(licenseNumber);
+		builder.append(", service=");
+		builder.append(service);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append("]");
+		return builder.toString();
 	}
 
 

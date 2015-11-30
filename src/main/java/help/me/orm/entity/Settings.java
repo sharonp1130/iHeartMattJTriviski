@@ -258,4 +258,47 @@ public class Settings implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Settings [settingsId=");
+		builder.append(settingsId);
+		builder.append(", mondayStart=");
+		builder.append(mondayStart);
+		builder.append(", mondayEnd=");
+		builder.append(mondayEnd);
+		builder.append(", tuesdayStart=");
+		builder.append(tuesdayStart);
+		builder.append(", tuesdayEnd=");
+		builder.append(tuesdayEnd);
+		builder.append(", wednesdayStart=");
+		builder.append(wednesdayStart);
+		builder.append(", wednesdayEnd=");
+		builder.append(wednesdayEnd);
+		builder.append(", thursdayStart=");
+		builder.append(thursdayStart);
+		builder.append(", thursdayEnd=");
+		builder.append(thursdayEnd);
+		builder.append(", fridayStart=");
+		builder.append(fridayStart);
+		builder.append(", fridayEnd=");
+		builder.append(fridayEnd);
+		builder.append(", saturdayStart=");
+		builder.append(saturdayStart);
+		builder.append(", saturdayEnd=");
+		builder.append(saturdayEnd);
+		builder.append(", sundayStart=");
+		builder.append(sundayStart);
+		builder.append(", sundayEnd=");
+		builder.append(sundayEnd);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

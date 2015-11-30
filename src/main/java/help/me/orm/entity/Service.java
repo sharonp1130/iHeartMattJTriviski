@@ -48,4 +48,15 @@ public class Service implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Service [serviceId=");
+		builder.append(serviceId);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

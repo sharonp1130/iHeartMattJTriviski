@@ -237,5 +237,34 @@ public class Info implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Info [infoId=");
+		builder.append(infoId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", city=");
+		builder.append(city);
+		builder.append(", zipcode=");
+		builder.append(zipcode);
+		builder.append(", phoneNumber=");
+		builder.append(phoneNumber);
+		builder.append(", phoneOk=");
+		builder.append(phoneOk);
+		builder.append(", textOk=");
+		builder.append(textOk);
+		builder.append(", emailOk=");
+		builder.append(emailOk);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append("]");
+		return builder.toString();
+	}
+
 
 }

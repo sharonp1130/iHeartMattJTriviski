@@ -12,7 +12,7 @@
         zipcode varchar(5) not null,
         user integer,
         primary key (infoId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     create table license (
         licenseId integer not null auto_increment,
@@ -22,7 +22,7 @@
         updated_at datetime,
         user integer,
         primary key (licenseId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     create table location (
         locationId integer not null auto_increment,
@@ -30,15 +30,15 @@
         latitude double precision not null,
         longitude double precision not null,
         updated_at datetime,
-        user integer,
+        user integer not null,
         primary key (locationId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     create table service (
         serviceId integer not null auto_increment,
         description varchar(100) not null,
         primary key (serviceId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     create table settings (
         settingsId integer not null auto_increment,
@@ -60,7 +60,7 @@
         wednesdayStart time,
         user integer,
         primary key (settingsId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     create table user (
         userId integer not null auto_increment,
@@ -70,7 +70,7 @@
         info integer,
         settings integer,
         primary key (userId)
-    ) type=InnoDB;
+    ) ENGINE=InnoDB;
 
     alter table license 
         add constraint UK_lvjf835d07i7ocaqt6eokfely  unique (licenseNumber);
@@ -99,11 +99,6 @@
     alter table location 
         add constraint FK_owkc1yyb1330lm9mvakxldg85 
         foreign key (user) 
-        references user (userId);
-
-    alter table location 
-        add constraint FK_g0vfc14eu6fgl3fykg23ei4y7 
-        foreign key (locationId) 
         references user (userId);
 
     alter table settings 

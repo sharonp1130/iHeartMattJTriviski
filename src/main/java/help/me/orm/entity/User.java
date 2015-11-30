@@ -1,8 +1,10 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +17,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -100,7 +105,7 @@ public class User implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	@JoinColumn(name = "info")
+	@JoinColumn(name = "info", nullable=true)
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Info getInfo() {
 		return this.info;
@@ -110,7 +115,7 @@ public class User implements java.io.Serializable {
 		this.info = info;
 	}
 
-	@JoinColumn(name = "settings")
+	@JoinColumn(name = "settings", nullable=true)
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public Settings getSettings() {
 		return this.settings;
@@ -127,18 +132,17 @@ public class User implements java.io.Serializable {
 
 	/**
 	 * @param email
-	 * @throws ValidatorException
 	 */
-	public void setEmail(String email) throws ValidatorException {
+	public void setEmail(String email) {
 		if (!EmailValidator.getInstance().isValid(email)) {
-			throw new ValidatorException("Email address is invalid.");
+			throw new IllegalStateException("Email address is invalid.");
 		}
 		
 		this.email = email;
 	}
 
-    @JoinColumn(name = "locationId")
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+    @OrderBy("created_at")
     public Set<Location> getLocations() {
         return this.locations;
     }
@@ -159,7 +163,7 @@ public class User implements java.io.Serializable {
 	
 	@Generated(GenerationTime.INSERT) 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
+	@Column(name = "created_at", length = 19, insertable=true, updatable=false)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
@@ -170,13 +174,60 @@ public class User implements java.io.Serializable {
 
 	@Generated(GenerationTime.ALWAYS) 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", length = 19, insertable=false, updatable=true)
+	@Column(name = "updated_at", length = 19, insertable=true, updatable=true)
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	@PreUpdate
+	@PrePersist
+	public void updateTimeStamps() {
+		this.updatedAt = new Date();
+		
+		if (this.createdAt == null) {
+			this.createdAt = this.updatedAt;
+		}
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [userId=");
+		builder.append(userId);
+		builder.append(", info=");
+		builder.append(info);
+		builder.append(", settings=");
+		builder.append(settings);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", locations=");
+		builder.append(locations != null ? toString(locations, maxLen) : null);
+		builder.append(", licenses=");
+		builder.append(licenses != null ? toString(licenses, maxLen) : null);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

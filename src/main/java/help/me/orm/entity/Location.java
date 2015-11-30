@@ -2,14 +2,15 @@ package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -78,8 +79,8 @@ public class Location implements java.io.Serializable {
 		this.locationId = locationId;
 	}
 
-	@JoinColumn(name = "user")
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="user", nullable=false, updatable=false)
 	public User getUser() {
 		return this.user;
 	}
@@ -126,6 +127,25 @@ public class Location implements java.io.Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Location [locationId=");
+		builder.append(locationId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", longitude=");
+		builder.append(longitude);
+		builder.append(", latitude=");
+		builder.append(latitude);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append("]");
+		return builder.toString();
 	}
 
 
