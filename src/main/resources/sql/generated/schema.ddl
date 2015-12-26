@@ -3,46 +3,46 @@
         infoId integer not null auto_increment,
         address varchar(64) not null,
         city varchar(64) not null,
-        created_at datetime,
         emailOk bit not null,
         phoneNumber varchar(20) not null,
         phoneOk bit not null,
         textOk bit not null,
-        updated_at datetime,
         zipcode varchar(5) not null,
         user integer,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (infoId)
     ) ENGINE=InnoDB;
 
     create table license (
         licenseId integer not null auto_increment,
-        created_at datetime,
         licenseNumber varchar(32) not null,
         service tinyblob not null,
-        updated_at datetime,
         user integer,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (licenseId)
     ) ENGINE=InnoDB;
 
     create table location (
         locationId integer not null auto_increment,
-        created_at datetime,
         latitude double precision not null,
         longitude double precision not null,
-        updated_at datetime,
         user integer not null,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (locationId)
     ) ENGINE=InnoDB;
 
     create table service (
         serviceId integer not null auto_increment,
         description varchar(100) not null,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (serviceId)
     ) ENGINE=InnoDB;
 
     create table settings (
         settingsId integer not null auto_increment,
-        created_at datetime,
         fridayEnd time,
         fridayStart time,
         mondayEnd time,
@@ -55,20 +55,24 @@
         thursdayStart time,
         tuesdayEnd time,
         tuesdayStart time,
-        updated_at datetime,
         wednesdayEnd time,
         wednesdayStart time,
         user integer,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (settingsId)
     ) ENGINE=InnoDB;
 
     create table user (
         userId integer not null auto_increment,
-        created_at datetime,
         email varchar(50) not null,
-        updated_at datetime,
+        firstName varchar(20) not null,
+        lastName varchar(20) not null,
+        isProvider tinyint(1) default 0,
         info integer,
         settings integer,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (userId)
     ) ENGINE=InnoDB;
 

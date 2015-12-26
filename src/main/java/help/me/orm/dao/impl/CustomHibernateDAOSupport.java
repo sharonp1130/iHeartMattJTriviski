@@ -2,6 +2,7 @@ package help.me.orm.dao.impl;
 
 import java.lang.reflect.ParameterizedType;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -56,5 +57,12 @@ public abstract class CustomHibernateDAOSupport<T> extends HibernateDaoSupport i
 	@Override
 	public T findById(Integer id) {
 		return(T) getHibernateTemplate().get(persistentClass, id);
+	}
+	
+	/**
+	 * @return the current hibernate session
+	 */
+	public Session getCurrentSession() {
+		return getHibernateTemplate().getSessionFactory().getCurrentSession();
 	}
 }

@@ -10,5 +10,10 @@ import help.me.orm.entity.User;
  */
 public interface IUserDao {
 	
+	/**
+	 * Find the user by the email address
+	 * @param email
+	 * @return User or null if not found.
+	 */
 	public User findByEmail(String email);
 }

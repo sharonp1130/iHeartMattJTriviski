@@ -4,14 +4,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
-<!-- 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
- -->	
-	<bean id="sessionFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 	    <property name="dataSource">
 	      <ref bean="dataSource"/>
 	    </property>
-	
+	    
+	    
  	    <property name="hibernateProperties">
 	       <props>
 	         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
@@ -20,17 +18,20 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	         <prop key="hibernate.ddl-auto">create</prop>
 	       </props>
 	    </property>
-<!-- 
+	    
+	    
+<!-- 	     
 	    <property name="hibernateProperties">
 	       <props>
 	         <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 	         <prop key="hibernate.format_sql">false</prop>
-	         <prop key="hibernate.show_sql">false</prop>
+	         <prop key="hibernate.show_sql">true</prop>
 	         <prop key="hibernate.ddl-auto">create</prop>
+	         <prop key="hibernate.connection.url">jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</prop>
+	         
 	       </props>
 	    </property>
-	    	
- -->
+	 -->    
  	    <property name="annotatedClasses">
 			<list>
 				<value>help.me.orm.entity.User</value>
