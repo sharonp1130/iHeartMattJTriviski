@@ -7,4 +7,12 @@ import help.me.orm.entity.Service;
  * @author triviski
  *
  */
-public interface IServiceDao extends IDao<Service> {}
+public interface IServiceDao extends IDao<Service> {
+	
+	/**
+	 * Finds the service with description.  
+	 * @param description
+	 * @return Service object null if found
+	 */
+	public Service getServiceWithDescription(String description);
+}

@@ -1,21 +1,21 @@
 package help.me.orm.entity;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.LocationBoImpl;
 import help.me.orm.bo.impl.UserBoImpl;
-import help.me.orm.dao.impl.UserDaoImpl;
+import help.me.orm.dao.impl.ServiceDaoImpl;
 
 @ContextConfiguration(locations="classpath:config/BeanLocations.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +26,13 @@ public class UserTest {
 	@Autowired
 	UserBoImpl ubo;
 
+	@Autowired
+	LicenseBoImpl licbo;
+	
+	@Autowired
+	ServiceDaoImpl serv;
+	
+	
 	User user;
 	String email = "balls@gmail.com";
 
@@ -41,6 +48,16 @@ public class UserTest {
 			user.setIsProvider(true);
 			ubo.saveOrUpdate(user);
 		}
+		
+		setServices();
+	}
+	
+	public void setServices() {
+		for(String desc : Arrays.asList("plumbing", "electrical", "roofing")) {
+			Service s = new Service();
+			s.setDescription(desc);
+			serv.save(s);
+		}
 	}
 	
 	public Location addLocation(User user, double longitude, double latitude) {
@@ -48,6 +65,33 @@ public class UserTest {
 		lbo.saveOrUpdate(loc);
 		
 		return loc;
+	}
+
+	@Transactional
+	@Test
+	public void testLicense() {
+		String ln = "balls";
+		License plum = licbo.createNewLicense(ln, user, "plumbing");
+		
+		assertEquals(plum.getService().getDescription(), "plumbing");
+		assertEquals(plum.getLicenseNumber(), "balls");
+		
+		assertEquals(plum, user.getLicenses().iterator().next());
+		
+		try {
+			licbo.createNewLicense(ln, user, "plumbing");
+			fail("Should have failed adding the same deal");
+		} catch (Exception e) {
+			// should fail
+		}
+
+		License elec = licbo.createNewLicense(ln, user, "electrical");
+		License roof = licbo.createNewLicense(ln, user, "roofing");
+
+		assertTrue(user.getLicenses().contains(plum));
+		assertTrue(user.getLicenses().contains(elec));
+		assertTrue(user.getLicenses().contains(roof));
+		
 	}
 	
 	@Transactional
@@ -67,7 +111,6 @@ public class UserTest {
 		assertEquals("", (long)uloc.getLongitude(), (long)max);
 		assertEquals("", (long)eloc.getLatitude(), (long)max);
 		assertEquals("", (long)eloc.getLongitude(), (long)max);
-		
 	}
 	
 //	@Transactional
