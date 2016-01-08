@@ -29,6 +29,9 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import help.me.orm.listener.LastUpdateListener;
 
 /**
@@ -43,17 +46,26 @@ import help.me.orm.listener.LastUpdateListener;
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email") )
 @EntityListeners( value={LastUpdateListener.class})
 public class User implements java.io.Serializable {
-	
+	@JsonProperty("userId")
 	private int userId;
+	@JsonProperty("info")
 	private Info info;
+	@JsonProperty("availability")
 	private Settings settings;
+	@JsonProperty("email")
 	private String email;
+	@JsonProperty("firstName")
 	private String firstName;
+	@JsonProperty("lastName")
 	private String lastName;
+	@JsonProperty("isProvider")
 	boolean isProvider;
+	@JsonProperty("licenses")
     private Set<License> licenses = new HashSet<License>(0);
 
+	@JsonIgnore
 	private Date createdAt;
+	@JsonIgnore
 	private Date updatedAt;
 
 	// I took this out, no reason to load them all in this entity.

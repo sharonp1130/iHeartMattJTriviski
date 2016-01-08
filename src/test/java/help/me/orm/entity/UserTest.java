@@ -3,6 +3,7 @@ package help.me.orm.entity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Arrays;
 
@@ -14,6 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import help.me.json.utilities.JsonUtilities;
 import help.me.orm.bo.impl.InfoBoImpl;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.LocationBoImpl;
@@ -78,7 +83,7 @@ public class UserTest {
 
 	@Transactional
 	@Test
-	public void testLicense() {
+	public void testLicense() throws JsonGenerationException, JsonMappingException, IOException {
 		String ln = "balls";
 		License plum = ubo.addLicense(user, ln, "plumbing");
 		
@@ -93,6 +98,9 @@ public class UserTest {
 		assertTrue(user.getLicenses().contains(plum));
 		assertTrue(user.getLicenses().contains(elec));
 		assertTrue(user.getLicenses().contains(roof));
+		
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
+
 	}
 	
 	@Transactional
@@ -116,7 +124,7 @@ public class UserTest {
 
 	@Transactional
 	@Test
-	public void testInfo() {
+	public void testInfo() throws JsonGenerationException, JsonMappingException, IOException {
 		Info info = new Info();
 		info.setAddress("some address");
 		info.setBusinessName("my business");
@@ -131,11 +139,13 @@ public class UserTest {
 		
 		assertEquals(info, user.getInfo());
 		assertEquals(info.getUser(), user);
+		
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
 	}
 	
 	@Transactional
 	@Test
-	public void testSettings() {
+	public void testSettings() throws JsonGenerationException, JsonMappingException, IOException {
 		Settings setting = new Settings();
 		@SuppressWarnings("deprecation")
 		Time t = new Time(1,2,3);
@@ -143,5 +153,6 @@ public class UserTest {
 		user.setSettings(setting);
 		ubo.saveOrUpdate(user);
 		System.out.println(user);
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
 	}
 }
