@@ -20,9 +20,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.validator.EmailValidator;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -82,8 +84,8 @@ public class User implements java.io.Serializable {
 
 
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+	@GeneratedValue(generator="userIncrement")
+	@GenericGenerator(name="userIncrement", strategy = "increment")
 	@Column(name = "userId", unique = true, nullable = false)
 	public int getUserId() {
 		return this.userId;
@@ -102,8 +104,8 @@ public class User implements java.io.Serializable {
 		this.isProvider = isProvider;
 	}
 
-	@JoinColumn(name = "info", nullable=true)
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	public Info getInfo() {
 		return this.info;
 	}
@@ -156,18 +158,16 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
-//    @OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-//    @OrderBy("created_at")
-//    public Set<Location> getLocations() {
-//        return this.locations;
-//    }
-//    
-//    public void setLocations(Set<Location> locations) {
-//        this.locations = locations;
-//    }
-
-    @JoinColumn(name = "licenseId")
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	/**
+	 * @param license Add a new license.
+	 */
+	@Transient
+	public void addLicense(License license) {
+		this.licenses.add(license);
+	}
+	
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
     public Set<License> getLicenses() {
         return this.licenses;
     }

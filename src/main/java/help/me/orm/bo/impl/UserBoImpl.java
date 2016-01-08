@@ -7,6 +7,7 @@ import help.me.orm.bo.ILocationBo;
 import help.me.orm.bo.IUserBo;
 import help.me.orm.dao.IDao;
 import help.me.orm.dao.impl.UserDaoImpl;
+import help.me.orm.entity.License;
 import help.me.orm.entity.Location;
 import help.me.orm.entity.User;
 
@@ -19,7 +20,10 @@ public class UserBoImpl implements IUserBo {
 
 	@Autowired
 	UserDaoImpl userDao;
-
+	
+	@Autowired
+	LicenseBoImpl licenseBo;
+	
 	@Autowired
 	ILocationBo locationBo;
 	
@@ -81,4 +85,18 @@ public class UserBoImpl implements IUserBo {
 		return locationBo.addLocation(email, longitude, latitude);
 	}
 
+	/**
+	 * @param user
+	 * @param licenseId
+	 * @param serviceDescription
+	 * 
+	 * @return newly added license
+	 */
+	@Override
+	public License addLicense(User user, String licenseNum, String serviceDescription) {
+		License license = licenseBo.createNewLicense(licenseNum, user, serviceDescription);
+		user.addLicense(license);
+		
+		return license;
+	}
 }

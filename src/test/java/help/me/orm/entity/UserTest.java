@@ -1,7 +1,9 @@
 package help.me.orm.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.sql.Time;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -12,8 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import help.me.orm.bo.impl.InfoBoImpl;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.LocationBoImpl;
+import help.me.orm.bo.impl.SettingsBoImpl;
 import help.me.orm.bo.impl.UserBoImpl;
 import help.me.orm.dao.impl.ServiceDaoImpl;
 
@@ -32,6 +36,11 @@ public class UserTest {
 	@Autowired
 	ServiceDaoImpl serv;
 	
+	@Autowired
+	InfoBoImpl ibo;
+	
+	@Autowired
+	SettingsBoImpl setbo;
 	
 	User user;
 	String email = "balls@gmail.com";
@@ -71,27 +80,19 @@ public class UserTest {
 	@Test
 	public void testLicense() {
 		String ln = "balls";
-		License plum = licbo.createNewLicense(ln, user, "plumbing");
+		License plum = ubo.addLicense(user, ln, "plumbing");
 		
 		assertEquals(plum.getService().getDescription(), "plumbing");
 		assertEquals(plum.getLicenseNumber(), "balls");
 		
 		assertEquals(plum, user.getLicenses().iterator().next());
 		
-		try {
-			licbo.createNewLicense(ln, user, "plumbing");
-			fail("Should have failed adding the same deal");
-		} catch (Exception e) {
-			// should fail
-		}
-
-		License elec = licbo.createNewLicense(ln, user, "electrical");
-		License roof = licbo.createNewLicense(ln, user, "roofing");
+		License elec = ubo.addLicense(user, "electrical", "electrical");
+		License roof = ubo.addLicense(user, "roofing", "roofing");
 
 		assertTrue(user.getLicenses().contains(plum));
 		assertTrue(user.getLicenses().contains(elec));
 		assertTrue(user.getLicenses().contains(roof));
-		
 	}
 	
 	@Transactional
@@ -112,26 +113,35 @@ public class UserTest {
 		assertEquals("", (long)eloc.getLatitude(), (long)max);
 		assertEquals("", (long)eloc.getLongitude(), (long)max);
 	}
+
+	@Transactional
+	@Test
+	public void testInfo() {
+		Info info = new Info();
+		info.setAddress("some address");
+		info.setBusinessName("my business");
+		info.setCity("st. paul");
+		info.setPhoneNumber("(818) 112-1345");
+		info.setZipcode("12345");
+		info.setUser(user);
+		ibo.saveOrUpdate(info);
+		
+		user.setInfo(info);
+		ubo.saveOrUpdate(user);
+		
+		assertEquals(info, user.getInfo());
+		assertEquals(info.getUser(), user);
+	}
 	
-//	@Transactional
-//	@Test
-//	public void testLicense() { 
-//		User user = new User();
-//		user.setEmail("mm.tt@gmail.com");
-//		
-//		ubo.save(user);
-//		System.out.println(ubo);
-//		User u = ubo.findById(user.getUserId());
-////		User ue = ubo.findByEmail(user.getEmail());
-//		
-//		assertEquals(user, u);
-//		
-////		assertEquals(user, ue);
-////		assertEquals(u, ue);
-//		System.out.println(user.getCreatedAt() + "  " + user.getUpdatedAt());
-//		System.out.println(user);
-//		System.out.println(u);
-//		
-//	}
-	
+	@Transactional
+	@Test
+	public void testSettings() {
+		Settings setting = new Settings();
+		@SuppressWarnings("deprecation")
+		Time t = new Time(1,2,3);
+		setting.setMondayStart(t);
+		user.setSettings(setting);
+		ubo.saveOrUpdate(user);
+		System.out.println(user);
+	}
 }
