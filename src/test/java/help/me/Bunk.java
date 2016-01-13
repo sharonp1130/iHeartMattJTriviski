@@ -43,7 +43,7 @@ public class Bunk {
 	
 
 	@Transactional
-	public void ballss() {
+	public void balls() {
 		User user = ubo.findByEmail("balls@gmail.com");
 		
 		if (user == null) {
@@ -54,6 +54,8 @@ public class Bunk {
 		user.setLastName("elias");
 		user.setIsProvider(true);
 		ubo.save(user);
+		user.setEmail("someother@fff.com");
+		ubo.saveOrUpdate(user);
 		
 		
 		System.out.println(user);
@@ -93,7 +95,7 @@ public class Bunk {
 	}
 
 	@Transactional
-	public void balls() {
+	public void ballss() {
 		doSetUp();
 		System.out.println(user);
 		

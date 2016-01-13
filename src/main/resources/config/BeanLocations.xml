@@ -11,11 +11,16 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<!-- Database Configuration -->
 	<import resource="../database/DataSource.xml"/>
+	
+	<!-- Hibernate Configuration -->
  	<import resource="../database/Hibernate.xml"/>
+
+	<!-- Jersey Web Configuration -->
+ 	<import resource="../web/WebResources.xml"/>
  
  	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>properties/application.properties</value>
+			<value>classpath:properties/application.properties</value>
 		</property>
 	</bean>
 </beans>

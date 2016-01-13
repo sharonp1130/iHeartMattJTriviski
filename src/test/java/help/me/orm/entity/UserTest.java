@@ -155,4 +155,12 @@ public class UserTest {
 		System.out.println(user);
 		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
 	}
+	
+	@Transactional
+	@Test
+	public void testUser() {
+		ubo.saveOrUpdate(user);
+		user.setEmail("someoher@fff.com");
+		ubo.saveOrUpdate(user);
+	}
 }
