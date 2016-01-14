@@ -30,7 +30,6 @@ public class AccountResource {
 	@Path("/helloworld")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response helloWorld(@QueryParam("name") String name) {
-		number++;
 		return Response.ok(String.format("Hello %s!", name == null ? "no name" : name)).build();
 	}
 }
