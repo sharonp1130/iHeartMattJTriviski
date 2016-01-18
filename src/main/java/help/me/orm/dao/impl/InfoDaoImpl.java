@@ -12,12 +12,5 @@ import help.me.orm.entity.Info;
  *
  */
 @Repository("infoDao")
-public class InfoDaoImpl extends CustomHibernateDAOSupport<Info> implements IInfoDao {
-
-	@Override
-	public Info findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-}
+public class InfoDaoImpl extends CustomHibernateDAOSupport<Info> implements IInfoDao {}
 

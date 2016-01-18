@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import help.me.json.utilities.JsonUtilities;
@@ -99,7 +100,7 @@ public class UserTest {
 		assertTrue(user.getLicenses().contains(elec));
 		assertTrue(user.getLicenses().contains(roof));
 		
-		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user.getLicenses()));
 
 	}
 	
@@ -140,7 +141,7 @@ public class UserTest {
 		assertEquals(info, user.getInfo());
 		assertEquals(info.getUser(), user);
 		
-		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user.getInfo()));
 	}
 	
 	@Transactional
@@ -153,14 +154,15 @@ public class UserTest {
 		user.setSettings(setting);
 		ubo.saveOrUpdate(user);
 		System.out.println(user);
-		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user.getSettings()));
 	}
 	
 	@Transactional
 	@Test
-	public void testUser() {
+	public void testUser() throws JsonProcessingException {
 		ubo.saveOrUpdate(user);
 		user.setEmail("someoher@fff.com");
 		ubo.saveOrUpdate(user);
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(user));
 	}
 }

@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -268,6 +269,108 @@ public class Settings implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	/**
+	 * Used for updating.  This will get all the values from settings that are not null 
+	 * and set them in this.  
+	 * 
+	 * @param settings object to do a "merge" of sorts with this.
+	 */
+	@Transient
+	public void updateValuesFromOther(Settings settings) {
+		// No real good way to do this but the long way...balls.
+		
+		Time t = settings.getMondayStart();
+		
+		// Monday
+		if (t != null) {
+			mondayStart = t;
+		}
+		
+		t = settings.getMondayEnd();
+		
+		if (t != null) {
+			mondayEnd = t;
+		}
+		
+		// Tuesday
+		t = settings.getTuesdayStart();
+		
+		if (t != null) {
+			tuesdayStart = t;
+		}
+		
+		t = settings.getTuesdayEnd();
+		
+		if (t != null) {
+			tuesdayEnd = t;
+		}
+
+		// Wednesday
+		t = settings.getWednesdayStart();
+		
+		if (t != null) {
+			wednesdayStart = t;
+		}
+		
+		t = settings.getWednesdayEnd();
+		
+		if (t != null) {
+			wednesdayEnd = t;
+		}
+		
+		// Thursday
+		t = settings.getThursdayStart();
+		
+		if (t != null) {
+			thursdayStart = t;
+		}
+		
+		t = settings.getThursdayEnd();
+		
+		if (t != null) {
+			thursdayEnd = t;
+		}
+
+		// Friday
+		t = settings.getFridayStart();
+		
+		if (t != null) {
+			fridayStart = t;
+		}
+		
+		t = settings.getFridayEnd();
+		
+		if (t != null) {
+			fridayEnd = t;
+		}
+		
+		// Saturday
+		t = settings.getSaturdayStart();
+		
+		if (t != null) {
+			saturdayStart = t;
+		}
+		
+		t = settings.getSaturdayEnd();
+		
+		if (t != null) {
+			saturdayEnd = t;
+		}
+
+		// Sunday
+		t = settings.getSundayStart();
+		
+		if (t != null) {
+			sundayStart = t;
+		}
+		
+		t = settings.getSundayEnd();
+		
+		if (t != null) {
+			sundayEnd = t;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -50,6 +50,11 @@ public abstract class CustomHibernateDAOSupport<T> extends HibernateDaoSupport i
 	}
 
 	@Override
+	public T merge(T entity) {
+		return (T) getHibernateTemplate().merge(entity);
+	}
+
+	@Override
 	public void saveOrUpdate(T entity) {
 		getHibernateTemplate().saveOrUpdate(entity);
 	}

@@ -29,6 +29,7 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -48,10 +49,6 @@ import help.me.orm.listener.LastUpdateListener;
 public class User implements java.io.Serializable {
 	@JsonProperty("userId")
 	private int userId;
-	@JsonProperty("info")
-	private Info info;
-	@JsonProperty("availability")
-	private Settings settings;
 	@JsonProperty("email")
 	private String email;
 	@JsonProperty("firstName")
@@ -60,9 +57,16 @@ public class User implements java.io.Serializable {
 	private String lastName;
 	@JsonProperty("isProvider")
 	boolean isProvider;
-	@JsonProperty("licenses")
-    private Set<License> licenses = new HashSet<License>(0);
 
+	/**
+	 * info, settings and licenses are not included.  Those are retruned independantly.
+	 */
+	@JsonIgnore
+	private Settings settings;
+	@JsonIgnore
+	private Info info;
+	@JsonIgnore
+    private Set<License> licenses = new HashSet<License>(0);
 	@JsonIgnore
 	private Date createdAt;
 	@JsonIgnore
@@ -94,6 +98,25 @@ public class User implements java.io.Serializable {
 		this.setEmail(email);
 	}
 
+    /**
+     * Merges user into this.  Only checks the values that can be updated, 
+     * first and last name and isProvider. Email can not change, and will not update
+     * anyway.
+     * 
+     * @param user
+     */
+    @Transient
+    public void merge(User user) {
+    		if (user.getFirstName() != null) {
+    			firstName = user.getFirstName();
+    		}
+    		
+    		if (user.getLastName() != null) {
+    			lastName = user.getLastName();
+    		}
+    		
+    		isProvider = user.getIsProvider();
+    }
 
 	@Id
 	@GeneratedValue(generator="userIncrement")
@@ -107,6 +130,21 @@ public class User implements java.io.Serializable {
 		this.userId = userId;
 	}
 
+	/**
+	 * Checks to see if this account creation is complete.  Used for Jackson JSON output.
+	 * 
+	 * @return True if the account is complete, ie the info, settings and license portion of this account 
+	 * have already been created.
+	 */
+	@Transient
+	@JsonProperty("accountComplete")
+	public boolean isAccountComplete() {
+		/**
+		 * This only works correctly if hibernate updates everything correctly.  Fingers crossed.
+		 */
+		return settings != null && info != null && !licenses.isEmpty();
+	}
+	
 	@Column(name = "isProvider", nullable = false, columnDefinition = "TINYINT(1)")
 	public boolean getIsProvider() {
 		return isProvider;
@@ -116,8 +154,8 @@ public class User implements java.io.Serializable {
 		this.isProvider = isProvider;
 	}
 
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "info", nullable=true)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Info getInfo() {
 		return this.info;
 	}
@@ -127,7 +165,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@JoinColumn(name = "settings", nullable=true)
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Settings getSettings() {
 		return this.settings;
 	}
@@ -147,14 +185,14 @@ public class User implements java.io.Serializable {
 
 	@Column(name = "lastName", unique = false, nullable = false, length = 20)
 	public String getLastName() {
-		return this.firstName;
+		return this.lastName;
 	}
 	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 	
-	@Column(name = "email", unique = true, nullable = false, length = 50)
+	@Column(name = "email", unique = true, nullable = false, length = 50, updatable = false)
 	public String getEmail() {
 		return this.email;
 	}
@@ -217,9 +255,9 @@ public class User implements java.io.Serializable {
 		builder.append("User [userId=");
 		builder.append(userId);
 		builder.append(", info=");
-		builder.append(info);
+		builder.append(info == null ? null : info.getInfoId());
 		builder.append(", settings=");
-		builder.append(settings);
+		builder.append(settings == null ? null : settings.getSettingsId());
 		builder.append(", email=");
 		builder.append(email);
 		builder.append(", firstName=");

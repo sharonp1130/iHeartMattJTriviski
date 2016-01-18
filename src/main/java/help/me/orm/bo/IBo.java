@@ -34,6 +34,15 @@ public interface IBo<T> {
 	}
 	
 	/**
+	 * Merge the entity.
+	 * @param entity
+	 * @return
+	 */
+	public default T merge(T entity) {
+		return getDao().merge(entity);
+	}
+	
+	/**
 	 * @param user
 	 */
 	public default void saveOrUpdate(T entity) {

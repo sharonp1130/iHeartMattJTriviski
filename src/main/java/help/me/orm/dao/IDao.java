@@ -31,6 +31,12 @@ public interface IDao<T> {
 	public void delete(T entity);
 	
 	/**
+	 * Mergeds the entity into the sessionFactory.  The entity will not be updated directly.
+	 * 
+	 * @param entity
+	 */
+	public T merge(T entity);
+	/**
 	 * Saves if the entity exists otherwise it updates.
 	 * 
 	 * @param entity

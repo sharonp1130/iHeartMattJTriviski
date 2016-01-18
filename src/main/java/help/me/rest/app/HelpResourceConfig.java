@@ -1,4 +1,4 @@
-package help.me.rest.resources;
+package help.me.rest.app;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
