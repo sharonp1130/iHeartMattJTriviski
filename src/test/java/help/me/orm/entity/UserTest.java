@@ -48,6 +48,7 @@ public class UserTest {
 	@Autowired
 	SettingsBoImpl setbo;
 	
+
 	User user;
 	String email = "balls@gmail.com";
 
@@ -83,7 +84,7 @@ public class UserTest {
 	}
 
 	@Transactional
-	@Test
+//	@Test
 	public void testLicense() throws JsonGenerationException, JsonMappingException, IOException {
 		String ln = "balls";
 		License plum = ubo.addLicense(user, ln, "plumbing");
@@ -105,7 +106,7 @@ public class UserTest {
 	}
 	
 	@Transactional
-	@Test
+//	@Test
 	public void testLocation() {
 		double max = 20;
 		for (double ll = max; ll > 1; ll--) {

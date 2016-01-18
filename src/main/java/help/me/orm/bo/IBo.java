@@ -1,9 +1,12 @@
 package help.me.orm.bo;
 
+import org.apache.log4j.Logger;
+
 import help.me.orm.dao.IDao;
 
 public interface IBo<T> {
-	
+	static Logger log = Logger.getLogger(IBo.class);
+
 	public IDao<T> getDao();
 	
 	/**

@@ -38,6 +38,7 @@
     create table service (
         serviceId integer not null,
         description varchar(100) not null,
+        iconFileName varchar(256) not null,
         created_at datetime default CURRENT_TIMESTAMP,
         primary key (serviceId)
     ) ENGINE=InnoDB;

@@ -14,7 +14,7 @@ import help.me.orm.bo.ISettingsBo;
 import help.me.orm.bo.IUserBo;
 
 public abstract class BaseResource {
-	static Logger log = Logger.getLogger(AccountResource.class);
+	static Logger log = Logger.getLogger(BaseResource.class);
 	
 	@Autowired
 	IUserBo userBo;

@@ -20,13 +20,15 @@ public class Service implements java.io.Serializable {
 
 	private int serviceId;
 	private String description;
-
+	private String iconFileName;
+	
 	public Service() {
 	}
 
-	public Service(int serviceId, String description) {
+	public Service(int serviceId, String description, String iconFileName) {
 		this.serviceId = serviceId;
 		this.description = description;
+		this.iconFileName = iconFileName;
 	}
 
 	@Id
@@ -50,6 +52,15 @@ public class Service implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Column(name = "iconFileName", unique = false, nullable = false, length = 100)
+	public String getIconFileName() {
+		return this.iconFileName;
+	}
+	
+	public void setIconFileName(String iconFileName) {
+		this.iconFileName = iconFileName;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

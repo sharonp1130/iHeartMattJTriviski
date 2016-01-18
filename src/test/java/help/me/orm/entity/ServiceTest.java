@@ -1,5 +1,9 @@
 package help.me.orm.entity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,21 +11,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import help.me.orm.dao.impl.ServiceDaoImpl;
+import help.me.orm.bo.IServiceBo;
+import help.me.orm.bo.impl.ServiceBoImpl;
 import junit.framework.TestCase;
 
 @ContextConfiguration(locations="classpath:config/BeanLocations.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ServiceTest extends TestCase {
-	@Autowired
-	private ServiceDaoImpl dao;
 	
+	@Autowired
+	private IServiceBo serviceBo;
+	
+	private File initFile = new File("/Users/triviski/help-me/help-me-spring/src/main/resources/img/service_init.csv");
 	@Test
 	@Transactional
-	public void testService() {
-		Service s = new Service();
-		s.setDescription("Plubming");
-		s.setServiceId(1234);
-		dao.save(s);
+	public void testInitService() throws FileNotFoundException, IOException {
+		serviceBo.initializeFromFile(initFile);
 	}
 }
