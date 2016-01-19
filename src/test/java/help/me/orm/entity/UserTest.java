@@ -19,13 +19,13 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import help.me.json.utilities.JsonUtilities;
 import help.me.orm.bo.impl.InfoBoImpl;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.LocationBoImpl;
 import help.me.orm.bo.impl.SettingsBoImpl;
 import help.me.orm.bo.impl.UserBoImpl;
 import help.me.orm.dao.impl.ServiceDaoImpl;
+import help.me.utilities.json.JsonUtilities;
 
 @ContextConfiguration(locations="classpath:config/BeanLocations.xml")
 @RunWith(SpringJUnit4ClassRunner.class)

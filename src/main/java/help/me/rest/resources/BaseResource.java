@@ -1,9 +1,18 @@
 package help.me.rest.resources;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,14 +96,23 @@ public abstract class BaseResource {
 	 * @return
 	 */
 	protected Response okay(Object entity) {
-		return response(entity, Status.OK);
+		return okay(entity, null);
+	}
+	
+	/**
+	 * @param entity
+	 * @param mediaType
+	 * @return
+	 */
+	protected Response okay(Object entity, MediaType mediaType) {
+		return response(entity, Status.OK, mediaType);
 	}
 	
 	/**
 	 * @return empty okay response.
 	 */
 	protected Response okay() {
-		return response(null, Status.OK);
+		return okay(null, null);
 	}
 	
 	/**
@@ -148,5 +166,80 @@ public abstract class BaseResource {
 	 */
 	protected Response serverError(Object entity) {
 		return serverError(entity, null);
+	}
+
+	/**
+	 * @param inputFile File to stream as part of the StreamingOutput
+	 * @return MinimalStreamOutput that will stream the contents of inputFile
+	 * @throws FileNotFoundException
+	 */
+	protected StreamingOutput getStreamingOutput(File inputFile) throws FileNotFoundException {
+		return getStreamingOutput(new FileInputStream(inputFile));
+	}
+
+	/**
+	 * @param inputStream
+	 * @return MinimalStreamingOutput to stream the inputStream.
+	 */
+	protected StreamingOutput getStreamingOutput(final InputStream inputStream) {
+		MinimalStreamingOutput stream = new MinimalStreamingOutput(inputStream);
+		
+		return stream;
+	}
+	
+	/**
+	 * Minimal implementation.  Reads the contents from sourceStream and writes it into output.
+	 * 
+	 * 
+	 * @author triviski
+	 *
+	 */
+	public class MinimalStreamingOutput implements StreamingOutput {
+		private InputStream sourceStream;
+		private boolean closeStream;
+		
+		/**
+		 * This will always close the sourceStream when finished with the write method.
+		 * @param sourceStream
+		 */
+		public MinimalStreamingOutput(InputStream sourceStream) {
+			this(sourceStream, true);
+		}
+			
+		/**
+		 * 
+		 * @param sourceStream
+		 * @param closeStream if true will close the stream when finished with the write method.
+		 */
+		public MinimalStreamingOutput(InputStream sourceStream, boolean closeStream) {
+			super();
+			this.sourceStream = sourceStream;
+			this.closeStream = closeStream;
+		}
+
+		
+		/* (non-Javadoc)
+		 * @see javax.ws.rs.core.StreamingOutput#write(java.io.OutputStream)
+		 */
+		@Override
+		public void write(OutputStream output) throws IOException, WebApplicationException {
+			try {
+				byte[] buf = new byte[4096];
+				
+				int bytesRead;
+				
+				do {
+					bytesRead = sourceStream.read(buf);
+					
+					if (bytesRead > 0) {
+						output.write(buf, 0, bytesRead);
+					}
+				} while (bytesRead > 0);
+			} finally {
+				if (closeStream) {
+					sourceStream.close();
+				}
+			}
+		}
 	}
 }

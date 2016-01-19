@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collection;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -17,7 +18,6 @@ public interface IServiceBo extends IBo<Service> {
 	public static final String DESC_HEADER_NAME = "description";
 	public static final String ICON_HEADER_NAME = "icon";
 	
-	public String getIconFile(Service service);
 	
 	/**
 	 * Finds the service with description.  
@@ -26,6 +26,13 @@ public interface IServiceBo extends IBo<Service> {
 	 */
 	public Service getServiceWithDescription(String description);
 
+	/**
+	 * Get a collection of all of the valid service descriptions.
+	 * 
+	 * @return
+	 */
+	public Collection<String> getServiceDescriptions();
+	
 	/**
 	 * Takes the init file csv row and will check if the service already exists.  If it does not 
 	 * will create a new one and save it.

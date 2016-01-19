@@ -1,4 +1,4 @@
-package help.me.json.utilities;
+package help.me.utilities.json;
 
 import java.util.Collection;
 import java.util.Map;

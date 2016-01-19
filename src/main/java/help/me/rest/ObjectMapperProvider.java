@@ -5,7 +5,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import help.me.json.utilities.JsonUtilities;
+import help.me.utilities.json.JsonUtilities;
 
 /**
  * Object mapper provider for Jersey used for responses that get back the 

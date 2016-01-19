@@ -1,5 +1,9 @@
 package help.me.orm.bo.impl;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,15 +25,6 @@ public class ServiceBoImpl implements IServiceBo {
 	}
 
 	/* (non-Javadoc)
-	 * @see help.me.orm.bo.IServiceBo#getIconFile(help.me.orm.entity.Service)
-	 */
-	@Override
-	public String getIconFile(Service service) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see help.me.orm.bo.IServiceBo#getServiceWithDescription(java.lang.String)
 	 */
 	@Override
@@ -37,4 +32,13 @@ public class ServiceBoImpl implements IServiceBo {
 		return dao.getServiceWithDescription(description);
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<String> getServiceDescriptions() {
+		List<String> results = dao.getCurrentSession().createCriteria(Service.class)
+			.setProjection(Projections.property("description"))
+			.list();
+
+		return results;
+	}
 }

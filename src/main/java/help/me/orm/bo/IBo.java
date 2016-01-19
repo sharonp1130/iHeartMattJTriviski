@@ -61,5 +61,4 @@ public interface IBo<T> {
 	public default T findById(Integer id) {
 		return getDao().findById(id);
 	}
-	
 }
