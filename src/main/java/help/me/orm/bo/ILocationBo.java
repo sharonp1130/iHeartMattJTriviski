@@ -7,18 +7,18 @@ public interface ILocationBo extends IBo<Location> {
 	/**
 	 * @param user
 	 * @param longitude
-	 * @param lattitude
+	 * @param latitude
 	 * @return New location object
 	 */
-	public Location addLocation(User user, double longitude, double lattitude);
+	public Location addLocation(User user, double longitude, double latitude);
 	
 	/**
 	 * @param email
 	 * @param longitude
-	 * @param lattitude
+	 * @param latitude
 	 * @return New location object
 	 */
-	public Location addLocation(String email, double longitude, double lattitude);
+	public Location addLocation(String email, double longitude, double latitude);
 
 	/**
 	 * Gets the most recent location of user.

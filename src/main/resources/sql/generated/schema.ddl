@@ -30,7 +30,6 @@
         latitude double precision not null,
         longitude double precision not null,
         user integer not null,
-        updated_at datetime on update CURRENT_TIMESTAMP,
         created_at datetime default CURRENT_TIMESTAMP,
         primary key (locationId)
     ) ENGINE=InnoDB;

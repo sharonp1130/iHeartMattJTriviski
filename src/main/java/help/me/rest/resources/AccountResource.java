@@ -46,6 +46,22 @@ public class AccountResource extends BaseResource {
 	}
 	
 	/**
+	 * @param userId
+	 * @return
+	 */
+	@GET
+	@Path("/user/{userId : \\d+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
+	public Response getUser(@PathParam("userId") int userId) {
+		User user = userBo.findById(userId);
+		
+		return user == null ? 
+				notFound() :
+				okay(user);
+	}
+
+	/**
 	 * Find a user object with the email.
 	 * 
 	 * The user json wil

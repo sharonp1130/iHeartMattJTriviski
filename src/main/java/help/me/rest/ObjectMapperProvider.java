@@ -19,7 +19,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 	private ObjectMapper mapper;
 	
 	public ObjectMapperProvider() {
-		mapper = JsonUtilities.createSerializerObjectMapper();
+		mapper = JsonUtilities.createRequestObjectMapper();
 	}
 	
 	   /**

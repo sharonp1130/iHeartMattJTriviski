@@ -22,7 +22,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import help.me.orm.bo.IServiceBo;
 import help.me.orm.entity.Service;
-import help.me.utilities.json.JsonUtilities;
 
 /**
  * Resource for getthing the available resources. 
@@ -81,7 +80,8 @@ public class ServicesResource extends BaseResource {
 			Map<String, Collection<String>> servs = new HashMap<String, Collection<String>>();
 			servs.put("descriptions", services);
 			
-			return okay(JsonUtilities.getRequestMapper().writeValueAsString(servs), MediaType.APPLICATION_JSON_TYPE);
+//			return okay(JsonUtilities.getRequestMapper().writeValueAsString(servs), MediaType.APPLICATION_JSON_TYPE);
+			return okay(servs, MediaType.APPLICATION_JSON_TYPE);
 		}
 	}
 
