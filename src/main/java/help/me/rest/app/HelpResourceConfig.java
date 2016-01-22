@@ -1,7 +1,10 @@
 package help.me.rest.app;
 
+import javax.ws.rs.ApplicationPath;
+
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
+import org.springframework.stereotype.Component;
 
 /**
  * Jersey application.
@@ -9,6 +12,8 @@ import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
  * @author triviski
  *
  */
+@Component
+@ApplicationPath("help")
 public class HelpResourceConfig extends ResourceConfig {
 	private static final String RESOURCE_PACKAGES = "help.me.rest";
 	

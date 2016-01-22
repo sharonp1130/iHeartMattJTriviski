@@ -30,6 +30,6 @@ public class Base64ConversionTest {
 		decoded.rewind();
 		assertEquals(orig, decoded);
 		
-		System.out.println(Base64ConversionUtilities.getEncodeContentsString(icon));
+		//System.out.println(Base64ConversionUtilities.getEncodeContentsString(icon));
 	}
 }

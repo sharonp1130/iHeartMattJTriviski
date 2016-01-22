@@ -2,7 +2,8 @@ package help.me.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * This is the spring boot class that will be found by Jetty and started when 
@@ -14,10 +15,12 @@ import org.springframework.context.ApplicationContext;
  * @author triviski
  *
  */
+@Configuration
 @SpringBootApplication
+@ImportResource("config/BeanLocations.xml")
 public class WebBoot {
     
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(WebBoot.class, args);
+        SpringApplication.run(WebBoot.class, args);
     }
 }

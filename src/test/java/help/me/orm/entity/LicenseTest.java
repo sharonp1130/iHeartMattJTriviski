@@ -1,3 +1,4 @@
+
 package help.me.orm.entity;
 
 import static org.junit.Assert.*;

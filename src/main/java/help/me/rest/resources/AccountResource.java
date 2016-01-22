@@ -1,5 +1,7 @@
 package help.me.rest.resources;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -39,10 +41,10 @@ import help.me.orm.entity.User;
 public class AccountResource extends BaseResource {
 	
 	@GET
-	@Path("/helloworld")
+	@Path("/ping")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response helloWorld(@QueryParam("name") String name) {
-		return Response.ok(String.format("Hello %s!", name == null ? "no name" : name)).build();
+	public Response helloWorld() {
+		return Response.ok(String.format("Pong! %s", new SimpleDateFormat("yyyy:MMddTHH:mm:ss").format(Calendar.getInstance().getTime()))).build();
 	}
 	
 	/**

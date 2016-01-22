@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import help.me.orm.bo.IServiceBo;
-import help.me.orm.bo.impl.ServiceBoImpl;
 import junit.framework.TestCase;
 
 @ContextConfiguration(locations="classpath:config/BeanLocations.xml")
