@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-@ApplicationPath("help")
+@ApplicationPath("api")
 public class HelpResourceConfig extends ResourceConfig {
 	private static final String RESOURCE_PACKAGES = "help.me.rest";
 	
@@ -26,5 +26,4 @@ public class HelpResourceConfig extends ResourceConfig {
 		packages(RESOURCE_PACKAGES);
 		register(RequestContextFilter.class);
 	}
-
 }
