@@ -1,7 +1,5 @@
 package help.me.rest.resources;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -29,7 +27,7 @@ import help.me.orm.entity.User;
 /**
  * Jersey resource class for account information.  
  * 
- * This is used to look up account information, add an account, 
+ * This is used to look up user account information, add an account, 
  * update and delete.  Basically, all the account stuff balls.
  * 
  * @author triviski
@@ -37,22 +35,15 @@ import help.me.orm.entity.User;
  */
 @Component
 @Scope(value="request")
-@Path("account")
-public class AccountResource extends BaseResource {
-	
-	@GET
-	@Path("/ping")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response helloWorld() {
-		return Response.ok(String.format("Pong! %s", new SimpleDateFormat("yyyy:MMddTHH:mm:ss").format(Calendar.getInstance().getTime()))).build();
-	}
+@Path("user")
+public class UserResource extends BaseResource {
 	
 	/**
 	 * @param userId
 	 * @return
 	 */
 	@GET
-	@Path("/user/{userId : \\d+}")
+	@Path("{userId : \\d+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
 	public Response getUser(@PathParam("userId") int userId) {
@@ -172,7 +163,7 @@ public class AccountResource extends BaseResource {
 	 * @return
 	 */
 	@DELETE
-	@Path("/user/{userId : \\d+}")
+	@Path("/{userId : \\d+}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Transactional
 	public Response deleteUser(@PathParam("userId") int userId) {
@@ -194,7 +185,7 @@ public class AccountResource extends BaseResource {
 	 * @return OK if found and updated else 404 if not found.
 	 */
 	@POST
-	@Path("/user/{userId : \\d+}")
+	@Path("/{userId : \\d+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
@@ -218,7 +209,6 @@ public class AccountResource extends BaseResource {
 	 * @return Response with status.
 	 */
 	@PUT
-	@Path("/user")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
@@ -245,7 +235,7 @@ public class AccountResource extends BaseResource {
 	 * @return
 	 */
 	@POST
-	@Path("/user/{userId : \\d+}/info")
+	@Path("/{userId : \\d+}/info")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
@@ -289,7 +279,7 @@ public class AccountResource extends BaseResource {
 	 * @return
 	 */
 	@POST
-	@Path("/user/{userId : \\d+}/availability")
+	@Path("/{userId : \\d+}/availability")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
