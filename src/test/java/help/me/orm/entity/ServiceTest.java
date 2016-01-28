@@ -11,10 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import help.me.boot.WebBoot;
 import help.me.orm.bo.IServiceBo;
 import junit.framework.TestCase;
 
-@ContextConfiguration(locations="classpath:config/BeanLocations.xml")
+@ContextConfiguration(classes=WebBoot.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ServiceTest extends TestCase {
 	

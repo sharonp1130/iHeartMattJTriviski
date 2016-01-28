@@ -38,4 +38,12 @@ public class LicenseBoImpl implements ILicenseBo {
 	public License createNewLicense(String licenseNumber, User user, Service service) {
 		return dao.createNewLicense(licenseNumber, user, service);
 	}
+
+	/* (non-Javadoc)
+	 * @see help.me.orm.bo.ILicenseBo#findLicenseByNumber(java.lang.String)
+	 */
+	@Override
+	public License findLicenseByNumber(String licenseNumber) {
+		return dao.findLicenseByNumber(licenseNumber);
+	}
 }

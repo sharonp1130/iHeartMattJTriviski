@@ -1,7 +1,7 @@
 
 package help.me.orm.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import help.me.boot.WebBoot;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.UserBoImpl;
+import help.me.utilities.json.JsonUtilities;
 
-@ContextConfiguration(locations="classpath:config/BeanLocations.xml")
+@ContextConfiguration(classes=WebBoot.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LicenseTest {
 	
@@ -38,7 +42,7 @@ public class LicenseTest {
 	
 	@Transactional
 	@Test
-	public void testLicense() { 
+	public void testLicense() throws JsonProcessingException { 
 		User u = createUser("mmm.ttt@gmail.com");
 		
 		ubo.save(u);
@@ -50,12 +54,14 @@ public class LicenseTest {
 		plumbL.setLicenseNumber("PLUMB123");
 		plumbL.setService(plumb);
 		plumbL.setUser(u);
+		u.addLicense(plumbL);
 
 		License electL = new License();
 		electL.setLicenseNumber("ELEC456");
 		electL.setService(elec);
 		electL.setUser(u);
 		
+		u.addLicense(electL);
 		bo.save(plumbL);
 		bo.save(electL);
 
@@ -67,6 +73,8 @@ public class LicenseTest {
 		
 		assertEquals(electL, e);
 		assertEquals(electL.getService(), e.getService());
+		
+		System.out.println(JsonUtilities.getRequestMapper().writeValueAsString(u.getLicenses()));
 
 	}
 	

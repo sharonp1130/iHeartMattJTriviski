@@ -24,4 +24,11 @@ public interface ILicenseDao extends IDao<License> {
 	 */
 	public License createNewLicense(String licenseNumber, User user, Service service);
 
+	/**
+	 * 
+	 * @param licenseNumber
+	 * @return
+	 */
+	License findLicenseByNumber(String licenseNumber);
+
 }

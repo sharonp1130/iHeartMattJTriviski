@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import help.me.boot.WebBoot;
 import help.me.orm.bo.impl.InfoBoImpl;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.LocationBoImpl;
@@ -27,9 +28,9 @@ import help.me.orm.bo.impl.UserBoImpl;
 import help.me.orm.dao.impl.ServiceDaoImpl;
 import help.me.utilities.json.JsonUtilities;
 
-@ContextConfiguration(locations="classpath:config/BeanLocations.xml")
+@ContextConfiguration(classes=WebBoot.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserTest {
+public class UserTest  {
 	@Autowired
 	LocationBoImpl lbo;
 	

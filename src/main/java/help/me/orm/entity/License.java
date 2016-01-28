@@ -33,16 +33,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "license",  uniqueConstraints = @UniqueConstraint(columnNames = {"licenseNumber", "user"}) )
 public class License implements java.io.Serializable {
-
+	
 	@JsonProperty("licenseNumber")
 	private String licenseNumber;
-
+	@JsonProperty("service")
+	private Service service;
+	
 	@JsonIgnore
 	private int licenseId;
 	@JsonIgnore
 	private User user;
-	@JsonIgnore
-	private Service service;
 	@JsonIgnore
 	private Date createdAt;
 	@JsonIgnore
@@ -68,7 +68,7 @@ public class License implements java.io.Serializable {
 	}
 
 	/**
-	 * Used for jackson output.  Gets the service description so there is not 
+	 * Used for Jackson output.  Gets the service description so there is not 
 	 * another nested service.
 	 * 
 	 * @return The service description if service is not null else null
@@ -112,7 +112,7 @@ public class License implements java.io.Serializable {
 	}
 
 	@JoinColumn(name = "service")
-	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Service getService() {
 		return this.service;
 	}

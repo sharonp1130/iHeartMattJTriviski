@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import help.me.orm.bo.IInfoBo;
 import help.me.orm.bo.ILicenseBo;
+import help.me.orm.bo.IServiceBo;
 import help.me.orm.bo.ISettingsBo;
 import help.me.orm.bo.IUserBo;
 
@@ -37,6 +38,8 @@ public abstract class BaseResource {
 	@Autowired
 	ILicenseBo licenseBo;
 
+	@Autowired
+	IServiceBo serviceBo;
 	
 	/**
 	 * @param entity

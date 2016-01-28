@@ -2,6 +2,7 @@ package help.me.boot;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -35,7 +36,12 @@ public class ServiceInitListener {
 		    if (initFile != null) {
 		         try {
 		     		IServiceBo serviceBo = (IServiceBo) ctx.getApplicationContext().getBean(SERVICE_BO_NAME);
-					serviceBo.initializeFromFile(new File(initFile));
+		     		if (initFile.startsWith("classpath:")) {
+		     			InputStream initStream = getClass().getResourceAsStream(initFile.replace("classpath:", ""));
+		     			serviceBo.initializeFromStream(initStream);
+		     		} else {
+		     			serviceBo.initializeFromFile(new File(initFile));
+		     		}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -27,5 +27,13 @@ public interface ILicenseBo extends IBo<License> {
 	 * @return new license
 	 */
 	public License createNewLicense(String licenseNumber, User user, Service service);
+	
+	/**
+	 * Find the license based on the license number.
+	 * 
+	 * @param licenseNumber
+	 * @return the license or null if not found.
+	 */
+	public License findLicenseByNumber(String licenseNumber);
 
 }

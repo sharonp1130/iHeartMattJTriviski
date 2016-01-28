@@ -211,7 +211,6 @@ public class User implements java.io.Serializable {
 		this.licenses.add(license);
 	}
 	
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
     public Set<License> getLicenses() {
         return this.licenses;

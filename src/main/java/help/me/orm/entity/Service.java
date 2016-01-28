@@ -22,7 +22,15 @@ public class Service implements java.io.Serializable {
 	private String description;
 	private String iconFileName;
 	
-	public Service() {
+	public Service() {}
+	
+	/**
+	 * Jackson constructor.
+	 * 
+	 * @param description
+	 */
+	public Service(String description) {
+		this(-1, description, null);
 	}
 
 	public Service(int serviceId, String description, String iconFileName) {

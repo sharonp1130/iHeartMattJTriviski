@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import help.me.orm.entity.Info;
 import help.me.orm.entity.License;
+import help.me.orm.entity.Service;
 import help.me.orm.entity.Settings;
 import help.me.orm.entity.User;
 
@@ -138,7 +139,7 @@ public class UserResource extends BaseResource {
 	 * @return info for user with id userId.
 	 */
 	@GET
-	@Path("/{userId : \\d+}/license")
+	@Path("/{userId : \\d+}/licenses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserLicenses(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
@@ -307,6 +308,51 @@ public class UserResource extends BaseResource {
 			userBo.save(user);
 			
 			return okay(user.getSettings());
+		}
+	}
+	
+	/**
+	 * @param userId
+	 * @param license
+	 * @return
+	 */
+	@POST
+	@Path("/{userId : \\d+}/license")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+	@Transactional
+	public Response addLicense(@PathParam("userId") int userId, License license) {
+		User user = userBo.findById(userId);
+		License license_ = licenseBo.findLicenseByNumber(license.getLicenseNumber());
+		
+		if (user == null) {
+			return response(String.format("No user was found with userId %d", userId), 
+					Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
+		} else if (license_ != null && user.equals(license_.getUser())) {
+			return response(String.format("User with userId %d already has a license with licenseNumber %s", userId, license.getLicenseNumber()), 
+					Status.OK, MediaType.TEXT_PLAIN_TYPE);
+		} else if (license_ != null && !user.equals(license_.getUser())) {
+			return response(String.format("A different user owns licenseNumber %s", license.getLicenseNumber()), 
+					Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
+		} else {
+			/**
+			 * The service for the license is a stub.  We need to get the actual 
+			 * service and and set it properly.
+			 */
+			Service service = serviceBo.getServiceWithDescription(license.getService().getDescription());
+			
+			if (service == null) {
+				// Invalid service.
+				return response(String.format("Invalid service description %s", license.getService().getDescription()), 
+						Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
+			} else {
+				license.setService(service);
+				license.setUser(user);
+				user.addLicense(license);
+				userBo.save(user);
+				
+				return okay(license);
+			}
 		}
 	}
 }
