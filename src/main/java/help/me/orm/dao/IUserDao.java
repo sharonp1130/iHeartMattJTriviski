@@ -8,7 +8,7 @@ import help.me.orm.entity.User;
  * @author triviski
  *
  */
-public interface IUserDao {
+public interface IUserDao  extends IDao<User> {
 	
 	/**
 	 * Find the user by the email address

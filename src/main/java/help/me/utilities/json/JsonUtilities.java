@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 
 /*
 * Jackson serialization utilities.  Static instances of object mappers configured with the available views are 
@@ -59,6 +60,7 @@ public class JsonUtilities {
 		}
 
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.registerModule(new Hibernate4Module());
 		
 		return mapper;
 	}

@@ -13,6 +13,7 @@ import help.me.orm.entity.Service;
 
 @Repository("serviceBo")
 public class ServiceBoImpl implements IServiceBo {
+
 	@Autowired
 	ServiceDaoImpl dao;
 

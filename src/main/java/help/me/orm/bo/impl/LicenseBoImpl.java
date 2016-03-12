@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import help.me.orm.bo.ILicenseBo;
 import help.me.orm.dao.IDao;
-import help.me.orm.dao.ILicenseDao;
+import help.me.orm.dao.impl.LicenseDaoImpl;
 import help.me.orm.entity.License;
 import help.me.orm.entity.Service;
 import help.me.orm.entity.User;
@@ -13,7 +13,7 @@ import help.me.orm.entity.User;
 @Repository("licenseBo")
 public class LicenseBoImpl implements ILicenseBo {
 	@Autowired
-	ILicenseDao dao;
+	LicenseDaoImpl dao;
 	
 	/* (non-Javadoc)
 	 * @see help.me.orm.bo.IBo#getDao()

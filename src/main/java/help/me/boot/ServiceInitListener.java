@@ -22,7 +22,7 @@ import help.me.orm.bo.IServiceBo;
 public class ServiceInitListener {
 	public static final String SERVICE_INIT_FILE_PROPERTY = "help.me.serviceInitFile";
     public static final String SERVICE_BO_NAME = "serviceBo";
-
+    public static final String INIT_DEFAULT_FILE = "classpath:/img/service_init.csv";
 	/**
 	 * When the context is ready will init the service db from the init file if given. Any updates to the file 
 	 * will be found and the data will be updated in the hibernate database.
@@ -31,20 +31,19 @@ public class ServiceInitListener {
 	 */
 	@EventListener
 	public void handleApplicationReady(ContextRefreshedEvent ctx) {
-	    String initFile = System.getProperty(SERVICE_INIT_FILE_PROPERTY);
+		String initFile = System.getProperty(SERVICE_INIT_FILE_PROPERTY);
+	    initFile = initFile == null ? INIT_DEFAULT_FILE : initFile;
 	    
-		    if (initFile != null) {
-		         try {
-		     		IServiceBo serviceBo = (IServiceBo) ctx.getApplicationContext().getBean(SERVICE_BO_NAME);
-		     		if (initFile.startsWith("classpath:")) {
-		     			InputStream initStream = getClass().getResourceAsStream(initFile.replace("classpath:", ""));
-		     			serviceBo.initializeFromStream(initStream);
-		     		} else {
-		     			serviceBo.initializeFromFile(new File(initFile));
-		     		}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		    } 
+         try {
+     		IServiceBo serviceBo = (IServiceBo) ctx.getApplicationContext().getBean(SERVICE_BO_NAME);
+     		if (initFile.startsWith("classpath:")) {
+     			InputStream initStream = getClass().getResourceAsStream(initFile.replace("classpath:", ""));
+     			serviceBo.initializeFromStream(initStream);
+     		} else {
+     			serviceBo.initializeFromFile(new File(initFile));
+     		}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+    } 
 }

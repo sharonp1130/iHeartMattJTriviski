@@ -1,5 +1,7 @@
 package help.me.orm.dao;
 
+import org.hibernate.Session;
+
 /**
  * Basic interface to control all daos.
  * 
@@ -48,4 +50,9 @@ public interface IDao<T> {
 	 * @return
 	 */
 	public T findById(Integer id);
+
+	/**
+	 * @return current hibernate session
+	 */
+	public Session getCurrentSession(); 
 }

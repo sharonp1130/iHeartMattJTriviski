@@ -1,5 +1,7 @@
 package help.me.orm.dao;
 
+import java.util.Collection;
+
 import help.me.orm.entity.License;
 import help.me.orm.entity.Service;
 import help.me.orm.entity.User;
@@ -29,6 +31,5 @@ public interface ILicenseDao extends IDao<License> {
 	 * @param licenseNumber
 	 * @return
 	 */
-	License findLicenseByNumber(String licenseNumber);
-
+	public License findLicenseByNumber(String licenseNumber);
 }

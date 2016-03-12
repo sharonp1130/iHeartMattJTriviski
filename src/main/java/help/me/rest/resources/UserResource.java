@@ -2,6 +2,7 @@ package help.me.rest.resources;
 
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,6 +25,10 @@ import help.me.orm.entity.License;
 import help.me.orm.entity.Service;
 import help.me.orm.entity.Settings;
 import help.me.orm.entity.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * Jersey resource class for account information.  
@@ -37,6 +42,7 @@ import help.me.orm.entity.User;
 @Component
 @Scope(value="request")
 @Path("user")
+@Api(value="User resource to find users, create new users and update user information.")
 public class UserResource extends BaseResource {
 	
 	/**
@@ -47,6 +53,8 @@ public class UserResource extends BaseResource {
 	@Path("{userId : \\d+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+	@ApiOperation(value="Retrieve a user with the user ID.", response=User.class)
+	@ApiResponses(@ApiResponse(code=404, message="User ID not found."))
 	public Response getUser(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
 		
@@ -65,9 +73,11 @@ public class UserResource extends BaseResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response checkUserAccount(@QueryParam("email") String email) {
-		
-		
+	@ApiOperation(value="Retrieve a user with the email.", 
+		notes="Email is a unique field and this method will always return either an empty set or the given user",
+		response=User.class)
+	@ApiResponses(@ApiResponse(code=404, message="User with email supplied does not exist."))
+	public Response checkUserAccount(@NotNull @QueryParam("email") String email) {
 		User user;
 		
 //		if (userId == null) {
@@ -91,6 +101,10 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/info")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value="Retrieve the user info for specified user ID.",
+			response=Info.class,
+			notes="In the event that the account was created but not completed some of the info values could be null.")
+	@ApiResponses(@ApiResponse(code=404, message="User with supplied user ID does not exist."))
 	public Response getUserInfo(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
 		
@@ -116,6 +130,10 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/settings")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value="Retrieve the availability for specified user ID.",
+			response=Settings.class,
+			notes="Some values may be null if start / end times were not supplied for a given day.")
+	@ApiResponses(@ApiResponse(code=404, message="User with supplied user ID does not exist."))
 	public Response getUserSettings(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
 		
@@ -141,6 +159,11 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/licenses")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value="Retrieve the set of licenses for specified user ID.",
+			response=License.class,
+			responseContainer="List"
+	)
+	@ApiResponses(@ApiResponse(code=404, message="User with supplied user ID does not exist."))
 	public Response getUserLicenses(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
 		
@@ -167,11 +190,13 @@ public class UserResource extends BaseResource {
 	@Path("/{userId : \\d+}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Transactional
+	@ApiOperation(value="Delete user with specified user ID.")
+	@ApiResponses(@ApiResponse(code=404, message="User with supplied user ID does not exist."))
 	public Response deleteUser(@PathParam("userId") int userId) {
 		User user = userBo.findById(userId);
 		
 		if (user == null) {
-			return serverError(String.format("No user found for userId %d", userId));
+			return notFound(String.format("No user found for userId %d", userId));
 		} else {
 			userBo.delete(user);
 			
@@ -190,6 +215,14 @@ public class UserResource extends BaseResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Update user with specified user ID.",
+			notes="NOTE:  Email is a unique field and is never upadted.  Example JSON input: { 'email' : 'someemail@gmail.com', 'firstName' : 'fred', 'lastName' : 'smith', 'isProvider' : true }",
+			response=User.class
+	)
+	@ApiResponses({
+			@ApiResponse(code=404, message="User with supplied user ID does not exist."), 
+			@ApiResponse(code=200, message="User was updated.  Responds with updated user", response=User.class)
+	})
 	public Response updateUser(@PathParam("userId") int userId, User user) {
 		User user_ = userBo.findById(userId);
 		
@@ -213,6 +246,13 @@ public class UserResource extends BaseResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+	@ApiOperation(value="Create a new user.",
+			notes="Example JSON input: { 'email' : 'someemail@gmail.com', 'firstName' : 'fred', 'lastName' : 'smith', 'isProvider' : true }"
+	)
+	@ApiResponses({
+			@ApiResponse(code=500, message="Unknown error"),
+			@ApiResponse(code=200, message="New user was created.", response=User.class)
+			})
 	public Response newUser(User user) throws Exception {
 		/**
 		 * If the user exists just return...check the values?
@@ -240,6 +280,16 @@ public class UserResource extends BaseResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Add or update user info with specified user ID.",
+			notes="Example JSON input: { 'businessName' : 'my business', 'address' : 'new business address', "
+					+ "'city' : 'st. paul', 'zipcode' : '12345', 'phone' : '(818) 112-1345', "
+					+ "'phoneOk' : true, 'textOk' : true, 'emailOk' : true}",
+			response=Info.class
+	)
+	@ApiResponses({
+			@ApiResponse(code=404, message="User with supplied user ID does not exist."), 
+			@ApiResponse(code=200, message="User info was added or updated successfully.", response=Info.class)
+	})
 	public Response addOrUpdateInfo(@PathParam("userId") int userId, Info info) {
 		User user = userBo.findById(userId);
 		
@@ -284,11 +334,27 @@ public class UserResource extends BaseResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Add or update user availability with specified user ID.",
+			notes="Example JSON input: { 'mondayStart' : null, 'mondayEnd' : '00:00:31', "
+					+ "'tuesdayStart' : null, 'tuesdayEnd' : null, "
+					+ "'wednesdayStart' : null, 'wednesdayEnd' : null, "
+					+ "'thursdayStart' : null, 'thursdayEnd' : null, "
+					+ "'fridayStart' : null, 'fridayEnd' : null, "
+					+ "'saturdayStart' : null, 'saturdayEnd' : null, "
+					+ "'sundayStart' : null, 'sundayEnd' : '12:00:00' }."
+					+ "  NOTE:  The example shows a complete JSON input.  Not all key / value pairs are required. "
+					+ "Updates will be made to the key / value pairs that are present and the values are valide.",
+			response=Settings.class
+	)
+	@ApiResponses({
+			@ApiResponse(code=404, message="User with supplied user ID does not exist."), 
+			@ApiResponse(code=200, message="User availability was added or updated successfully.", response=Settings.class)
+	})
 	public Response addOrUpdateSettings(@PathParam("userId") int userId, Settings settings) {
 		User user = userBo.findById(userId);
 		
 		if (user == null) {
-			return response(String.format("No user was found with userId %d", userId), Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
+			return response(String.format("No user was found with userId %d", userId), Status.NOT_FOUND, MediaType.TEXT_PLAIN_TYPE);
 		} else if (user.getSettings() != null) {
 			// Settings already exists so 
 			/**
@@ -316,21 +382,28 @@ public class UserResource extends BaseResource {
 	 * @param license
 	 * @return
 	 */
-	@POST
+	@PUT
 	@Path("/{userId : \\d+}/license")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Add a new licese for user with specified user ID.",
+			notes="Example JSON input: {'licenseNumber' : 'PLUMB123', 'service' : 'plubming'}"
+	)
+	@ApiResponses({
+			@ApiResponse(code=404, message="User with supplied user ID does not exist."), 
+			@ApiResponse(code=400, message="A different user has owns license number supplied."),
+			@ApiResponse(code=200, message="New license was created or existing license that matched input values was found.", response=License.class)
+	})
 	public Response addLicense(@PathParam("userId") int userId, License license) {
 		User user = userBo.findById(userId);
 		License license_ = licenseBo.findLicenseByNumber(license.getLicenseNumber());
 		
 		if (user == null) {
 			return response(String.format("No user was found with userId %d", userId), 
-					Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
+					Status.NOT_FOUND, MediaType.TEXT_PLAIN_TYPE);
 		} else if (license_ != null && user.equals(license_.getUser())) {
-			return response(String.format("User with userId %d already has a license with licenseNumber %s", userId, license.getLicenseNumber()), 
-					Status.OK, MediaType.TEXT_PLAIN_TYPE);
+			return okay(license_);
 		} else if (license_ != null && !user.equals(license_.getUser())) {
 			return response(String.format("A different user owns licenseNumber %s", license.getLicenseNumber()), 
 					Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);

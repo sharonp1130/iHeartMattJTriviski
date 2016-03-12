@@ -1,6 +1,7 @@
 package help.me.rest.resources;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import help.me.orm.bo.IServiceBo;
 import help.me.orm.entity.Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * Resource for getthing the available resources. 
@@ -32,6 +37,7 @@ import help.me.orm.entity.Service;
 @Component
 @Scope(value="request")
 @Path("services")
+@Api(value="Resource to find services or get icons related to a service.")
 public class ServicesResource extends BaseResource {
 	@Autowired
 	IServiceBo serviceBo;
@@ -71,6 +77,12 @@ public class ServicesResource extends BaseResource {
 	@Path("descriptions")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Retrieve a list of all available service descriptions", 
+			response=String.class, 
+			responseContainer="Map")
+	@ApiResponses(value={
+			@ApiResponse(code=404, message="No services found")
+	})
 	public Response getServices() throws JsonProcessingException {
 		Collection<String> services = serviceBo.getServiceDescriptions();
 
@@ -80,7 +92,6 @@ public class ServicesResource extends BaseResource {
 			Map<String, Collection<String>> servs = new HashMap<String, Collection<String>>();
 			servs.put("descriptions", services);
 			
-//			return okay(JsonUtilities.getRequestMapper().writeValueAsString(servs), MediaType.APPLICATION_JSON_TYPE);
 			return okay(servs, MediaType.APPLICATION_JSON_TYPE);
 		}
 	}
@@ -97,13 +108,27 @@ public class ServicesResource extends BaseResource {
 	@Path("{description : [a-zA-Z]+}/icon")
 	@Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.TEXT_PLAIN})
 	@Transactional
+	@ApiOperation(value="Get icon file for service.")
+	@ApiResponses(value={@ApiResponse(code=500, message="Service icon not found or unexpected error.")})
 	public Response getIcon(@PathParam("description") String description) {
 		Service service = serviceBo.getServiceWithDescription(description);
 		
 		if (service == null) {
 			return notFound();
 		} else {
-			return streamFileResponse(service.getIconFileName());
+			InputStream iconStream = getClass().getResourceAsStream(service.getIconFileName());
+			
+			if (iconStream == null) {
+				return serverError("Icon file was not found for service" + description);
+			} else {
+				try {
+					return Response
+							.ok(getStreamingOutput(iconStream), MediaType.APPLICATION_OCTET_STREAM_TYPE)
+							.build();
+				} catch (Exception e) {
+					return serverError(ExceptionUtils.getRootCauseMessage(e), MediaType.TEXT_PLAIN_TYPE);
+				}
+			}
 		}
 	}
 }

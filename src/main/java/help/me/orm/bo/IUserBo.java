@@ -1,5 +1,7 @@
 package help.me.orm.bo;
 
+import java.util.Collection;
+
 import help.me.orm.entity.License;
 import help.me.orm.entity.Location;
 import help.me.orm.entity.User;
@@ -58,4 +60,15 @@ public interface IUserBo extends IBo<User>{
 	 * @return newly created license
 	 */
 	public License addLicense(User user, String licenseNum, String serviceDescription);
+	
+	/**
+	 * @param serviceDescription
+	 * @param longitude
+	 * @param latitude
+	 * @param distance in miles
+	 * @param maxResults max number or results to return
+	 * @param userToSkip do not include users with user id in this list.
+	 * @return Collection of users with their last location within distance miles of the input coordinates.
+	 */
+	public Collection<User> findProviders(String serviceDescription, double longitude, double latitude, double distance, int maxResults, Collection<Integer> userToSkip);
 }

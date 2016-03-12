@@ -3,13 +3,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+    <repositories>
+        <repository>
+            <id>swagger-maven-plugin-mvn-repo</id>
+            <url>https://github.com/kongchen/swagger-maven-plugin/raw/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
 	<groupId>help.me</groupId>
 	<artifactId>backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<name>help-me-backend</name>
 	<description>Help me backend server.</description>
-	
 	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
@@ -65,17 +75,11 @@
         </dependency>
         <!-- end::actuator[] -->
         <!-- tag::tests[] -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-		
-<!-- 		<dependency>
+ 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -95,6 +99,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+		</dependency>    
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -147,16 +156,44 @@
 		    <artifactId>commons-csv</artifactId>
 		    <version>1.2</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jersey2-jaxrs</artifactId>
-			<version>1.5.0</version>
+			<version>1.5.7</version>
+ 		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>1.5.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-cypher-compiler-2.1</artifactId>
+			<version>2.1.8</version>
 		</dependency>
 	</dependencies>
 
     <build>
         <plugins>
+        
+        		<plugin>
+        			<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-assembly-plugin</artifactId>
+        			<configuration>
+        				<descriptor>src/assembly/bin.xml</descriptor>
+        				<finalName>backend-${project.version}</finalName>
+        			</configuration>
+        			<executions>
+        				<execution>
+        					<phase>install</phase>
+        					<goals>
+        						<goal>single</goal>
+        					</goals>
+        				</execution>
+        			</executions>
+        		</plugin>
+        
+        
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -196,7 +233,114 @@
 	                </resources>
 	            </configuration>
 	        </plugin>
-        </plugins>
+
+<!-- 			<plugin>
+				<groupId>com.redowlanalytics</groupId>
+				<artifactId>swagger2markup-maven-plugin</artifactId>
+				<version>0.7.1</version>
+				<configuration>
+					
+					<inputDirectory>src/docs/swagger</inputDirectory>
+					<examplesDirectory>src/docs/asciidoc/generated</examplesDirectory>
+					<descriptionsDirectory>src/docs/asciidoc</descriptionsDirectory>
+					<schemasDirectory>src/docs/schema</schemasDirectory>
+					<separateDefinitions>true</separateDefinitions>
+				</configuration>
+			</plugin>
+
+	        
+			<plugin>
+				<groupId>io.github.robwin</groupId>
+				<artifactId>swagger2markup-maven-plugin</artifactId>
+				<version>0.9.2</version>
+				<configuration>
+					<inputDirectory>src/docs/swagger</inputDirectory>
+					<examplesDirectory>src/docs/asciidoc/generated</examplesDirectory>
+					<descriptionsDirectory>src/docs/asciidoc</descriptionsDirectory>
+					<schemasDirectory>src/docs/schema</schemasDirectory>
+					<separateDefinitions>true</separateDefinitions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>1.5.2</version>
+				<executions>
+					<execution>
+						<id>output-html</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+ -->
+             <plugin>
+                  <groupId>com.github.kongchen</groupId>
+                  <artifactId>swagger-maven-plugin</artifactId>
+                  <version>3.1.0</version>
+                  <configuration>
+                      <apiSources>
+                        <apiSource>
+                             <springmvc>false</springmvc>
+                             <locations>help.me.rest.resources</locations>
+                             <schemes>http</schemes>
+                             <host>localhost:8080</host>
+                             <basePath>/api</basePath>
+                             <info>
+                                 <title>Service Provider API</title>
+                                 <version>v1</version>
+                                 <description>Resources to create and query for service providers.</description>
+                                 <termsOfService>
+                                     http://www.github.com/kongchen/swagger-maven-plugin
+                                 </termsOfService>
+
+<!--                                  <contact>
+                                     <email>kongchen@gmail.com</email>
+                                     <name>Kong Chen</name>
+                                     <url>http://kongch.com</url>
+                                 </contact>
+ -->
+                                 <license>
+                                     <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+                                     <name>Apache 2.0</name>
+                                 </license>
+                             </info>
+                             <!-- Support classpath or file absolute path here.
+                             1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                             2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                 "${basedir}/src/main/resources/template/hello.html" -->
+                              <templatePath>${basedir}/src/main/resources/templates/strapdown.html.hbs</templatePath>
+                              <outputPath>${basedir}/target/classes/static/document.html</outputPath>
+                              <swaggerDirectory>generated/swagger-ui</swaggerDirectory>
+   			                  <swaggerApiReader>com.wordnik.swagger.jaxrs.reader.DefaultJaxrsApiReader</swaggerApiReader>
+                          </apiSource>
+                      </apiSources>
+                  </configuration>
+                 <executions>
+                     <execution>
+                         <phase>compile</phase>
+                         <goals>
+                             <goal>generate</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+			    <dependencies>
+			        <!-- Adding dependency to swagger-hibernate-validations to enable the BeanValidator as a custom
+			             model converter -->
+			        <dependency>
+			            <groupId>io.swagger</groupId>
+			            <artifactId>swagger-hibernate-validations</artifactId>
+			            <version>1.5.6</version>
+			        </dependency>
+			    </dependencies>
+
+             </plugin>
+    		</plugins>
     </build>
+
 	<packaging>jar</packaging>
+	
 </project>

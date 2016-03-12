@@ -1,48 +1,52 @@
+DROP DATABASE IF EXISTS `help_me_db`;
+CREATE DATABASE IF NOT EXISTS `help_me_db`;
+use `help_me_db`
 
     create table info (
-        infoId integer not null auto_increment,
+        infoId integer not null,
+        businessName varchar(64),
         address varchar(64) not null,
         city varchar(64) not null,
-        emailOk bit not null,
         phoneNumber varchar(20) not null,
-        phoneOk bit not null,
-        textOk bit not null,
+        emailOk tinyint(1) default 1,
+        phoneOk tinyint(1) default 1,
+        textOk tinyint(1) default 1,
         zipcode varchar(5) not null,
         user integer,
-        updated_at datetime,
-        created_at datetime,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (infoId)
     ) ENGINE=InnoDB;
 
     create table license (
-        licenseId integer not null auto_increment,
+        licenseId integer not null,
         licenseNumber varchar(32) not null,
-        service tinyblob not null,
+        service integer,
         user integer,
-        updated_at datetime,
-        created_at datetime,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (licenseId)
     ) ENGINE=InnoDB;
 
     create table location (
-        locationId integer not null auto_increment,
+        locationId integer not null,
         latitude double precision not null,
         longitude double precision not null,
         user integer not null,
-        updated_at datetime,
-        created_at datetime,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (locationId)
     ) ENGINE=InnoDB;
 
     create table service (
-        serviceId integer not null auto_increment,
+        serviceId integer not null,
         description varchar(100) not null,
-        created_at datetime,
+        iconFileName varchar(256) not null,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (serviceId)
     ) ENGINE=InnoDB;
 
     create table settings (
-        settingsId integer not null auto_increment,
+        settingsId integer not null,
         fridayEnd time,
         fridayStart time,
         mondayEnd time,
@@ -58,61 +62,59 @@
         wednesdayEnd time,
         wednesdayStart time,
         user integer,
-        updated_at datetime,
-        created_at datetime,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (settingsId)
     ) ENGINE=InnoDB;
 
     create table user (
-        userId integer not null auto_increment,
+        userId integer not null,
         email varchar(50) not null,
+        firstName varchar(20) not null,
+        lastName varchar(20) not null,
+        isProvider tinyint(1) default 0,
         info integer,
         settings integer,
-        updated_at datetime,
-        created_at datetime,
+        updated_at datetime on update CURRENT_TIMESTAMP,
+        created_at datetime default CURRENT_TIMESTAMP,
         primary key (userId)
     ) ENGINE=InnoDB;
 
     alter table license 
-        add constraint UK_lvjf835d07i7ocaqt6eokfely  unique (licenseNumber);
+        add constraint UK_licenseNumber  unique (licenseNumber, user);
 
     alter table service 
-        add constraint UK_njew1c9fl5n5u2fmteo291087  unique (description);
+        add constraint UK_serviceDescription  unique (description);
 
     alter table user 
-        add constraint UK_ob8kqyqqgmefl0aco34akdtpe  unique (email);
+        add constraint UK_email  unique (email);
 
     alter table info 
-        add constraint FK_tlhqa6aw4w6nf3lys7psffx1g 
+        add constraint FK_info_user 
         foreign key (user) 
         references user (userId);
 
     alter table license 
-        add constraint FK_9gvkruwy6mlddv6y0gbraguwo 
+        add constraint FK_license_user 
         foreign key (user) 
-        references user (userId);
-
-    alter table license 
-        add constraint FK_4wd9hhh6chohd0y3b42v3vtcv 
-        foreign key (licenseId) 
         references user (userId);
 
     alter table location 
-        add constraint FK_owkc1yyb1330lm9mvakxldg85 
+        add constraint FK_location_user
         foreign key (user) 
         references user (userId);
 
     alter table settings 
-        add constraint FK_lnd19kday2o70exm15vyct55w 
+        add constraint FK_settings_user
         foreign key (user) 
         references user (userId);
 
     alter table user 
-        add constraint FK_bw1t1f0s75tvu7n445abxweme 
+        add constraint FK_user_info 
         foreign key (info) 
         references info (infoId);
 
     alter table user 
-        add constraint FK_9wplpc8a5gs5yc0q4cqcvigcl 
+        add constraint FK_user_settings
         foreign key (settings) 
         references settings (settingsId);
