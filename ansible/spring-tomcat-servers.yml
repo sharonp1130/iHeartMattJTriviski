@@ -2,9 +2,10 @@
 - hosts: spring-tomcat-servers
   remote_user: root
   vars: 
+    new_user: tomcat
     http_port: 80
-    apt_packages: 
-      - git 
+
+    # ansible-mysql variables
     mysql_root_password: rootpassword
     mysql_enabled_on_startup: yes
     
@@ -23,14 +24,19 @@
         - mysql-server
         - mysql-client
 
+    # Ansible maven variables.
     maven_major: 3
     maven_release: 3.3.9
+    
+    # Git stuff
+    git_branch: master
+    git_url: git@github.com:sharonp1130/iHeartMattJTriviski.git
+    git_dest_dir: "/home/{{ new_user }}/help_me"
 
   roles:
-    - { role: add_user, new_user: "tomcat" }
+    - { role: add_user }
     - { role: ansible-java-oracle }
     - { role: ansible-mysql }
     - { role: ansible-maven}
-    #- { role: apt_install }
-
-
+    - { role: git_bootstrap, tags: [bootstrap] }
+    - { role: git, tags: [git, install] }

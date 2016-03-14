@@ -1,0 +1,20 @@
+---
+# file: ssh_keys/tasks/main.yml
+# variables:
+# required: new_user - The user to add the ssh keys as, pub_rsa, priv_rsa, the path to the file rsa files to be copied over.
+
+# Required variables: new_user, home_mode, ie 0755., force_create.
+# required files: ssh_keys/files/id_rsa, id_rsa.pub.
+# required variables: pub_rsa, priv_rsa.  These are the paths to the files to be copied over.
+
+# Create the .ssh directory.  This assumes the users home already exists.
+- name: Create the .ssh directory.
+  file: path=/home/{{ new_user }}/.ssh owner={{ new_user }} group={{ new_user }} mode={{ rsa_dir_mode }} state=directory
+  
+- name: Copy the rsa private file.
+  copy: src={{ priv_rsa }} dest=/home/{{ new_user }}/.ssh/id_rsa backup={{ backup }} force={{ force_create }} mode={{ rsa_mode }} owner={{ new_user }}
+
+- name: Copy the rsa public file.
+  copy: src={{ pub_rsa }} dest=/home/{{ new_user }}/.ssh/id_rsa.pub backup=yes force={{ force_create }} mode={{ rsa_mode }} owner={{ new_user }}
+
+    

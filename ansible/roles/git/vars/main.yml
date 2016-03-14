@@ -1,0 +1,17 @@
+---
+# Variables for retrieving the git repo.
+
+# Specify the branch to checkout.  Default is always master.
+# git_branch: master
+
+# The url for the repo.
+# git_url: URL_NOT_SET
+
+# The checkout location.  
+# git_dest_dir: DEST_DIR_NOT_SET
+
+# These are used to grab the contents of the local rsa key file.  If the file does not exist
+# you must create it blah.
+ansible_user_pub_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+ansible_user_key: "{{ lookup('file', ansible_user_pub_file) }}"
+
