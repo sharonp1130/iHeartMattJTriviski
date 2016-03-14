@@ -6,3 +6,4 @@
 *.swp
 target
 last_run.log
+ansible/roles/ansible-*

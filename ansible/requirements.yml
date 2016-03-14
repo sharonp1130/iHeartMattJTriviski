@@ -1,0 +1,16 @@
+---
+# Maven installer
+- src: tecris.maven
+  name: ansible-maven
+
+# Java installer for oracle
+- src: williamyeh.oracle-java
+  name: ansible-java-oracle
+
+# Mysql installer.
+- src: geerlingguy.mysql
+  name: ansible-mysql
+
+# Tomcat installer
+#- src: alexanderjardim.tomcat
+#  name: ansible-tomcat

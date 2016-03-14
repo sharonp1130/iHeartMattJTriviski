@@ -1,0 +1,18 @@
+---
+# Role to create a user and set up the users home directory.
+# Required variables: new_user, home_mode, ie 0755.  Note, this must be quoted because it will be changed to integer if you set the mode using no quotes.
+- name: Add a new user without a password.
+  user: name={{ new_user }} state={{ home_state }} generate_ssh_key={{ create_ssh }} shell="{{ user_shell }}"
+  when: new_user_password is not defined
+
+- name: Encrypt the supplied user password
+  shell: "/usr/bin/openssl passwd -salt salty -1 {{ new_user_password }}"
+  register: encrypted_password
+  when: new_user_password is defined
+
+- name: Add a new user with a password.
+  user: name={{ new_user }} state={{ home_state }} generate_ssh_key={{ create_ssh }} shell="{{ user_shell }}" password={{ encrypted_password.stdout }}
+  when: new_user_password is defined  
+                        
+- name: Set the permissions for the new users home dir.
+  file: state={{ home_dir_state }} path="/home/{{ new_user }}" mode={{ home_mode }} owner={{ new_user }} group={{ new_user }}

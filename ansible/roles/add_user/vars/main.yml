@@ -1,0 +1,20 @@
+---
+# file: add_user/var/mail.yml
+home_mode: "0755"
+
+# Present or absent.  Defaults to present.
+home_state: present
+
+home_dir_state: directory
+
+create_ssh: no
+
+user_shell: "/bin/bash"
+
+
+# Default password that is encrypted.  For more secure, should set this password at execution.
+# Password must be encrytped.  Encrypt a password like this:
+# openssl passwd -salt salty -1 <my password>
+
+# By default, the user is added without a password.  Set new_user_password to add a password.  The encryption is included, so add the actual password.
+# new_user_password: 'balls'

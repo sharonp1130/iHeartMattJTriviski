@@ -1,0 +1,36 @@
+---
+- hosts: spring-tomcat-servers
+  remote_user: root
+  vars: 
+    http_port: 80
+    apt_packages: 
+      - git 
+    mysql_root_password: rootpassword
+    mysql_enabled_on_startup: yes
+    
+    mysql_databases: 
+        - name: help_me_db
+          encoding: latin1
+          collation: latin1_general_ci
+          
+    mysql_users: 
+      - name: helper
+        host: "%"
+        password: helperpassword
+        priv: "help_me_db.*:ALL"
+
+    mysql_packages:
+        - mysql-server
+        - mysql-client
+
+    maven_major: 3
+    maven_release: 3.3.9
+
+  roles:
+    - { role: add_user, new_user: "tomcat" }
+    - { role: ansible-java-oracle }
+    - { role: ansible-mysql }
+    - { role: ansible-maven}
+    #- { role: apt_install }
+
+
