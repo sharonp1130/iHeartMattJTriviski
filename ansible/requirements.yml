@@ -11,6 +11,5 @@
 - src: geerlingguy.mysql
   name: ansible-mysql
 
-# Tomcat installer
-#- src: alexanderjardim.tomcat
-#  name: ansible-tomcat
+- src: sprylab.tomcat-ubuntu
+  name: ansible-tomcat8

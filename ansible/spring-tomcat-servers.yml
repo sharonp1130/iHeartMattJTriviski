@@ -33,10 +33,15 @@
     git_url: git@github.com:sharonp1130/iHeartMattJTriviski.git
     git_dest_dir: "/home/{{ new_user }}/help_me"
 
+    # Tomcat variables
+    tomcat_ubuntu_user_install: yes
+    tomcat_ubuntu_mysql_jbdc_install: yes
+
   roles:
-    - { role: add_user }
-    - { role: ansible-java-oracle }
-    - { role: ansible-mysql }
-    - { role: ansible-maven}
+    - { role: add_user, tags: [user]}
+    - { role: ansible-java-oracle, tags: [install, java] }
+    - { role: ansible-mysql, tags: [install, mysql]}
+    - { role: ansible-maven, tags: [install, maven]}
+    - { role: ansible-tomcat8, tags: [install, tomcat]}
     - { role: git_bootstrap, tags: [bootstrap] }
-    - { role: git, tags: [git, install] }
+    - { role: git, tags: [install, git] }
