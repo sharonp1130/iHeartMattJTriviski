@@ -5,9 +5,15 @@ import java.io.IOException;
 import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 import org.springframework.stereotype.Component;
 
-import io.swagger.jaxrs.config.BeanConfig;
+import help.me.rest.ObjectMapperProvider;
+import help.me.rest.resources.LocationResource;
+import help.me.rest.resources.PingResource;
+import help.me.rest.resources.Query;
+import help.me.rest.resources.ServicesResource;
+import help.me.rest.resources.UserResource;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
 
@@ -20,7 +26,6 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @Component
 @ApplicationPath("api")
 public class HelpResourceConfig extends ResourceConfig {
-	private static final String RESOURCE_PACKAGES = "help.me.rest";
 	
 	public HelpResourceConfig() throws IOException {
 		super();
@@ -28,20 +33,19 @@ public class HelpResourceConfig extends ResourceConfig {
 	     * Register JAX-RS application components.
 	     */
 		setApplicationName("Help Me Server");
-		packages(RESOURCE_PACKAGES);
-		//this.register(RequestContextFilter.class);
 		
 		// Add the swagger classes.
 		register(SwaggerSerializers.class);
         register(ApiListingResource.class);
+        register(LocationResource.class);
+        register(PingResource.class);
+        register(Query.class);
+        register(ServicesResource.class);
+        register(UserResource.class);
+        register(ObjectMapperProvider.class);
+        property(ServerProperties.MOXY_JSON_FEATURE_DISABLE, true);
+        
+        setApplicationName("HelpMeBackendServer");
 
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setVersion("1.0.2");
-        beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:8080");
-        beanConfig.setBasePath("/api");
-        beanConfig.setResourcePackage("help.me.rest.resources");
-        beanConfig.setPrettyPrint(true);
-        beanConfig.setScan(true);
 	}
 }

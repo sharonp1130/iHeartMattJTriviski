@@ -11,10 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import help.me.boot.WebBoot;
+import help.me.boot.SpringBootMain;
 import help.me.orm.bo.impl.InfoBoImpl;
 
-@ContextConfiguration(classes=WebBoot.class)
+@ContextConfiguration(classes=SpringBootMain.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class InfoTest {
 	

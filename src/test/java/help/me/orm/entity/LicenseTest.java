@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import help.me.boot.WebBoot;
+import help.me.boot.SpringBootMain;
 import help.me.orm.bo.impl.LicenseBoImpl;
 import help.me.orm.bo.impl.UserBoImpl;
 import help.me.utilities.json.JsonUtilities;
 
-@ContextConfiguration(classes=WebBoot.class)
+@ContextConfiguration(classes=SpringBootMain.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LicenseTest {
 	
