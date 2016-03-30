@@ -1,0 +1,11 @@
+---
+# var file for maven build role.
+
+# The maven command to use.
+# maven_cmd
+
+# The directory to build the repo.
+# repo_root_dir
+
+# Maven goals
+maven_goals: "clean compile"

@@ -1,0 +1,15 @@
+---
+# var file for webapp-deploy role
+
+# War file to be copied or linked to the tomcat webapp directory.
+war_file: 
+
+# War file destination name.
+dest_name: 
+
+# Tomcat webapp directory:
+webapp_dir: 
+
+# Flag for linking or copying war file to webapp dir.  Default is copy.
+link_war_file: no
+

@@ -1,0 +1,21 @@
+---
+# tasks file for webapp-deploy role
+- fail: msg="webapp_dir is a required variable and is not set."
+  when: webapp_dir is not defined 
+
+- name: Check to see if webapp_dir exists
+  stat: path="{{ webapp_dir }}"
+  register: dir_stat
+
+- fail: msg="{{ webapp_dir }} does not exist."
+  when: not dir_stat.stat.exists
+
+- name: "Link war file {{ war_file }} to tomcat webapp directory {{ webapp_dir }}"
+  file: state=link owner="{{ deploy_user }}" src="{{ war_file }}" dest="{{ webapp_dir }}/{{ dest_name if dest_name is defined else '' }}"
+  remote_user: "{{ deploy_user }}"
+  when: link_war_file is defined and link_war_file and 
+
+- name: "Copy war file {{ war_file }} to tomcat webapp directory {{ webapp_dir }}"
+  file: remote_src=True owner="{{ deploy_user }}" src="{{ war_file }}" dest="{{ webapp_dir }}/{{ dest_name if dest_name is defined else '' }}"
+  remote_user: "{{ deploy_user }}"
+  when: link_war_file is defined and not link_war_file

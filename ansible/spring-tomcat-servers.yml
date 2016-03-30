@@ -36,10 +36,10 @@
     # Tomcat variables
     tomcat_ubuntu_user_install: yes
     tomcat_ubuntu_mysql_jbdc_install: yes
-
-  tasks:
-    - name: Build the project and deploy the war file to tomcat.
-
+    
+    # Used to build and deploy the app.
+    maven_cmd: /opt/apache-maven-3.3.9/bin/mvn
+    repo_root_dir: "{{ git_dest_dir }}"
 
   roles:
     - { role: add_user, tags: [user]}
@@ -49,3 +49,4 @@
     - { role: ansible-tomcat8, tags: [install, tomcat]}
     - { role: git_bootstrap, tags: [bootstrap] }
     - { role: git, tags: [install, git] }
+    - { role: webapp-deploy, deploy_user: "{{ new_user }}", tags: [deploy] }
