@@ -1,0 +1,33 @@
+---
+
+# Playbook for taking a local war file and deploying it in a remote tomcat webapp directory.
+# This expects that the variable war_file is set, most likely from the command line and it is 
+# the path to the war file to be deployed from the local host.
+- hosts: spring-tomcat-servers
+  remote_user: root
+  
+  vars:
+    mysql_root_password: rootpassword
+    webapp_dir: /var/lib/tomcat8/webapps
+    
+  tasks:
+    - fail: msg="webapp_dir is a required variable and is not set."
+      when: webapp_dir is not defined 
+
+    - fail: msg="war_file is a required variable and is not set."
+      when: war_file is not defined 
+    
+    - name: Check to see if webapp_dir exists
+      stat: path="{{ webapp_dir }}"
+      register: dir_stat
+    
+    - fail: msg="{{ webapp_dir }} does not exist."
+      when: not dir_stat.stat.exists
+      
+    - name: Copy "{{ war_file }}" to "{{ webapp_dir }}".
+      copy: src="{{ war_file }}" dest="{{ webapp_dir }}/services"
+    
+  
+  
+  
+
