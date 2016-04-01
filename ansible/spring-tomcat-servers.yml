@@ -15,7 +15,10 @@
       tags: pre
       
     - name: Add repository for Ubuntu 14.4
-      apt_repository: repo='deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu trusty main'
+      apt_repository: repo="{{ item }}"
+      with_items: 
+        - 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu trusty main'
+        - 'ppa:openjdk-r/ppa'
       register: results
       tags: pre
       
@@ -23,12 +26,25 @@
       apt: update_cache=yes
       when: results.changed
       tags: pre
-  
+      
+    - name: Install java
+      apt: name=openjdk-8-jdk
+      register: java_install
+      tags: pre
+      
+    - name: Set the default java version 
+      alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+      tags: pre
+     
+      
   vars: 
     http_port: 80
     db_name: help_me_db
+    mysql_user: helper
+    mysql_helper_password: H3lp3rp@$$w0rd
+    new_user_password: "x^5%#$%00fgsaDs@1"
     
-    mysql_root_password: rootpassword
+    mysql_root_password: "**$$534%$#@"
     
     # This will force change the password.
     mysql_root_password_update: yes
@@ -41,9 +57,9 @@
           collation: latin1_general_ci
           
     mysql_users: 
-      - name: helper
+      - name: "{{ mysql_user }}"
         host: "%"
-        password: helperpassword
+        password: "{{ mysql_helper_password }}"
         priv: "{{ db_name }}.*:ALL"
         
     # I guess this is the default so things won't start
@@ -58,12 +74,8 @@
       - mariadb-client
       - mariadb-server
       - python-mysqldb
-
-    # Tomcat variables
-    tomcat_ubuntu_user_install: yes
-    tomcat_ubuntu_mysql_jbdc_install: yes
     
   roles:
-    - { role: ansible-java-oracle, tags: [install, java] }
+    - { role: add_user, new_user: "{{ mysql_user }}", tags: [user] }
+    - { role: local-mycnf, tags: [user, mysql] }
     - { role: ansible-mysql, tags: [install, mysql]}
-    - { role: ansible-tomcat8, tags: [install, tomcat]}

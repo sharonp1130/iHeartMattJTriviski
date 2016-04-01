@@ -3,13 +3,9 @@
 - src: tecris.maven
   name: ansible-maven
 
-# Java installer for oracle
-- src: williamyeh.oracle-java
-  name: ansible-java-oracle
-
 # Mysql installer.
 - src: geerlingguy.mysql
   name: ansible-mysql
-
-- src: sprylab.tomcat-ubuntu
-  name: ansible-tomcat8
+  
+- src: angstwad.docker_ubuntu
+  name: ansible-docker

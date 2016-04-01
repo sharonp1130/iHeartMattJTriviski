@@ -1,0 +1,11 @@
+---
+# local-mycnf/tasks/main.yml
+# Creates a local .my.cnf file with the mysql_user and password set up.
+# This means the user does not need to use password and user.
+- name: Create the local .my.cnf file with user / password.
+  template:
+    src: local.my.cnf.j2
+    dest: "/home/{{ mysql_user }}/.my.cnf"
+    owner: "{{ mysql_user }}"
+    group: "{{ mysql_user }}"
+    mode: 0600
