@@ -1,0 +1,5 @@
+---
+# daemonize/meta/main.yml
+dependencies:
+  - role: deploy-war
+

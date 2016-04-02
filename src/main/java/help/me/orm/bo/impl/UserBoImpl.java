@@ -166,9 +166,7 @@ public class UserBoImpl implements IUserBo {
 				crit.add(Restrictions.not(Restrictions.in("user.userId", userToSkip)));
 			}
 			
-			if (maxResults > 0) {
-				crit.setMaxResults(maxResults);
-			}
+			crit.setMaxResults(maxResults > 0 ? maxResults : RESULT_UPPER_LIMIT);
 
 			Collection<User> results = crit.list();
 			

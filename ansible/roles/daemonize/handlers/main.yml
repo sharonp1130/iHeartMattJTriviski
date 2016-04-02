@@ -1,0 +1,18 @@
+---
+# daemonize/handlers/main.yml
+- name: "restart {{ daemon_service_name }}"
+  service: 
+    name: "{{ daemon_service_name }}"
+    state: restarted
+
+- name: "start {{ daemon_service_name }}"
+  service: 
+    name: "{{ daemon_service_name }}"
+    state: started 
+    enabled: yes
+
+- name: "stop {{ daemon_service_name }}"
+  service: 
+    name: "{{ daemon_service_name }}"
+    state: stopped 
+    enabled: no

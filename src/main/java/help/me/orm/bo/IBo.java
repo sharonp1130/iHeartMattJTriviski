@@ -5,6 +5,13 @@ import org.apache.log4j.Logger;
 import help.me.orm.dao.IDao;
 
 public interface IBo<T> {
+	/**
+	 * This value should be used when doing queries if no max results is given.  If 
+	 * we don't do this an outside force could spam the server by requesting everything 
+	 * which at some point will be a huge number of values.
+	 */
+	static final int RESULT_UPPER_LIMIT = 30;
+	
 	static Logger log = Logger.getLogger(IBo.class);
 
 	public IDao<T> getDao();

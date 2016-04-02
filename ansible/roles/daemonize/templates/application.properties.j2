@@ -1,0 +1,18 @@
+logging.level.root=INFO
+logging.level.org.springframework=INFO
+endpoints.actuator.enabled=true
+management.context-path=/
+
+# Required values for the database.
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:{{ mysql_port }}/{{ db_name }}
+jdbc.username={{ mysql_user }}
+jdbc.password={{ mysql_helper_password }}
+
+# Hibernate related values.
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.format_sql=false
+hibernate.show_sql=false
+hibernate.hbm2ddl.auto=create
+
+server.port=${port:8080}

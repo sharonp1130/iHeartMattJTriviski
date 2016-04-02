@@ -1,0 +1,18 @@
+---
+# daemonize/vars/main.yml
+
+# Name of the service
+daemon_service_name: 
+
+# Command to run
+daemon: 
+
+# Options to pass to the daemon.
+daemon_opts:
+
+# Pidfile for the daemon.
+daemon_pidfile:
+
+# If you want the service to start as a user other than 
+# root change this.
+daemon_user: root

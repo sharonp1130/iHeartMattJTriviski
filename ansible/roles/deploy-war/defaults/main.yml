@@ -1,0 +1,10 @@
+---
+# deploy/vars/main.yml
+# The war file that is being deployed and set up to execute.
+war_file:
+
+# Destination for the file on the host machine.
+# The destination directory.  This will be created if need be.
+war_dest_dir: 
+
+war_owner: root

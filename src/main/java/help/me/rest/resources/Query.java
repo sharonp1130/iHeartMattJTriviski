@@ -1,7 +1,9 @@
 package help.me.rest.resources;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
@@ -13,10 +15,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import help.me.orm.entity.User;
+import help.me.utilities.ConvertUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -58,13 +62,19 @@ public class Query extends BaseResource {
 			@NotNull @QueryParam("latitude") Double latitude,
 			@ApiParam(value="Allowable distance of user.", required=true) 
 			@QueryParam("distance") double distance,
-			@ApiParam(value="Max number of query results.  Zero or less means no limit", defaultValue="0") 
+			@ApiParam(value="Max number of query results.  Zero or less means the system limit will be used.", defaultValue="0") 
 			@QueryParam("maxResults") int maxResults,
-			@ApiParam(value="User ids to skip.  Currently each value must be added as a query param.  Future updates will allow for csv inputs.") 
-			@QueryParam("usersToSkip") List<Integer> usersToSkip
+			@ApiParam(value="User ids to skip.  This should be a csv with single user IDS and/or number ranges.  Example: 1,2,3,7..12.") 
+			@QueryParam("usersToSkip") List<String> usersToSkip
 			) {
 
-		Collection<User> results = userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, usersToSkip);
+		Collection<Integer> skips = new TreeSet<Integer>();
+		
+		for (String chunk : usersToSkip) {
+			skips.addAll(ConvertUtils.convertRangeInt(Arrays.asList(StringUtils.split(chunk, ","))));
+		}
+
+		Collection<User> results = userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, skips);
 		
 		return okay(results);
 	}

@@ -42,20 +42,18 @@
     db_name: help_me_db
     mysql_user: helper
     mysql_helper_password: H3lp3rp@$$w0rd
-    new_user_password: "x^5%#$%00fgsaDs@1"
+    new_user_password: 2489xtc432%
     
-    mysql_root_password: "**$$534%$#@"
+    mysql_root_password: chickenTastesGood(123)
     
     # This will force change the password.
     mysql_root_password_update: yes
 
     mysql_enabled_on_startup: yes
     
-    mysql_databases: 
-        - name: "{{ db_name }}"
-          encoding: latin1
-          collation: latin1_general_ci
-          
+    # Using the same file as the ansible-mysql, but we are creating 
+    # our own database because we need to make sure that we do not
+    # drop the database.
     mysql_users: 
       - name: "{{ mysql_user }}"
         host: "%"
@@ -74,8 +72,45 @@
       - mariadb-client
       - mariadb-server
       - python-mysqldb
+      
     
+    # Daemonize variables
+    daemon_service_name: helpme
+    daemon_pidfile: "/tmp/helpme.pid"
+    daemon: /usr/bin/java 
+    daemon_user: "{{ mysql_user }}"
+    daemon_etc: "/etc/{{ daemon_service_name }}"
+    daemon_properties: "{{ daemon_etc }}/properties"
+    daemon_bin: "{{ daemon_etc }}/bin"
+    daemon_opts: "-Djava.security.egd=file:/dev/./urandom -jar {{ war_executable }} --spring.config.location=file:{{ daemon_properties }}/application.properties"
+
+    # Deployment variables.
+    war_file: "../target/backend-0.0.2-SNAPSHOT-executable.war"
+    war_dest_dir: "{{ daemon_bin }}"
+    
+    dump_file: help_me_db.dump.sql
+    dump_dest: "/tmp/{{ dump_file }}"
+    
+  #tasks:
+  #  - name: Check to see if database "{{ db_name }}" exists
+  #    mysql_db: state=present name="{{ db_name }}"
+  #    tags: db-load
+  #    register: db_exists
+    
+  #  - name: Copy db dump file to remote
+  #    copy: src="{{ dump_file }}" dest="{{ dump_dest }}"
+  #    tags: db-load
+  #    when: db_exists.changed
+      
+  #  - name: Load dump file {{ dump_dest }}
+  #    mysql_db: state=import name="{{ db_name }}" target="{{ dump_dest }}"
+  #    tags: db-load
+  #    when: db_exists.changed
+    
+  
   roles:
     - { role: add_user, new_user: "{{ mysql_user }}", tags: [user] }
     - { role: local-mycnf, tags: [user, mysql] }
     - { role: ansible-mysql, tags: [install, mysql]}
+    - { role: load-db, tags: [db-load]}
+    - { role: daemonize, tags: [deploy, daemon]}
