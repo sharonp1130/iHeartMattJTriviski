@@ -1,11 +1,11 @@
 package help.me.rest.resources;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
-import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import help.me.orm.entity.User;
 import help.me.utilities.ConvertUtils;
@@ -37,6 +38,31 @@ import io.swagger.annotations.ApiParam;
 @Api(value="Provider query resource.")
 public class Query extends BaseResource {
 	
+	/**
+	 * Special extention of the array list class that is 
+	 * used for user query results.  This class is used to use 
+	 * the specially set up object mapper for the query result
+	 * serialization to JSON.
+	 * 
+	 * @author triviski
+	 *
+	 */
+	@SuppressWarnings("serial")
+	public class UserQueryResults extends ArrayList<User> {
+
+		public UserQueryResults() {
+			super();
+		}
+
+		public UserQueryResults(Collection<? extends User> c) {
+			super(c);
+		}
+
+		public UserQueryResults(int initialCapacity) {
+			super(initialCapacity);
+		}
+	}
+
 	/**
 	 * @param serviceDescription
 	 * @param longitude
@@ -61,7 +87,7 @@ public class Query extends BaseResource {
 			@ApiParam(value="The current latitude", required=true) 
 			@NotNull @QueryParam("latitude") Double latitude,
 			@ApiParam(value="Allowable distance of user.", required=true) 
-			@QueryParam("distance") double distance,
+			@NotNull @QueryParam("distance") Double distance,
 			@ApiParam(value="Max number of query results.  Zero or less means the system limit will be used.", defaultValue="0") 
 			@QueryParam("maxResults") int maxResults,
 			@ApiParam(value="User ids to skip.  This should be a csv with single user IDS and/or number ranges.  Example: 1,2,3,7..12.") 
@@ -74,7 +100,7 @@ public class Query extends BaseResource {
 			skips.addAll(ConvertUtils.convertRangeInt(Arrays.asList(StringUtils.split(chunk, ","))));
 		}
 
-		Collection<User> results = userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, skips);
+		Collection<User> results = new UserQueryResults(userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, skips));
 		
 		return okay(results);
 	}

@@ -1,9 +1,9 @@
 
     create table info (
         infoId integer not null,
-        businessName varchar(64),
-        address varchar(64) not null,
-        city varchar(64) not null,
+        businessName varchar(256),
+        address varchar(256) not null,
+        city varchar(128) not null,
         phoneNumber varchar(20) not null,
         emailOk tinyint(1) default 1,
         phoneOk tinyint(1) default 1,
@@ -42,6 +42,15 @@
         primary key (serviceId)
     ) ENGINE=InnoDB;
 
+    create table subservice (
+        subServiceId integer not null,
+        description varchar(100) not null,
+        iconFileName varchar(256) not null,
+        service integer,
+        created_at datetime default CURRENT_TIMESTAMP,
+        primary key (subServiceId)
+    ) ENGINE=InnoDB;
+
     create table settings (
         settingsId integer not null,
         fridayEnd time,
@@ -67,8 +76,8 @@
     create table user (
         userId integer not null,
         email varchar(50) not null,
-        firstName varchar(20) not null,
-        lastName varchar(20) not null,
+        firstName varchar(64) not null,
+        lastName varchar(128) not null,
         isProvider tinyint(1) default 0,
         info integer,
         settings integer,

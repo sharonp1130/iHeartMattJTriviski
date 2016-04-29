@@ -3,16 +3,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <repositories>
-        <repository>
-            <id>swagger-maven-plugin-mvn-repo</id>
-            <url>https://github.com/kongchen/swagger-maven-plugin/raw/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+			<id>swagger-maven-plugin-mvn-repo</id>
+			<url>https://github.com/kongchen/swagger-maven-plugin/raw/mvn-repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>OSGEO GeoTools repo</id>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+		</repository>
+		<repository>
+			<id>Hibernate Spatial repo</id>
+			<url>http://www.hibernatespatial.org/repository</url>
+		</repository>
+	</repositories>
 
 	<groupId>help.me</groupId>
 	<artifactId>backend</artifactId>
@@ -30,6 +38,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -92,9 +101,12 @@
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<artifactId>jackson-datatype-hibernate5</artifactId>
 		</dependency>    
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-orm</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
@@ -131,7 +143,12 @@
 			<artifactId>oro</artifactId>
 			<version>2.0.8</version>
 		</dependency>
- </dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+	</dependencies>
 
     <build>
         <plugins>
@@ -223,4 +240,13 @@
     </build>
 
 	
+    <dependencyManagement>
+    	<dependencies>
+    		<dependency>
+    			<groupId>org.hibernate</groupId>
+    			<artifactId>hibernate-search-orm</artifactId>
+    			<version>5.1.0.Final</version>
+    		</dependency>
+    	</dependencies>
+    </dependencyManagement>
 </project>

@@ -5,6 +5,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import help.me.rest.resources.Query.UserQueryResults;
 import help.me.utilities.json.JsonUtilities;
 
 /**
@@ -17,9 +18,11 @@ import help.me.utilities.json.JsonUtilities;
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 	private ObjectMapper mapper;
+	private ObjectMapper userMapper;
 	
 	public ObjectMapperProvider() {
 		mapper = JsonUtilities.createRequestObjectMapper();
+		userMapper = JsonUtilities.createUserObjectMapper();
 	}
 	
 	   /**
@@ -29,6 +32,14 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 	    */
 	   @Override
 	   public ObjectMapper getContext(final Class<?> type) {
-		   return mapper;
+		   /**
+		    * Query results will be stored in a special list class in order to 
+		    * identify when the user object mapper needs to be used.
+		    */
+		   if (type.equals(UserQueryResults.class)) {
+			   return userMapper;
+		   } else {
+			   return mapper;
+		   }
 	   }
 }
