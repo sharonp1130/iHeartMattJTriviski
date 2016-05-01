@@ -7,3 +7,4 @@
 target
 last_run.log
 ansible/roles/ansible-*
+*_.java
