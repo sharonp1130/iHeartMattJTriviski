@@ -62,6 +62,9 @@ public class User implements java.io.Serializable {
 	@JsonIgnore
     private Set<License> licenses = new HashSet<License>(0);
 	@JsonIgnore
+	private Set<Location> locations = new HashSet<Location>(0);
+
+	@JsonIgnore
 	private Date createdAt;
 	@JsonIgnore
 	private Date updatedAt;
@@ -218,6 +221,16 @@ public class User implements java.io.Serializable {
     public void setLicenses(Set<License> licenses) {
         this.licenses = licenses;
     }
+    
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
+    public Set<Location> getLocations() {
+        return this.locations;
+    }
+    
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
+    
 	
 	@Generated(GenerationTime.INSERT) 
 	@Temporal(TemporalType.TIMESTAMP)
