@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -142,8 +141,7 @@ public class Info implements java.io.Serializable {
 	}
 
 	@JoinColumn(name="user")
-	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public User getUser() {
 		return this.user;
 	}

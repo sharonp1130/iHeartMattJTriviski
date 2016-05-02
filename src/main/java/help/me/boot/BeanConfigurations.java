@@ -87,7 +87,7 @@ public class BeanConfigurations {
         properties.put(HIBERNATE_FORMAT_SQL_PROPERTY, environment.getRequiredProperty(HIBERNATE_FORMAT_SQL_PROPERTY));
         
         if (environment.containsProperty("hibernate.hbm2ddl.auto")) {
-        		properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.format_sql"));
+        		properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         }
         
         return properties;        

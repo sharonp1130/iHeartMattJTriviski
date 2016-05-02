@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -92,8 +91,7 @@ public class License implements java.io.Serializable {
 	}
 
 	@JoinColumn(name = "user")
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	public User getUser() {
 		return this.user;
 	}

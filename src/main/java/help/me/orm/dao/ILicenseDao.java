@@ -1,7 +1,5 @@
 package help.me.orm.dao;
 
-import java.util.Collection;
-
 import help.me.orm.entity.License;
 import help.me.orm.entity.Service;
 import help.me.orm.entity.User;

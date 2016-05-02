@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class ServiceInitListener {
 	 * @param ctx
 	 */
 	@EventListener
-	public void handleApplicationReady(ContextRefreshedEvent ctx) {
+	public void handleApplicationReady(ApplicationReadyEvent ctx) {
 		String initFile = System.getProperty(SERVICE_INIT_FILE_PROPERTY);
 	    initFile = initFile == null ? INIT_DEFAULT_FILE : initFile;
 	    

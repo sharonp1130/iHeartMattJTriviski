@@ -43,6 +43,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User implements java.io.Serializable {
 	@JsonProperty("userId")
 	private int userId;
+	
 	@JsonProperty("email")
 	private String email;
 	@JsonProperty("firstName")
@@ -53,7 +54,7 @@ public class User implements java.io.Serializable {
 	boolean isProvider;
 
 	/**
-	 * info, settings and licenses are not included.  Those are retruned independantly.
+	 * info, settings and licenses are not included.  Those are returned independently.
 	 */
 	@JsonIgnore
 	private Settings settings;
