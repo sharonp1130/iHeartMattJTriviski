@@ -38,11 +38,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<hibernate-search.version>5.5.3.Final</hibernate-search.version>
 		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
-		
+<!-- 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-actuator-docs</artifactId>
@@ -55,7 +56,8 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-rest-hal-browser</artifactId>
 		</dependency>
-		<dependency>
+	
+ -->		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -75,11 +77,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>	
-        <dependency>
+<!--         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
- 		<dependency>
+ --> 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
@@ -99,11 +101,11 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate5</artifactId>
 		</dependency>    
-<!-- 		<dependency>
+ 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-orm</artifactId>
 		</dependency>
- -->		<dependency>
+ 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.3.1</version>
@@ -241,7 +243,7 @@
     		<dependency>
     			<groupId>org.hibernate</groupId>
     			<artifactId>hibernate-search-orm</artifactId>
-    			<version>5.1.0.Final</version>
+    			<version>${hibernate-search.version}</version>
     		</dependency>
     	</dependencies>
     </dependencyManagement>

@@ -22,6 +22,9 @@ get_word = lambda: random.choice(words)
 get_int = lambda maxInt: random.randint(0, maxInt)
 get_service = lambda: random.choice(services)
 get_bool = lambda: long(time.time()) % random.randint(1, 10) == 0
+
+get_latitude = lambda: random.uniform(34.1, 34.2)
+get_longitude = lambda: random.uniform(-118.2, -118.1)
                                 
 def gen_user():
     return {
@@ -106,8 +109,12 @@ if __name__ == "__main__":
             print r.text
             
             
+#             34.190163    -118.131317 - alta
+#             34.161327    -118.167648 - rose bowl
+#             34.146461    -118.134476 - target
+            
         #Add some locations here.
-        r = requests.post(location_url % uid, json=dict(longitude=1, latitude=1))
+        r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
 
             
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)

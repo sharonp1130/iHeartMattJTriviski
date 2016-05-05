@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.search.query.dsl.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -158,23 +159,29 @@ public class UserBoImpl implements IUserBo {
 		if (service == null) {
 			return Collections.emptyList();
 		} else {
-			Criteria crit = getDao().getCurrentSession().createCriteria(License.class)
-				.add(Restrictions.eq("service", service))
-				.setProjection(Projections.property("user"));
+			/**
+			 * TODO This is the first part of the search for stuff and is working.  This will find all locations and return the users, but it 
+			 * may not be fast enough and it does not currently filter the way that is necessary.  This must be updated.
+			 */
+			FullTextSession fullTextSession = Search.getFullTextSession(getDao().getCurrentSession());
 			
-			if (!userToSkip.isEmpty()) {
-				crit.add(Restrictions.not(Restrictions.in("user.userId", userToSkip)));
-			}
+			QueryBuilder builder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Location.class).get();
+			org.apache.lucene.search.Query luceneQuery = builder
+				.spatial()
+				.within(distance, Unit.KM)
+				.ofLatitude(latitude)
+				.andLongitude(longitude)
+			.createQuery();
 			
-			crit.setMaxResults(maxResults > 0 ? maxResults : RESULT_UPPER_LIMIT);
+			org.hibernate.Query hibQuery = fullTextSession
+				.createFullTextQuery(luceneQuery, Location.class);
 
-			Collection<User> results = crit.list();
-			
-			List<User> filtered = results.parallelStream()
-					.filter((user) -> withinDistnace(user, longitude, latitude, distance))
+			List<Location> results = hibQuery.list();
+				
+			return results
+					.stream()
+					.map(location -> location.getUser())
 					.collect(Collectors.toList());
-			
-			 return filtered;
 		}
 	}
 }
