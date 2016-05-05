@@ -150,7 +150,7 @@ public class Info implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@Column(name = "address", nullable = false, length = 64)
+	@Column(name = "address", nullable = false, length = 256)
 	public String getAddress() {
 		return this.address;
 	}
@@ -162,7 +162,7 @@ public class Info implements java.io.Serializable {
 	/**
 	 * @param businessName
 	 */
-	@Column(name = "businessName", nullable = true, length = 64)
+	@Column(name = "businessName", nullable = true, length = 256)
 	public String getBusinessName() {
 		return this.businessName;
 	}
@@ -171,7 +171,7 @@ public class Info implements java.io.Serializable {
 		this.businessName = businessName;
 	}
 
-	@Column(name = "city", nullable = false, length = 64)
+	@Column(name = "city", nullable = false, length = 256)
 	public String getCity() {
 		return this.city;
 	}

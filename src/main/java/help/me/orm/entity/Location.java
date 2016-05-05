@@ -17,6 +17,12 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Latitude;
+import org.hibernate.search.annotations.Longitude;
+import org.hibernate.search.annotations.Spatial;
+import org.hibernate.search.annotations.SpatialMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,15 +32,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author triviski
  *
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "location")
+@Indexed
+@Spatial(spatialMode=SpatialMode.HASH)
+@SuppressWarnings("serial")
+//@FullTextFilterDefs(
+//		{
+//			@FullTextFilterDef(name=)
+//			
+//		}
+//		)
 public class Location implements java.io.Serializable {
 
 	@JsonProperty("longitude")
+	@Longitude
 	private double longitude;
+
 	@JsonProperty("latitude")
+	@Latitude
 	private double latitude;
+
 	@JsonProperty("createdAt")
 	private Date createdAt;
 
@@ -89,6 +107,7 @@ public class Location implements java.io.Serializable {
 
 	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="user", nullable=false, updatable=false)
+	@IndexedEmbedded
 	public User getUser() {
 		return this.user;
 	}
