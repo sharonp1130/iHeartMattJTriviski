@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -53,9 +51,8 @@ public class Location implements java.io.Serializable {
 	@Latitude
 	private double latitude;
 
-	@JsonProperty("createdAt")
 	private Date createdAt;
-
+	
 	@JsonIgnore
 	private int locationId;
 	@JsonIgnore
@@ -134,9 +131,8 @@ public class Location implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
-	@Generated(GenerationTime.INSERT) 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
+	@Column(name = "created_at", length = 19, insertable=true, updatable=false)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}

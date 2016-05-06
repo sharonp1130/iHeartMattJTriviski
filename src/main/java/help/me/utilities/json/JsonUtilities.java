@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import help.me.orm.entity.Info;
 import help.me.orm.entity.License;
 import help.me.orm.entity.Location;
+import help.me.orm.entity.Service;
 import help.me.orm.entity.Settings;
 import help.me.orm.entity.User;
 
@@ -59,7 +61,7 @@ public class JsonUtilities {
 	 * 
 	 * @return a new object mapper with view viewClass and inclusion and indent options set based on inputs.
 	 */
-	public static ObjectMapper createMapper(boolean typeInfo) {
+	public static ObjectMapper createMapper(boolean typeInfo, boolean ignoreTransient) {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		if (typeInfo) {
@@ -68,7 +70,13 @@ public class JsonUtilities {
 		}
 
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		mapper.registerModule(new Hibernate5Module());
+		Hibernate5Module module = new Hibernate5Module();
+		
+		if (!ignoreTransient) {
+			module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+		}
+
+		mapper.registerModule(module);
 		
 		return mapper;
 	}
@@ -97,7 +105,7 @@ public class JsonUtilities {
 	 * @return a new object mapper with view RequestView.
 	 */
 	public static ObjectMapper createRequestObjectMapper() {
-		ObjectMapper mapper = createMapper(false);
+		ObjectMapper mapper = createMapper(false, true);
 		return mapper;
 	}
 
@@ -105,7 +113,7 @@ public class JsonUtilities {
 	 * @return a new object mapper with view SerializationView and indent on.
 	 */
 	public static ObjectMapper createSerializerObjectMapper() {
-		ObjectMapper mapper = createMapper(true);
+		ObjectMapper mapper = createMapper(true, true);
 		
 		return mapper;
 	}
@@ -131,15 +139,40 @@ public class JsonUtilities {
 		@JsonProperty("licenses")
 		public abstract Set<License> getLicenses();
 
-		@JsonProperty("locations")
-		public abstract Set<Location> getLocations();
+		@JsonProperty("location")
+		public abstract Location getLastLocation();
 	}
 
+	abstract class LicenseMixin {
+//		@JsonIgnore
+//		private Service service;
+
+		@JsonIgnore
+		public abstract Service getService();
+		
+//		@JsonProperty("serviceId")
+//		public Integer getServiceId() {
+//			return service == null ? null : service.getServiceId();
+//		}
+	}
+
+	abstract class ServiceMixin {
+		@JsonIgnore
+		private String description;
+		
+		@JsonIgnore
+		private String iconFileName;
+		
+		
+		
+	}
 	public static ObjectMapper createUserObjectMapper() {
-		ObjectMapper mapper = createRequestObjectMapper();
+		ObjectMapper mapper = createMapper(false, false);
 		
 		// Add the mixin to include all of the mapped classes.
-		mapper.addMixIn(User.class, UserMixin.class);
+		mapper.addMixIn(User.class, UserMixin.class)
+			  .addMixIn(License.class, LicenseMixin.class)
+			  ;
 		return mapper;
 	}
 	

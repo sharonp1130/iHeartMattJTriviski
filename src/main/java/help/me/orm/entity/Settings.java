@@ -19,6 +19,10 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "settings")
+@Indexed
 public class Settings implements java.io.Serializable {
 	
 	@JsonIgnore
@@ -40,6 +45,8 @@ public class Settings implements java.io.Serializable {
 	@JsonIgnore
 	private Date updatedAt;
 
+	@Field
+	@DateBridge(resolution=Resolution.HOUR)
 	@JsonProperty("mondayStart")
 	private Time mondayStart;
 	@JsonProperty("mondayEnd")
@@ -98,6 +105,49 @@ public class Settings implements java.io.Serializable {
 		this.user = user;
 	}
 
+//	@Transient
+//	@JsonIgnore
+//	public boolean isAvailable(DayOfWeek dow, Time time) {
+//		Time st;
+//		Time et;
+//		
+//		switch(dow) {
+//		case SUNDAY:
+//			st = this.sundayStart;
+//			et = this.sundayEnd;
+//			break;
+//		case MONDAY:
+//			st = this.mondayStart;
+//			et = this.mondayEnd;
+//			break;
+//		case TUESDAY:
+//			st = this.tuesdayStart;
+//			et = this.tuesdayEnd;
+//			break;
+//		case WEDNESDAY:
+//			st = this.wednesdayStart;
+//			et = this.wednesdayEnd;
+//			break;
+//		case THURSDAY:
+//			st = this.thursdayStart;
+//			et = this.thursdayEnd;
+//			break;
+//		case FRIDAY:
+//			st = this.fridayStart;
+//			et = this.fridayEnd;
+//			break;
+//		default: // SATURDAY:
+//			st = this.saturdayStart;
+//			et = this.saturdayEnd;
+//			break;
+//		}
+//
+//		if (st == null || et == null) {
+//			return false;
+//		} else if (st.before(st)) 
+//		
+//		return false;
+//	}
 	
 	@Id
 	@GeneratedValue(generator="settingsIncrement")

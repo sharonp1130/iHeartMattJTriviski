@@ -27,6 +27,7 @@ import help.me.orm.entity.User;
  */
 @Repository("userBo")
 public class UserBoImpl implements IUserBo {
+	private static final int MAX_RESULTS = 30;
 
 	@Autowired
 	UserDaoImpl userDao;
@@ -176,7 +177,9 @@ public class UserBoImpl implements IUserBo {
 			org.hibernate.Query hibQuery = fullTextSession
 				.createFullTextQuery(luceneQuery, Location.class);
 
-			List<Location> results = hibQuery.list();
+			List<Location> results = hibQuery
+					.setMaxResults(maxResults > 0 ? maxResults : MAX_RESULTS)
+					.list();
 				
 			return results
 					.stream()

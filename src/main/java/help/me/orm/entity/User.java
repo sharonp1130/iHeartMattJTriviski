@@ -2,10 +2,12 @@ package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -104,6 +106,7 @@ public class User implements java.io.Serializable {
      * @param user
      */
     @Transient
+    @JsonIgnore
     public void merge(User user) {
     		if (user.getFirstName() != null) {
     			firstName = user.getFirstName();
@@ -226,6 +229,22 @@ public class User implements java.io.Serializable {
     @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
     public Set<Location> getLocations() {
         return this.locations;
+    }
+    
+    private static final Comparator<Location> lastLocation = new Comparator<Location>() {
+		
+		@Override
+		public int compare(Location o1, Location o2) {
+			// Want the last one so do it in reverse.
+			return Integer.compare(o2.getLocationId(), o1.getLocationId());
+		}
+	};
+	
+    @Transient
+    public Location getLastLocation() {
+    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
+    		locs.addAll(locations);
+    		return locs.first();
     }
     
     public void setLocations(Set<Location> locations) {

@@ -4,6 +4,8 @@ import requests
 import json
 import random
 import time
+import sys
+import multiprocessing as MP
 
 url_root = "http://192.241.195.224:8080/api"
 url_root = "http://localhost:8080/api"
@@ -69,12 +71,9 @@ def gen_license(service=None):
             "service" : service if service is not None and service in services else get_service()
             }
         
-
-if __name__ == "__main__":
+def do_run(nums=100):
     import datetime as dt
     st = dt.datetime.now()
-
-    nums = int(100)
 
     for _ in xrange(0, nums):
         user = gen_user()
@@ -106,21 +105,81 @@ if __name__ == "__main__":
             added.append(service)
                 
             r = requests.put(license_url % uid, json=gen_license(service))
-            print r.text
-            
-            
-#             34.190163    -118.131317 - alta
-#             34.161327    -118.167648 - rose bowl
-#             34.146461    -118.134476 - target
-            
+
         #Add some locations here.
         r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
 
             
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
 
-         
-         
+
+
+
+if __name__ == "__main__":
+    import datetime as dt
+    st = dt.datetime.now()
+
+    tcount = 5 
+    nums = int(100) 
+    
+    procs = []
+    
+    for _ in range(tcount):
+        p = MP.Process(target=do_run, args=(nums/tcount,))
+        procs.append(p)
+    
+    for p in procs:
+        p.start()
+    
+    for p in procs:
+        p.join()
+
+    
+    print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
+#     for _ in xrange(0, nums):
+#         user = gen_user()
+#         info = gen_info()
+#         avail = gen_avail()
+#         license = gen_license()
+# 
+#         # add the user.
+#         r = requests.put(user_url, json=user)
+# 
+#         # add the users info.
+#         u = r.json()
+#         uid = u.get("userId")
+# 
+#         r = requests.post(info_url % uid, json=info)
+#         inf = r.json()
+# 
+#         r = requests.post(availability_url % uid, json=avail)
+#         av = r.json()
+#      
+#         added = []
+#         for _ in range(random.randint(1, len(services))):
+#             service = random.choice(services)
+#             
+#             if service in added:
+#                 while service in added:
+#                     service = random.choice(services)
+#                 
+#             added.append(service)
+#                 
+#             r = requests.put(license_url % uid, json=gen_license(service))
+#             
+#             
+# #             34.190163    -118.131317 - alta
+# #             34.161327    -118.167648 - rose bowl
+# #             34.146461    -118.134476 - target
+#             
+#         #Add some locations here.
+#         r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
+# 
+#             
+#     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
+# 
+#          
+#          
 #     r = requests.get(url_root + "/query/service/heating", params=dict(longitude=1234, latitude=2345, distance=5, usersToSkip="4,5,10..15,18"))
 #     print r.json()
 

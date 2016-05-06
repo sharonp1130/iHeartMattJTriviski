@@ -35,9 +35,9 @@ public class License implements java.io.Serializable {
 	
 	@JsonProperty("licenseNumber")
 	private String licenseNumber;
-	@JsonProperty("service")
-	private Service service;
 	
+	@JsonIgnore
+	private Service service;
 	@JsonIgnore
 	private int licenseId;
 	@JsonIgnore
@@ -66,18 +66,11 @@ public class License implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	/**
-	 * Used for Jackson output.  Gets the service description so there is not 
-	 * another nested service.
-	 * 
-	 * @return The service description if service is not null else null
-	 */
 	@Transient
-	@JsonProperty("service")
-	public String getServiceDescription() {
-		return service == null ? null : service.getDescription();
+	public Integer getServiceId() {
+		return service == null ? null : service.getServiceId();
 	}
-	
+
 	@Id
 	@GeneratedValue(generator="licenseIncrement")
 	@GenericGenerator(name="licenseIncrement", strategy = "increment")
@@ -101,6 +94,7 @@ public class License implements java.io.Serializable {
 	}
 
 	@Column(name = "licenseNumber", unique = true, nullable = false, length = 32)
+	@JsonProperty("licenseNumber")
 	public String getLicenseNumber() {
 		return this.licenseNumber;
 	}
@@ -111,6 +105,7 @@ public class License implements java.io.Serializable {
 
 	@JoinColumn(name = "service")
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonProperty("service")
 	public Service getService() {
 		return this.service;
 	}
