@@ -128,7 +128,7 @@ public class UserResource extends BaseResource {
 	 * @return info for user with id userId.
 	 */
 	@GET
-	@Path("/{userId : \\d+}/settings")
+	@Path("/{userId : \\d+}/availability")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value="Retrieve the availability for specified user ID.",
 			response=Settings.class,

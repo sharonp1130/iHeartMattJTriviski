@@ -86,8 +86,17 @@ public class BeanConfigurations {
         properties.put(HIBERNATE_SHOW_SQL_PROPERTY, environment.getRequiredProperty(HIBERNATE_SHOW_SQL_PROPERTY));
         properties.put(HIBERNATE_FORMAT_SQL_PROPERTY, environment.getRequiredProperty(HIBERNATE_FORMAT_SQL_PROPERTY));
         
-        if (environment.containsProperty("hibernate.hbm2ddl.auto")) {
-        		properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        // This is hacky but I don't have time or the patients to blah...
+        for (String property : new String[] {
+        				"hibernate.hbm2ddl.auto", 
+        				"hibernate.search.default.indexBase",
+        				"hibernate.implicit_naming_strategy",
+        				"hibernate.physical_naming_strategy",
+        				"hibernate.search.default.directory_provider"
+        }) {
+	        if (environment.containsProperty(property)) {
+	        		properties.put(property, environment.getProperty(property));
+	        }
         }
         
         return properties;        

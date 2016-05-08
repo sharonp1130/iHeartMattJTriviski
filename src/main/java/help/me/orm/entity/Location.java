@@ -15,10 +15,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Latitude;
 import org.hibernate.search.annotations.Longitude;
+import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Spatial;
 import org.hibernate.search.annotations.SpatialMode;
 
@@ -35,12 +38,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Indexed
 @Spatial(spatialMode=SpatialMode.HASH)
 @SuppressWarnings("serial")
-//@FullTextFilterDefs(
-//		{
-//			@FullTextFilterDef(name=)
-//			
-//		}
-//		)
 public class Location implements java.io.Serializable {
 
 	@JsonProperty("longitude")
@@ -51,10 +48,15 @@ public class Location implements java.io.Serializable {
 	@Latitude
 	private double latitude;
 
+	@Field(analyze=Analyze.NO)
+	@SortableField()
 	private Date createdAt;
 	
 	@JsonIgnore
+	@Field(analyze=Analyze.NO)
+	@SortableField()
 	private int locationId;
+
 	@JsonIgnore
 	private User user;
 

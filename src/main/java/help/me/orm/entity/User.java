@@ -28,6 +28,8 @@ import org.apache.commons.validator.EmailValidator;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,11 +62,14 @@ public class User implements java.io.Serializable {
 	 */
 	@JsonIgnore
 	private Settings settings;
+
 	@JsonIgnore
 	private Info info;
 	@JsonIgnore
     private Set<License> licenses = new HashSet<License>(0);
+
 	@JsonIgnore
+	@ContainedIn
 	private Set<Location> locations = new HashSet<Location>(0);
 
 	@JsonIgnore
@@ -167,6 +172,7 @@ public class User implements java.io.Serializable {
 
 	@JoinColumn(name = "settings", nullable=true)
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@IndexedEmbedded(depth=1)
 	public Settings getSettings() {
 		return this.settings;
 	}

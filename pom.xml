@@ -24,7 +24,7 @@
 
 	<groupId>help.me</groupId>
 	<artifactId>backend</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>help-me-backend</name>

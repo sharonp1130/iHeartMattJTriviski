@@ -54,8 +54,8 @@ def gen_avail():
     
     for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
         if get_bool():
-            start = "08:00:00"
-            end = "17:00:00"
+            start = "8"
+            end = "17"
         else:
             start = None
             end = None
@@ -113,14 +113,29 @@ def do_run(nums=100):
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
 
 
+def update_settings(user_id, update=False):
+    r = requests.get(availability_url % user_id)
+    av = r.json()
+    
+    if update:
+        for k, v in av.items():
+            if v is None:
+                av[k] = 8 if "Start" in k else 17
 
+    print av
+    if update:
+        r = requests.post(availability_url % user_id, json=av)
 
 if __name__ == "__main__":
+#     update_settings(1, True)
+#     update_settings(1)
+#     
+#     exit(0)
     import datetime as dt
     st = dt.datetime.now()
 
-    tcount = 5 
-    nums = int(100) 
+    tcount = 1 
+    nums = int(2) 
     
     procs = []
     

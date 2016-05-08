@@ -1,10 +1,10 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,10 +19,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.NumericField;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,49 +30,90 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @SuppressWarnings("serial")
 @Entity
+@Embeddable
 @Table(name = "settings")
-@Indexed
 public class Settings implements java.io.Serializable {
 	
 	@JsonIgnore
 	private int settingsId;
+
 	@JsonIgnore
 	private User user;
+
 	@JsonIgnore
 	private Date createdAt;
 	@JsonIgnore
 	private Date updatedAt;
 
 	@Field
-	@DateBridge(resolution=Resolution.HOUR)
+	@NumericField
 	@JsonProperty("mondayStart")
-	private Time mondayStart;
+	private Integer mondayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("mondayEnd")
-	private Time mondayEnd;
+	private Integer mondayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("tuesdayStart")
-	private Time tuesdayStart;
+	private Integer tuesdayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("tuesdayEnd")
-	private Time tuesdayEnd;
+	private Integer tuesdayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("wednesdayStart")
-	private Time wednesdayStart;
+	private Integer wednesdayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("wednesdayEnd")
-	private Time wednesdayEnd;
+	private Integer wednesdayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("thursdayStart")
-	private Time thursdayStart;
+	private Integer thursdayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("thursdayEnd")
-	private Time thursdayEnd;
+	private Integer thursdayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("fridayStart")
-	private Time fridayStart;
+	private Integer fridayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("fridayEnd")
-	private Time fridayEnd;
+	private Integer fridayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("saturdayStart")
-	private Time saturdayStart;
+	private Integer saturdayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("saturdayEnd")
-	private Time saturdayEnd;
+	private Integer saturdayEnd;
+
+	@Field
+	@NumericField
 	@JsonProperty("sundayStart")
-	private Time sundayStart;
+	private Integer sundayStart;
+
+	@Field
+	@NumericField
 	@JsonProperty("sundayEnd")
-	private Time sundayEnd;
+	private Integer sundayEnd;
 
 	public Settings() {
 	}
@@ -84,9 +123,9 @@ public class Settings implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public Settings(int settingsId, Time mondayStart, Time mondayEnd, Time tuesdayStart, Time tuesdayEnd,
-			Time wednesdayStart, Time wednesdayEnd, Time thursdayStart, Time thursdayEnd, Time fridayStart,
-			Time fridayEnd, Time saturdayStart, Time saturdayEnd, Time sundayStart, Time sundayEnd, User user) {
+	public Settings(int settingsId, Integer mondayStart, Integer mondayEnd, Integer tuesdayStart, Integer tuesdayEnd,
+			Integer wednesdayStart, Integer wednesdayEnd, Integer thursdayStart, Integer thursdayEnd, Integer fridayStart,
+			Integer fridayEnd, Integer saturdayStart, Integer saturdayEnd, Integer sundayStart, Integer sundayEnd, User user) {
 		this.settingsId = settingsId;
 		this.mondayStart = mondayStart;
 		this.mondayEnd = mondayEnd;
@@ -107,9 +146,9 @@ public class Settings implements java.io.Serializable {
 
 //	@Transient
 //	@JsonIgnore
-//	public boolean isAvailable(DayOfWeek dow, Time time) {
-//		Time st;
-//		Time et;
+//	public boolean isAvailable(DayOfWeek dow, Integer time) {
+//		Integer st;
+//		Integer et;
 //		
 //		switch(dow) {
 //		case SUNDAY:
@@ -161,129 +200,129 @@ public class Settings implements java.io.Serializable {
 		this.settingsId = settingsId;
 	}
 
-	@Column(name = "mondayStart", length = 8)
-	public Time getMondayStart() {
+	@Column(name = "mondayStart", length = 1)
+	public Integer getMondayStart() {
 		return this.mondayStart;
 	}
 
-	public void setMondayStart(Time mondayStart) {
+	public void setMondayStart(Integer mondayStart) {
 		this.mondayStart = mondayStart;
 	}
 
-	@Column(name = "mondayEnd", length = 8)
-	public Time getMondayEnd() {
+	@Column(name = "mondayEnd", length = 1)
+	public Integer getMondayEnd() {
 		return this.mondayEnd;
 	}
 
-	public void setMondayEnd(Time mondayEnd) {
+	public void setMondayEnd(Integer mondayEnd) {
 		this.mondayEnd = mondayEnd;
 	}
 
-	@Column(name = "tuesdayStart", length = 8)
-	public Time getTuesdayStart() {
+	@Column(name = "tuesdayStart", length = 1)
+	public Integer getTuesdayStart() {
 		return this.tuesdayStart;
 	}
 
-	public void setTuesdayStart(Time tuesdayStart) {
+	public void setTuesdayStart(Integer tuesdayStart) {
 		this.tuesdayStart = tuesdayStart;
 	}
 
-	@Column(name = "tuesdayEnd", length = 8)
-	public Time getTuesdayEnd() {
+	@Column(name = "tuesdayEnd", length = 1)
+	public Integer getTuesdayEnd() {
 		return this.tuesdayEnd;
 	}
 
-	public void setTuesdayEnd(Time tuesdayEnd) {
+	public void setTuesdayEnd(Integer tuesdayEnd) {
 		this.tuesdayEnd = tuesdayEnd;
 	}
 
-	@Column(name = "wednesdayStart", length = 8)
-	public Time getWednesdayStart() {
+	@Column(name = "wednesdayStart", length = 1)
+	public Integer getWednesdayStart() {
 		return this.wednesdayStart;
 	}
 
-	public void setWednesdayStart(Time wednesdayStart) {
+	public void setWednesdayStart(Integer wednesdayStart) {
 		this.wednesdayStart = wednesdayStart;
 	}
 
-	@Column(name = "wednesdayEnd", length = 8)
-	public Time getWednesdayEnd() {
+	@Column(name = "wednesdayEnd", length = 1)
+	public Integer getWednesdayEnd() {
 		return this.wednesdayEnd;
 	}
 
-	public void setWednesdayEnd(Time wednesdayEnd) {
+	public void setWednesdayEnd(Integer wednesdayEnd) {
 		this.wednesdayEnd = wednesdayEnd;
 	}
 
-	@Column(name = "thursdayStart", length = 8)
-	public Time getThursdayStart() {
+	@Column(name = "thursdayStart", length = 1)
+	public Integer getThursdayStart() {
 		return this.thursdayStart;
 	}
 
-	public void setThursdayStart(Time thursdayStart) {
+	public void setThursdayStart(Integer thursdayStart) {
 		this.thursdayStart = thursdayStart;
 	}
 
-	@Column(name = "thursdayEnd", length = 8)
-	public Time getThursdayEnd() {
+	@Column(name = "thursdayEnd", length = 1)
+	public Integer getThursdayEnd() {
 		return this.thursdayEnd;
 	}
 
-	public void setThursdayEnd(Time thursdayEnd) {
+	public void setThursdayEnd(Integer thursdayEnd) {
 		this.thursdayEnd = thursdayEnd;
 	}
 
-	@Column(name = "fridayStart", length = 8)
-	public Time getFridayStart() {
+	@Column(name = "fridayStart", length = 1)
+	public Integer getFridayStart() {
 		return this.fridayStart;
 	}
 
-	public void setFridayStart(Time fridayStart) {
+	public void setFridayStart(Integer fridayStart) {
 		this.fridayStart = fridayStart;
 	}
 
-	@Column(name = "fridayEnd", length = 8)
-	public Time getFridayEnd() {
+	@Column(name = "fridayEnd", length = 1)
+	public Integer getFridayEnd() {
 		return this.fridayEnd;
 	}
 
-	public void setFridayEnd(Time fridayEnd) {
+	public void setFridayEnd(Integer fridayEnd) {
 		this.fridayEnd = fridayEnd;
 	}
 
-	@Column(name = "saturdayStart", length = 8)
-	public Time getSaturdayStart() {
+	@Column(name = "saturdayStart", length = 1)
+	public Integer getSaturdayStart() {
 		return this.saturdayStart;
 	}
 
-	public void setSaturdayStart(Time saturdayStart) {
+	public void setSaturdayStart(Integer saturdayStart) {
 		this.saturdayStart = saturdayStart;
 	}
 
-	@Column(name = "saturdayEnd", length = 8)
-	public Time getSaturdayEnd() {
+	@Column(name = "saturdayEnd", length = 1)
+	public Integer getSaturdayEnd() {
 		return this.saturdayEnd;
 	}
 
-	public void setSaturdayEnd(Time saturdayEnd) {
+	public void setSaturdayEnd(Integer saturdayEnd) {
 		this.saturdayEnd = saturdayEnd;
 	}
 
-	@Column(name = "sundayStart", length = 8)
-	public Time getSundayStart() {
+	@Column(name = "sundayStart", length = 1)
+	public Integer getSundayStart() {
 		return this.sundayStart;
 	}
 
-	public void setSundayStart(Time sundayStart) {
+	public void setSundayStart(Integer sundayStart) {
 		this.sundayStart = sundayStart;
 	}
 
-	@Column(name = "sundayEnd", length = 8)
-	public Time getSundayEnd() {
+	@Column(name = "sundayEnd", length = 1)
+	public Integer getSundayEnd() {
 		return this.sundayEnd;
 	}
 
-	public void setSundayEnd(Time sundayEnd) {
+	public void setSundayEnd(Integer sundayEnd) {
 		this.sundayEnd = sundayEnd;
 	}
 
@@ -329,7 +368,7 @@ public class Settings implements java.io.Serializable {
 	public void updateValuesFromOther(Settings settings) {
 		// No real good way to do this but the long way...balls.
 		
-		Time t = settings.getMondayStart();
+		Integer t = settings.getMondayStart();
 		
 		// Monday
 		if (t != null) {

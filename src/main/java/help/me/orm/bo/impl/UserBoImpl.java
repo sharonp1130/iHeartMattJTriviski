@@ -1,7 +1,9 @@
 package help.me.orm.bo.impl;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -149,6 +151,10 @@ public class UserBoImpl implements IUserBo {
 		return loc != null && calculateDistance(longitude, latitude, loc.getLongitude(), loc.getLatitude()) <= distance;
 	}
 	
+	private double milesToKM(double distanceInMiles) {
+	      return distanceInMiles * 1.609344;
+	}
+
 	/* (non-Javadoc)
 	 * @see help.me.orm.dao.ILicenseDao#findProviders(java.lang.String, double, double, double)
 	 */
@@ -166,16 +172,38 @@ public class UserBoImpl implements IUserBo {
 			 */
 			FullTextSession fullTextSession = Search.getFullTextSession(getDao().getCurrentSession());
 			
-			QueryBuilder builder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Location.class).get();
-			org.apache.lucene.search.Query luceneQuery = builder
+			QueryBuilder builder = fullTextSession.getSearchFactory().buildQueryBuilder()
+					.forEntity(Location.class)
+					.get();
+			
+			// The spatial distance query.
+			org.apache.lucene.search.Query distanceQuery = builder
 				.spatial()
-				.within(distance, Unit.KM)
+				.within(milesToKM(distance), Unit.KM)
 				.ofLatitude(latitude)
 				.andLongitude(longitude)
 			.createQuery();
+
+			/**
+			 * Get the current time to use to filter on only providers 
+			 * available right now.
+			 */
+			Calendar cal = Calendar.getInstance();
+			int hour = cal.get(Calendar.HOUR_OF_DAY);
+			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+			String startField = getTimeFieldName(dayOfWeek, true);
+			String endField = getTimeFieldName(dayOfWeek, false);
+			
+			org.apache.lucene.search.Query availableQuery = builder
+				.bool()
+					.must(distanceQuery)
+					.must(builder.range().onField(startField).above(hour).createQuery()).not() // Start not after now
+					.must(builder.range().onField(endField).below(hour).createQuery()).not() // End not before now
+				.createQuery();
 			
 			org.hibernate.Query hibQuery = fullTextSession
-				.createFullTextQuery(luceneQuery, Location.class);
+				.createFullTextQuery(availableQuery, Location.class)
+				;
 
 			List<Location> results = hibQuery
 					.setMaxResults(maxResults > 0 ? maxResults : MAX_RESULTS)
@@ -187,4 +215,56 @@ public class UserBoImpl implements IUserBo {
 					.collect(Collectors.toList());
 		}
 	}
+	
+	private static final String USER_SETTINGS_BASE = "user.settings.";
+	private static final String START = "Start";
+	private static final String END = "End";
+
+	/**
+	 * @param dayOfWeek
+	 * @param isStart
+	 * @return
+	 */
+	private String getTimeFieldName(int dayOfWeek, boolean isStart) {
+		return String.format("%s.%s%s", USER_SETTINGS_BASE, getDayName(dayOfWeek), isStart ? START : END);
+	}
+
+	/**
+	 * Gets the day string from the day of the week int to be used in the availability settings.
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	private String getDayName(int dayOfWeek) {
+		String day;
+
+		switch(dayOfWeek) {
+		case Calendar.SUNDAY:
+			day = "sunday";
+			break;
+		case Calendar.MONDAY:
+			day = "monday";
+			break;
+		case Calendar.TUESDAY:
+			day = "tuesday";
+			break;
+		case Calendar.WEDNESDAY:
+			day = "wednesday";
+			break;
+		case Calendar.THURSDAY:
+			day = "thursday";
+			break;
+		case Calendar.FRIDAY:
+			day = "friday";
+			break;
+		case Calendar.SATURDAY:
+			day = "saturday";
+			break;
+		default:
+			throw new IllegalArgumentException("Day of the week must be between 1 and 7.");
+		}
+
+		return day;
+	}
+
 }

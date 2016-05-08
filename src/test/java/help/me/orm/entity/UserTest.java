@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -150,9 +149,7 @@ public class UserTest  {
 	@Test
 	public void testSettings() throws JsonGenerationException, JsonMappingException, IOException {
 		Settings setting = new Settings();
-		@SuppressWarnings("deprecation")
-		Time t = new Time(1,2,3);
-		setting.setMondayStart(t);
+		setting.setMondayStart(11);
 		user.setSettings(setting);
 		ubo.saveOrUpdate(user);
 		System.out.println(user);
