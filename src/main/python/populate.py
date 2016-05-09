@@ -71,7 +71,7 @@ def gen_license(service=None):
             "service" : service if service is not None and service in services else get_service()
             }
         
-def do_run(nums=100):
+def do_run(nums=100, num_locs=2):
     import datetime as dt
     st = dt.datetime.now()
 
@@ -106,8 +106,11 @@ def do_run(nums=100):
                 
             r = requests.put(license_url % uid, json=gen_license(service))
 
-        #Add some locations here.
-        r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
+        import time
+        for _ in range(0, num_locs):
+            #Add some locations here.
+            r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
+            time.sleep(1)
 
             
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
@@ -127,10 +130,6 @@ def update_settings(user_id, update=False):
         r = requests.post(availability_url % user_id, json=av)
 
 if __name__ == "__main__":
-#     update_settings(1, True)
-#     update_settings(1)
-#     
-#     exit(0)
     import datetime as dt
     st = dt.datetime.now()
 
@@ -149,7 +148,10 @@ if __name__ == "__main__":
     for p in procs:
         p.join()
 
-    
+    update_settings(1, True)
+    update_settings(1)
+     
+   
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
 #     for _ in xrange(0, nums):
 #         user = gen_user()

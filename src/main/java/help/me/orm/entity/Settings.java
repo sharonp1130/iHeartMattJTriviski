@@ -143,50 +143,6 @@ public class Settings implements java.io.Serializable {
 		this.sundayEnd = sundayEnd;
 		this.user = user;
 	}
-
-//	@Transient
-//	@JsonIgnore
-//	public boolean isAvailable(DayOfWeek dow, Integer time) {
-//		Integer st;
-//		Integer et;
-//		
-//		switch(dow) {
-//		case SUNDAY:
-//			st = this.sundayStart;
-//			et = this.sundayEnd;
-//			break;
-//		case MONDAY:
-//			st = this.mondayStart;
-//			et = this.mondayEnd;
-//			break;
-//		case TUESDAY:
-//			st = this.tuesdayStart;
-//			et = this.tuesdayEnd;
-//			break;
-//		case WEDNESDAY:
-//			st = this.wednesdayStart;
-//			et = this.wednesdayEnd;
-//			break;
-//		case THURSDAY:
-//			st = this.thursdayStart;
-//			et = this.thursdayEnd;
-//			break;
-//		case FRIDAY:
-//			st = this.fridayStart;
-//			et = this.fridayEnd;
-//			break;
-//		default: // SATURDAY:
-//			st = this.saturdayStart;
-//			et = this.saturdayEnd;
-//			break;
-//		}
-//
-//		if (st == null || et == null) {
-//			return false;
-//		} else if (st.before(st)) 
-//		
-//		return false;
-//	}
 	
 	@Id
 	@GeneratedValue(generator="settingsIncrement")

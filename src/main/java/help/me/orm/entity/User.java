@@ -65,6 +65,7 @@ public class User implements java.io.Serializable {
 
 	@JsonIgnore
 	private Info info;
+
 	@JsonIgnore
     private Set<License> licenses = new HashSet<License>(0);
 
@@ -248,9 +249,13 @@ public class User implements java.io.Serializable {
 	
     @Transient
     public Location getLastLocation() {
-    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
-    		locs.addAll(locations);
-    		return locs.first();
+    		if (locations == null || locations.isEmpty()) {
+    			return null;
+    		} else {
+	    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
+	    		locs.addAll(locations);
+	    		return locs.first();
+    		}
     }
     
     public void setLocations(Set<Location> locations) {

@@ -196,6 +196,7 @@ public class UserBoImpl implements IUserBo {
 			
 			org.apache.lucene.search.Query availableQuery = builder
 				.bool()
+					.must(builder.keyword().onField("expired").matching(false).createQuery())
 					.must(distanceQuery)
 					.must(builder.range().onField(startField).above(hour).createQuery()).not() // Start not after now
 					.must(builder.range().onField(endField).below(hour).createQuery()).not() // End not before now
