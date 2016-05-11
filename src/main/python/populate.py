@@ -110,7 +110,6 @@ def do_run(nums=100, num_locs=2):
         for _ in range(0, num_locs):
             #Add some locations here.
             r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
-            time.sleep(1)
 
             
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
@@ -133,8 +132,8 @@ if __name__ == "__main__":
     import datetime as dt
     st = dt.datetime.now()
 
-    tcount = 1 
-    nums = int(2) 
+    tcount = 5 
+    nums = 1000
     
     procs = []
     
@@ -148,8 +147,8 @@ if __name__ == "__main__":
     for p in procs:
         p.join()
 
-    update_settings(1, True)
-    update_settings(1)
+#     update_settings(1, True)
+#     update_settings(1)
      
    
     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)

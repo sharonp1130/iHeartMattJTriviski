@@ -1,11 +1,12 @@
 package help.me.rest;
 
+import java.util.Map;
+
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import help.me.rest.resources.Query.UserQueryResults;
 import help.me.utilities.json.JsonUtilities;
 
 /**
@@ -36,7 +37,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 		    * Query results will be stored in a special list class in order to 
 		    * identify when the user object mapper needs to be used.
 		    */
-		   if (type.equals(UserQueryResults.class)) {
+		   if (Map.class.isAssignableFrom(type)) {
 			   return userMapper;
 		   } else {
 			   return mapper;

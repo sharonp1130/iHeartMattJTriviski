@@ -3,12 +3,14 @@ package help.me.orm.bo.impl;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
+import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.annotations.Spatial;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.dsl.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ import help.me.orm.entity.User;
 @Repository("userBo")
 public class UserBoImpl implements IUserBo {
 	private static final int MAX_RESULTS = 30;
+	/**
+	 * Used to get the current query time and subtract to filter locations.
+	 */
+	private static final int MAX_LOCATION_AGE_MINUTES = 1000 * 60 * 60;
+	
+	
 
 	@Autowired
 	UserDaoImpl userDao;
@@ -160,18 +168,22 @@ public class UserBoImpl implements IUserBo {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<User> findProviders(String serviceDescription, double longitude, double latitude, double distance, int maxResults, Collection<Integer> userToSkip) {
+	public Map<Double, User> findProviders(String serviceDescription, double longitude, double latitude, double distance, int maxResults, Collection<Integer> userToSkip) {
 		Service service = serviceBo.getServiceWithDescription(serviceDescription);
 		
 		if (service == null) {
-			return Collections.emptyList();
+			return Collections.<Double, User>emptyMap();
 		} else {
 			/**
-			 * TODO This is the first part of the search for stuff and is working.  This will find all locations and return the users, but it 
-			 * may not be fast enough and it does not currently filter the way that is necessary.  This must be updated.
+			 * Indexed with lucene, so using hibernate search full text queries.
 			 */
 			FullTextSession fullTextSession = Search.getFullTextSession(getDao().getCurrentSession());
 			
+			/**
+			 * Would have made more sense to use user and embed the location index, but I did not work.
+			 * We are using the spatial indexes for the location, so everything had to be embedded in 
+			 * the locations indexes.
+			 */
 			QueryBuilder builder = fullTextSession.getSearchFactory().buildQueryBuilder()
 					.forEntity(Location.class)
 					.get();
@@ -193,27 +205,47 @@ public class UserBoImpl implements IUserBo {
 			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 			String startField = getTimeFieldName(dayOfWeek, true);
 			String endField = getTimeFieldName(dayOfWeek, false);
+			long maxLastCheckin = System.currentTimeMillis() - MAX_LOCATION_AGE_MINUTES;
 			
+			/**
+			 * Merge all of the queries together here.  Read comments for explanation, but should be straight forward.
+			 */
 			org.apache.lucene.search.Query availableQuery = builder
 				.bool()
-					.must(builder.keyword().onField("expired").matching(false).createQuery())
+					.must(builder.keyword().onField("user.licenses.serviceId").matching(service.getServiceId()).createQuery()) // Must match the service id.
+					.must(builder.range().onField("createdAt").below(maxLastCheckin).createQuery()).not() // Exclude created at before max last checkin.
 					.must(distanceQuery)
 					.must(builder.range().onField(startField).above(hour).createQuery()).not() // Start not after now
 					.must(builder.range().onField(endField).below(hour).createQuery()).not() // End not before now
 				.createQuery();
 			
+			/**
+			 * Set it up to include the distance in the result sets.
+			 */
 			org.hibernate.Query hibQuery = fullTextSession
 				.createFullTextQuery(availableQuery, Location.class)
+				.setProjection(FullTextQuery.SPATIAL_DISTANCE, FullTextQuery.THIS)
+				.setSpatialParameters(latitude, longitude, Spatial.COORDINATES_DEFAULT_FIELD)
 				;
 
-			List<Location> results = hibQuery
+			List<Object[]> results = hibQuery
 					.setMaxResults(maxResults > 0 ? maxResults : MAX_RESULTS)
 					.list();
-				
-			return results
-					.stream()
-					.map(location -> location.getUser())
-					.collect(Collectors.toList());
+
+			/**
+			 * The results come back as a list since we added projection on the distance.
+			 */
+			Map<Double, User> distanceMap = new HashMap<Double, User>();
+
+			for (Object[] row : results) {
+				Double distance_ = (Double) row[0];
+				Location l = (Location) row[1];
+
+				System.out.println("dist="+distance_ + " Loca="+l);
+				distanceMap.put(distance_, l.getUser());
+			}
+			
+			return distanceMap;
 		}
 	}
 	

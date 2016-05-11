@@ -1,6 +1,5 @@
 package help.me.rest.resources;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -39,31 +38,6 @@ import io.swagger.annotations.ApiParam;
 public class Query extends BaseResource {
 	
 	/**
-	 * Special extention of the array list class that is 
-	 * used for user query results.  This class is used to use 
-	 * the specially set up object mapper for the query result
-	 * serialization to JSON.
-	 * 
-	 * @author triviski
-	 *
-	 */
-	@SuppressWarnings("serial")
-	public class UserQueryResults extends ArrayList<User> {
-
-		public UserQueryResults() {
-			super();
-		}
-
-		public UserQueryResults(Collection<? extends User> c) {
-			super(c);
-		}
-
-		public UserQueryResults(int initialCapacity) {
-			super(initialCapacity);
-		}
-	}
-
-	/**
 	 * @param serviceDescription
 	 * @param longitude
 	 * @param latitude
@@ -100,8 +74,6 @@ public class Query extends BaseResource {
 			skips.addAll(ConvertUtils.convertRangeInt(Arrays.asList(StringUtils.split(chunk, ","))));
 		}
 
-		Collection<User> results = new UserQueryResults(userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, skips));
-		
-		return okay(results);
+		return okay(userBo.findProviders(serviceDescription, longitude, latitude, distance, maxResults, skips));
 	}
 }

@@ -144,28 +144,21 @@ public class JsonUtilities {
 	}
 
 	abstract class LicenseMixin {
-//		@JsonIgnore
-//		private Service service;
-
 		@JsonIgnore
 		public abstract Service getService();
-		
-//		@JsonProperty("serviceId")
-//		public Integer getServiceId() {
-//			return service == null ? null : service.getServiceId();
-//		}
+
+		@JsonProperty
+		public abstract String getServiceDescription(); 
 	}
 
 	abstract class ServiceMixin {
-		@JsonIgnore
-		private String description;
+		@JsonProperty("description")
+		public abstract String getDescription();
 		
 		@JsonIgnore
 		private String iconFileName;
-		
-		
-		
 	}
+
 	public static ObjectMapper createUserObjectMapper() {
 		ObjectMapper mapper = createMapper(false, false);
 		
