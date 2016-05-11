@@ -163,6 +163,7 @@ public class User implements java.io.Serializable {
 
 	@JoinColumn(name = "info", nullable=true)
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@IndexedEmbedded(depth=1)
 	public Info getInfo() {
 		return this.info;
 	}
@@ -225,6 +226,7 @@ public class User implements java.io.Serializable {
 	}
 	
     @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
+	@IndexedEmbedded(depth=1)
     public Set<License> getLicenses() {
         return this.licenses;
     }

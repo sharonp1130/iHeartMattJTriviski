@@ -11,6 +11,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -76,5 +78,15 @@ public class LocationResource extends BaseResource {
 			Location loc = locationBo.addLocation(user, longitude, latitude);
 			return okay(loc, MediaType.APPLICATION_JSON_TYPE);
 		}
+	}
+	
+	@POST
+	@Path("admin/search/reindex")
+	@Transactional
+	public Response reindexLucene() throws InterruptedException {
+		// TODO This is temporary, need to disable everything for this.
+		FullTextSession fullTextSession = Search.getFullTextSession(userBo.getDao().getCurrentSession());
+		fullTextSession.createIndexer().startAndWait();
+		return okay();
 	}
 }

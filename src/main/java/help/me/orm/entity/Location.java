@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Analyze;
@@ -60,9 +59,6 @@ public class Location implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	
-	@JsonProperty
-	private boolean expired;
-
 	public Location() {
 	}
 
@@ -72,12 +68,11 @@ public class Location implements java.io.Serializable {
 	 * @param longitude
 	 * @param latitude
 	 */
-	public Location(int locationId, User user, double longitude, double latitude, boolean expired) {
+	public Location(int locationId, User user, double longitude, double latitude) {
 		this.locationId = locationId;
 		this.user = user;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.expired = expired;
 	}
 
 	/**
@@ -88,13 +83,12 @@ public class Location implements java.io.Serializable {
 	 * @param createdAt
 	 * @param updatedAt
 	 */
-	public Location(int locationId, User user, double longitude, double latitude, boolean expired, Date createdAt, Date updatedAt) {
+	public Location(int locationId, User user, double longitude, double latitude, Date createdAt, Date updatedAt) {
 		this.locationId = locationId;
 		this.user = user;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.createdAt = createdAt;
-		this.expired = expired;
 	}
 
 	@Id
@@ -138,16 +132,6 @@ public class Location implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
-	@Column(name = "expired", nullable = false, columnDefinition = "TINYINT(1)")
-	@Field
-	public boolean getExpired() {
-		return expired;
-	}
-
-	public void setExpired(boolean expired) {
-		this.expired = expired;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", length = 19, insertable=true, updatable=true)
 	public Date getCreatedAt() {
@@ -156,14 +140,6 @@ public class Location implements java.io.Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
-	}
-
-	/**
-	 * Sets the internal expire flag to true. 
-	 */
-	@Transient
-	public void expire() {
-		this.expired = true;
 	}
 
 	@Override

@@ -19,12 +19,6 @@ public interface ILocationBo extends IBo<Location> {
 	 * @return New location object
 	 */
 	public Location addLocation(String email, double longitude, double latitude);
-
-	
-	/**
-	 * @param user
-	 */
-	public void expireLocations(User user);
 	
 	/**
 	 * Gets the most recent location of user.

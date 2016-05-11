@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Field;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @SuppressWarnings("serial")
 @Entity
+@Embeddable
 @Table(name = "license",  uniqueConstraints = @UniqueConstraint(columnNames = {"licenseNumber", "user"}) )
 public class License implements java.io.Serializable {
 	
@@ -67,6 +70,7 @@ public class License implements java.io.Serializable {
 	}
 
 	@Transient
+	@Field
 	public Integer getServiceId() {
 		return service == null ? null : service.getServiceId();
 	}

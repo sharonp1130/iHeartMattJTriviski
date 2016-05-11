@@ -32,8 +32,6 @@ public class LocationBoImpl implements ILocationBo {
 	 */
 	@Override
 	public Location addLocation(User user, double longitude, double latitude) {
-		expireLocations(user);
-
 		return dao.addLocation(user, longitude, latitude);
 	}
 
@@ -59,10 +57,5 @@ public class LocationBoImpl implements ILocationBo {
 	@Override
 	public Location getLastLocation(String email) {
 		return dao.getLastLocation(email);
-	}
-
-	@Override
-	public void expireLocations(User user) {
-		user.getLocations().stream().forEach(location -> location.expire());
 	}
 }
