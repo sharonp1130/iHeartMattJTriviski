@@ -3,7 +3,6 @@ package help.me.orm.entity;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -19,14 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.validator.EmailValidator;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -74,9 +69,9 @@ public class User implements java.io.Serializable {
 	private Set<Location> locations = new HashSet<Location>(0);
 
 	@JsonIgnore
-	private Date createdAt;
+	private Long createdAt;
 	@JsonIgnore
-	private Date updatedAt;
+	private Long updatedAt;
 
 	// I took this out, no reason to load them all in this entity.
     // private Set<Location> locations = new HashSet<Location>(0);
@@ -89,7 +84,7 @@ public class User implements java.io.Serializable {
 
 
     public User(int userId, Info info, Settings settings, String email, String firstName, String lastName,
-			boolean isProvider, Set<License> licenses, Date createdAt, Date updatedAt) {
+			boolean isProvider, Set<License> licenses, Long createdAt, Long updatedAt) {
 		super();
 		this.userId = userId;
 		this.info = info;
@@ -102,6 +97,9 @@ public class User implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 		
 		this.setEmail(email);
+		
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
     /**
@@ -152,7 +150,7 @@ public class User implements java.io.Serializable {
 		return settings != null && info != null && !licenses.isEmpty();
 	}
 	
-	@Column(name = "isProvider", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "isProvider", nullable = false)
 	public boolean getIsProvider() {
 		return isProvider;
 	}
@@ -265,25 +263,21 @@ public class User implements java.io.Serializable {
     }
     
 	
-	@Generated(GenerationTime.INSERT) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
-	public Date getCreatedAt() {
+	@Column(name = "created_at", insertable=true, updatable=false)
+	public Long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	@Generated(GenerationTime.ALWAYS) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", length = 19, insertable=false, updatable=true)
-	public Date getUpdatedAt() {
+	@Column(name = "updated_at", insertable=true, updatable=true)
+	public Long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

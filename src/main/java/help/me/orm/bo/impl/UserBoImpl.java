@@ -206,6 +206,7 @@ public class UserBoImpl implements IUserBo {
 			String startField = getTimeFieldName(dayOfWeek, true);
 			String endField = getTimeFieldName(dayOfWeek, false);
 			long maxLastCheckin = System.currentTimeMillis() - MAX_LOCATION_AGE_MINUTES;
+			maxLastCheckin = 1;
 			
 			/**
 			 * Merge all of the queries together here.  Read comments for explanation, but should be straight forward.
@@ -224,7 +225,9 @@ public class UserBoImpl implements IUserBo {
 			 */
 			org.hibernate.Query hibQuery = fullTextSession
 				.createFullTextQuery(availableQuery, Location.class)
-				.setProjection(FullTextQuery.SPATIAL_DISTANCE, FullTextQuery.THIS)
+				.setProjection(FullTextQuery.SPATIAL_DISTANCE,  
+						FullTextQuery.DOCUMENT_ID, 
+						FullTextQuery.THIS)
 				.setSpatialParameters(latitude, longitude, Spatial.COORDINATES_DEFAULT_FIELD)
 				;
 

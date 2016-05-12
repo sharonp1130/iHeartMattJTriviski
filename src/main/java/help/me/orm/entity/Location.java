@@ -1,8 +1,6 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,17 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Latitude;
 import org.hibernate.search.annotations.Longitude;
-import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Spatial;
 import org.hibernate.search.annotations.SpatialMode;
 
@@ -48,12 +42,10 @@ public class Location implements java.io.Serializable {
 	@Latitude
 	private double latitude;
 
-	@Field(analyze=Analyze.NO)
-	@SortableField()
-	private Date createdAt;
+	@Field
+	private Long createdAt;
 	
 	@JsonIgnore
-	@SortableField()
 	private int locationId;
 
 	@JsonIgnore
@@ -83,7 +75,7 @@ public class Location implements java.io.Serializable {
 	 * @param createdAt
 	 * @param updatedAt
 	 */
-	public Location(int locationId, User user, double longitude, double latitude, Date createdAt, Date updatedAt) {
+	public Location(int locationId, User user, double longitude, double latitude, long createdAt) {
 		this.locationId = locationId;
 		this.user = user;
 		this.longitude = longitude;
@@ -132,13 +124,12 @@ public class Location implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=true, updatable=true)
-	public Date getCreatedAt() {
+	@Column(name = "created_at", insertable=true, updatable=false)
+	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
 	}
 
@@ -155,7 +146,6 @@ public class Location implements java.io.Serializable {
 		builder.append(latitude);
 		builder.append(", createdAt=");
 		builder.append(createdAt);
-		builder.append(", updatedAt=");
 		return builder.toString();
 	}
 	

@@ -1,7 +1,6 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
@@ -13,11 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,9 +37,9 @@ public class Info implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	@JsonIgnore
-	private Date createdAt;
+	private Long createdAt;
 	@JsonIgnore
-	private Date updatedAt;
+	private Long updatedAt;
 
 	/**
 	 * JSON output fields.
@@ -95,6 +90,8 @@ public class Info implements java.io.Serializable {
 		this.setCity(city);
 		this.setZipcode(zipcode);
 		this.setPhoneNumber(phoneNumber);
+		
+		this.createdAt = System.currentTimeMillis();
 	}
 
 	/**
@@ -112,7 +109,7 @@ public class Info implements java.io.Serializable {
 	 * @throws Exception - Telephone number format is invalid.
 	 */
 	public Info(int infoId, User user, String businessName, String address, String city, String zipcode, String phoneNumber, boolean phoneOk,
-			boolean textOk, boolean emailOk, Date createdAt, Date updatedAt) throws Exception {
+			boolean textOk, boolean emailOk, Long createdAt, Long updatedAt) throws Exception {
 		this.infoId = infoId;
 		this.user = user;
 		this.businessName = businessName;
@@ -251,25 +248,21 @@ public class Info implements java.io.Serializable {
 		this.emailOk = emailOk;
 	}
 
-	@Generated(GenerationTime.INSERT) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
-	public Date getCreatedAt() {
+	@Column(name = "created_at", insertable=true, updatable=false)
+	public Long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	@Generated(GenerationTime.ALWAYS) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", length = 19, insertable=false, updatable=true)
-	public Date getUpdatedAt() {
+	@Column(name = "updated_at", insertable=true, updatable=true)
+	public Long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

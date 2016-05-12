@@ -1,8 +1,6 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,13 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 
@@ -46,9 +40,9 @@ public class License implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	@JsonIgnore
-	private Date createdAt;
+	private Long createdAt;
 	@JsonIgnore
-	private Date updatedAt;
+	private Long updatedAt;
 
 	public License() {
 	}
@@ -60,7 +54,7 @@ public class License implements java.io.Serializable {
 		this.service = service;
 	}
 
-	public License(int licenseId, User user, String licenseNumber, Service service, Date createdAt, Date updatedAt) {
+	public License(int licenseId, User user, String licenseNumber, Service service, Long createdAt, Long updatedAt) {
 		this.licenseId = licenseId;
 		this.user = user;
 		this.licenseNumber = licenseNumber;
@@ -123,25 +117,21 @@ public class License implements java.io.Serializable {
 		this.service = service;
 	}
 
-	@Generated(GenerationTime.INSERT) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
-	public Date getCreatedAt() {
+	@Column(name = "created_at", length = 19, insertable=true, updatable=false)
+	public Long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	@Generated(GenerationTime.ALWAYS) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", length = 19, insertable=false, updatable=true)
-	public Date getUpdatedAt() {
+	@Column(name = "updated_at", length = 19, insertable=true, updatable=true)
+	public Long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

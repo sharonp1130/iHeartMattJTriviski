@@ -1,7 +1,6 @@
 package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,12 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.NumericField;
@@ -41,9 +36,9 @@ public class Settings implements java.io.Serializable {
 	private User user;
 
 	@JsonIgnore
-	private Date createdAt;
+	private Long createdAt;
 	@JsonIgnore
-	private Date updatedAt;
+	private Long updatedAt;
 
 	@Field
 	@NumericField
@@ -125,7 +120,7 @@ public class Settings implements java.io.Serializable {
 
 	public Settings(int settingsId, Integer mondayStart, Integer mondayEnd, Integer tuesdayStart, Integer tuesdayEnd,
 			Integer wednesdayStart, Integer wednesdayEnd, Integer thursdayStart, Integer thursdayEnd, Integer fridayStart,
-			Integer fridayEnd, Integer saturdayStart, Integer saturdayEnd, Integer sundayStart, Integer sundayEnd, User user) {
+			Integer fridayEnd, Integer saturdayStart, Integer saturdayEnd, Integer sundayStart, Integer sundayEnd, User user, Long createdAt, Long updatedAt) {
 		this.settingsId = settingsId;
 		this.mondayStart = mondayStart;
 		this.mondayEnd = mondayEnd;
@@ -142,6 +137,8 @@ public class Settings implements java.io.Serializable {
 		this.sundayStart = sundayStart;
 		this.sundayEnd = sundayEnd;
 		this.user = user;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 	
 	@Id
@@ -292,25 +289,21 @@ public class Settings implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@Generated(GenerationTime.INSERT) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at", length = 19, insertable=false, updatable=false)
-	public Date getCreatedAt() {
+	@Column(name = "created_at", insertable=true, updatable=false)
+	public Long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	@Generated(GenerationTime.ALWAYS) 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at", length = 19, insertable=false, updatable=true)
-	public Date getUpdatedAt() {
+	@Column(name = "updated_at", insertable=true, updatable=true)
+	public Long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

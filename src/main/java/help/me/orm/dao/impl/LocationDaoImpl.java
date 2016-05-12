@@ -1,7 +1,5 @@
 package help.me.orm.dao.impl;
 
-import java.util.Date;
-
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class LocationDaoImpl extends CustomHibernateDAOSupport<Location> impleme
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
 		location.setUser(user);
-		location.setCreatedAt(new Date());
+		location.setCreatedAt(System.currentTimeMillis());
 		
 		save(location);
 		
