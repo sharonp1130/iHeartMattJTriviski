@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,9 +38,9 @@ public class Settings implements java.io.Serializable {
 	private User user;
 
 	@JsonIgnore
-	private Long createdAt;
+	private long createdAt;
 	@JsonIgnore
-	private Long updatedAt;
+	private long updatedAt;
 
 	@Field
 	@NumericField
@@ -120,7 +122,8 @@ public class Settings implements java.io.Serializable {
 
 	public Settings(int settingsId, Integer mondayStart, Integer mondayEnd, Integer tuesdayStart, Integer tuesdayEnd,
 			Integer wednesdayStart, Integer wednesdayEnd, Integer thursdayStart, Integer thursdayEnd, Integer fridayStart,
-			Integer fridayEnd, Integer saturdayStart, Integer saturdayEnd, Integer sundayStart, Integer sundayEnd, User user, Long createdAt, Long updatedAt) {
+			Integer fridayEnd, Integer saturdayStart, Integer saturdayEnd, Integer sundayStart, Integer sundayEnd, 
+			User user, long createdAt, long updatedAt) {
 		this.settingsId = settingsId;
 		this.mondayStart = mondayStart;
 		this.mondayEnd = mondayEnd;
@@ -290,23 +293,37 @@ public class Settings implements java.io.Serializable {
 	}
 
 	@Column(name = "created_at", insertable=true, updatable=false)
-	public Long getCreatedAt() {
+	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Long createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	@Column(name = "updated_at", insertable=true, updatable=true)
-	public Long getUpdatedAt() {
+	public long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Long updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
+	
+	@PrePersist
+	@Transient
+	public void setCreatedAt() {
+		this.createdAt = System.currentTimeMillis();
+		this.updatedAt = this.createdAt;
+	}
+	
+	@PreUpdate
+	@Transient
+	public void setUpdatedAt() {
+		this.updatedAt = System.currentTimeMillis();
+	}
+	
 	/**
 	 * Used for updating.  This will get all the values from settings that are not null 
 	 * and set them in this.  

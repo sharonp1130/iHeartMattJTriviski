@@ -215,6 +215,7 @@ public class UserBoImpl implements IUserBo {
 				.bool()
 					.must(builder.keyword().onField("user.licenses.serviceId").matching(service.getServiceId()).createQuery()) // Must match the service id.
 					.must(builder.range().onField("createdAt").below(maxLastCheckin).createQuery()).not() // Exclude created at before max last checkin.
+					.must(builder.keyword().onField("expired").matching(false).createQuery()) // Don't get expired locations.
 					.must(distanceQuery)
 					.must(builder.range().onField(startField).above(hour).createQuery()).not() // Start not after now
 					.must(builder.range().onField(endField).below(hour).createQuery()).not() // End not before now
@@ -225,9 +226,7 @@ public class UserBoImpl implements IUserBo {
 			 */
 			org.hibernate.Query hibQuery = fullTextSession
 				.createFullTextQuery(availableQuery, Location.class)
-				.setProjection(FullTextQuery.SPATIAL_DISTANCE,  
-						FullTextQuery.DOCUMENT_ID, 
-						FullTextQuery.THIS)
+				.setProjection(FullTextQuery.SPATIAL_DISTANCE,  FullTextQuery.THIS)
 				.setSpatialParameters(latitude, longitude, Spatial.COORDINATES_DEFAULT_FIELD)
 				;
 
@@ -244,7 +243,7 @@ public class UserBoImpl implements IUserBo {
 				Double distance_ = (Double) row[0];
 				Location l = (Location) row[1];
 
-				System.out.println("dist="+distance_ + " Loca="+l);
+				log.debug(String.format("distance=%f location=%s",  distance_, l));
 				distanceMap.put(distance_, l.getUser());
 			}
 			

@@ -132,13 +132,13 @@ if __name__ == "__main__":
     import datetime as dt
     st = dt.datetime.now()
 
-    tcount = 5 
-    nums = 1000
+    thread_count = 5
+    user_to_add = 100
     
     procs = []
     
-    for _ in range(tcount):
-        p = MP.Process(target=do_run, args=(nums/tcount,))
+    for _ in range(thread_count):
+        p = MP.Process(target=do_run, args=(user_to_add/thread_count,))
         procs.append(p)
     
     for p in procs:
@@ -151,7 +151,7 @@ if __name__ == "__main__":
 #     update_settings(1)
      
    
-    print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
+    print "Number records=%5d took %s" % (user_to_add, dt.datetime.now() - st)
 #     for _ in xrange(0, nums):
 #         user = gen_user()
 #         info = gen_info()

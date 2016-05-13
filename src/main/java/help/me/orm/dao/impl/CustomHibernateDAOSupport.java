@@ -2,10 +2,10 @@ package help.me.orm.dao.impl;
 
 import java.lang.reflect.ParameterizedType;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import help.me.orm.dao.IDao;
 
@@ -18,8 +18,11 @@ import help.me.orm.dao.IDao;
  * @author triviski
  *
  */
-public abstract class CustomHibernateDAOSupport<T> extends HibernateDaoSupport implements IDao<T> {
+public abstract class CustomHibernateDAOSupport<T> implements IDao<T> {
 	private Class<T> persistentClass;
+	
+	@PersistenceContext(name="cod-base")
+	protected EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
 	public CustomHibernateDAOSupport() {
@@ -29,45 +32,49 @@ public abstract class CustomHibernateDAOSupport<T> extends HibernateDaoSupport i
                 .getGenericSuperclass()).getActualTypeArguments()[0];  
 	}
 
-	@Autowired
-    public void autoWire(SessionFactory sessionFactory) {
-        setSessionFactory(sessionFactory);
-    }
+//	@Autowired
+//    public void autoWire(SessionFactory sessionFactory) {
+//        setSessionFactory(sessionFactory);
+//    }
 	
     @Override
 	public void save(T entity) {
-    		getHibernateTemplate().save(entity);
+    		entityManager.persist(entity);
 	}
 
 	@Override
 	public void update(T entity) {
-		getHibernateTemplate().update(entity);
+		merge(entity);
 	}
 
 	@Override
 	public void delete(T entity) {
-		getHibernateTemplate().delete(entity);
+		entityManager.remove(entity);
 	}
 
 	@Override
 	public T merge(T entity) {
-		return (T) getHibernateTemplate().merge(entity);
+		return (T) entityManager.merge(entity);
 	}
 
 	@Override
 	public void saveOrUpdate(T entity) {
-		getHibernateTemplate().saveOrUpdate(entity);
+		if (entityManager.contains(entity)) { // Do an update.
+			update(entity);
+		} else { // Do a persist.
+			save(entity);
+		}
 	}
 
 	@Override
 	public T findById(Integer id) {
-		return(T) getHibernateTemplate().get(persistentClass, id);
+		return(T) entityManager.find(persistentClass, id);
 	}
 	
 	/**
 	 * @return the current hibernate session
 	 */
 	public Session getCurrentSession() {
-		return getHibernateTemplate().getSessionFactory().getCurrentSession();
+		return entityManager.unwrap(Session.class);
 	}
 }

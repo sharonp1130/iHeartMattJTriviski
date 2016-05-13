@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -69,9 +71,9 @@ public class User implements java.io.Serializable {
 	private Set<Location> locations = new HashSet<Location>(0);
 
 	@JsonIgnore
-	private Long createdAt;
+	private long createdAt;
 	@JsonIgnore
-	private Long updatedAt;
+	private long updatedAt;
 
 	// I took this out, no reason to load them all in this entity.
     // private Set<Location> locations = new HashSet<Location>(0);
@@ -84,7 +86,7 @@ public class User implements java.io.Serializable {
 
 
     public User(int userId, Info info, Settings settings, String email, String firstName, String lastName,
-			boolean isProvider, Set<License> licenses, Long createdAt, Long updatedAt) {
+			boolean isProvider, Set<License> licenses, long createdAt, long updatedAt) {
 		super();
 		this.userId = userId;
 		this.info = info;
@@ -150,7 +152,7 @@ public class User implements java.io.Serializable {
 		return settings != null && info != null && !licenses.isEmpty();
 	}
 	
-	@Column(name = "isProvider", nullable = false)
+	@Column(name = "isProvider", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean getIsProvider() {
 		return isProvider;
 	}
@@ -254,7 +256,15 @@ public class User implements java.io.Serializable {
     		} else {
 	    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
 	    		locs.addAll(locations);
-	    		return locs.first();
+	    		
+	    		for (Location loc : locs) {
+	    			if (!loc.getIsExpired()) {
+	    				return loc;
+	    			}
+	    		}
+	    		
+	    		// No unexpired locations so return null.
+	    		return null;
     		}
     }
     
@@ -264,21 +274,34 @@ public class User implements java.io.Serializable {
     
 	
 	@Column(name = "created_at", insertable=true, updatable=false)
-	public Long getCreatedAt() {
+	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Long createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	@Column(name = "updated_at", insertable=true, updatable=true)
-	public Long getUpdatedAt() {
+	public long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Long updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	@PrePersist
+	@Transient
+	public void setCreatedAt() {
+		this.createdAt = System.currentTimeMillis();
+		this.updatedAt = this.createdAt;
+	}
+	
+	@PreUpdate
+	@Transient
+	public void setUpdatedAt() {
+		this.updatedAt = System.currentTimeMillis();
 	}
 	
 	@Override

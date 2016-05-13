@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
@@ -43,13 +45,17 @@ public class Location implements java.io.Serializable {
 	private double latitude;
 
 	@Field
-	private Long createdAt;
+	private long createdAt;
 	
 	@JsonIgnore
 	private int locationId;
 
 	@JsonIgnore
 	private User user;
+	
+	@JsonProperty("expired")
+	@Field
+	private boolean expired;
 	
 	public Location() {
 	}
@@ -65,6 +71,7 @@ public class Location implements java.io.Serializable {
 		this.user = user;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.expired = false;
 	}
 
 	/**
@@ -75,7 +82,7 @@ public class Location implements java.io.Serializable {
 	 * @param createdAt
 	 * @param updatedAt
 	 */
-	public Location(int locationId, User user, double longitude, double latitude, long createdAt) {
+	public Location(int locationId, User user, double longitude, double latitude, long createdAt, boolean expired) {
 		this.locationId = locationId;
 		this.user = user;
 		this.longitude = longitude;
@@ -124,28 +131,46 @@ public class Location implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
+	@Column(name = "expired", nullable = false, columnDefinition="TINYINT(1)")
+	public boolean getIsExpired() {
+		return expired;
+	}
+
+	public void setIsExpired(boolean isExpired) {
+		this.expired = isExpired;
+	}
+
 	@Column(name = "created_at", insertable=true, updatable=false)
 	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Long createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
-
+	
+	@PrePersist
+	@Transient
+	public void setCreatedAt() {
+		this.createdAt = System.currentTimeMillis();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Location [locationId=");
-		builder.append(locationId);
-		builder.append(", user=");
-		builder.append(user == null ? null : user.getUserId());
-		builder.append(", longitude=");
+		builder.append("Location [longitude=");
 		builder.append(longitude);
 		builder.append(", latitude=");
 		builder.append(latitude);
 		builder.append(", createdAt=");
 		builder.append(createdAt);
+		builder.append(", locationId=");
+		builder.append(locationId);
+		builder.append(", user=");
+		builder.append(user.getUserId());
+		builder.append(", expired=");
+		builder.append(expired);
+		builder.append("]");
 		return builder.toString();
 	}
 	

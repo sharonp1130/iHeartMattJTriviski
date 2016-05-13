@@ -27,11 +27,18 @@ public class LocationDaoImpl extends CustomHibernateDAOSupport<Location> impleme
 	 */
 	@Override
 	public Location addLocation(User user, double longitude, double latitude) {
+		/**
+		 * Expire all of the old locations of the user before moving on.
+		 */
+		for (Location loc : user.getLocations()) {
+			loc.setIsExpired(true);
+		}
 		Location location = new Location();
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
 		location.setUser(user);
 		location.setCreatedAt(System.currentTimeMillis());
+		
 		
 		save(location);
 		

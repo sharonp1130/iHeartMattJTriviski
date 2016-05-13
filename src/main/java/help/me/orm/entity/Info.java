@@ -11,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -37,9 +40,9 @@ public class Info implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	@JsonIgnore
-	private Long createdAt;
+	private long createdAt;
 	@JsonIgnore
-	private Long updatedAt;
+	private long updatedAt;
 
 	/**
 	 * JSON output fields.
@@ -90,8 +93,6 @@ public class Info implements java.io.Serializable {
 		this.setCity(city);
 		this.setZipcode(zipcode);
 		this.setPhoneNumber(phoneNumber);
-		
-		this.createdAt = System.currentTimeMillis();
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class Info implements java.io.Serializable {
 	 * @throws Exception - Telephone number format is invalid.
 	 */
 	public Info(int infoId, User user, String businessName, String address, String city, String zipcode, String phoneNumber, boolean phoneOk,
-			boolean textOk, boolean emailOk, Long createdAt, Long updatedAt) throws Exception {
+			boolean textOk, boolean emailOk, long createdAt, long updatedAt) throws Exception {
 		this.infoId = infoId;
 		this.user = user;
 		this.businessName = businessName;
@@ -221,7 +222,7 @@ public class Info implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Column(name = "phoneOk", nullable = false)
+	@Column(name = "phoneOk", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean isPhoneOk() {
 		return this.phoneOk;
 	}
@@ -230,7 +231,7 @@ public class Info implements java.io.Serializable {
 		this.phoneOk = phoneOk;
 	}
 
-	@Column(name = "textOk", nullable = false)
+	@Column(name = "textOk", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean isTextOk() {
 		return this.textOk;
 	}
@@ -239,7 +240,7 @@ public class Info implements java.io.Serializable {
 		this.textOk = textOk;
 	}
 
-	@Column(name = "emailOk", nullable = false)
+	@Column(name = "emailOk", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean isEmailOk() {
 		return this.emailOk;
 	}
@@ -249,7 +250,7 @@ public class Info implements java.io.Serializable {
 	}
 
 	@Column(name = "created_at", insertable=true, updatable=false)
-	public Long getCreatedAt() {
+	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
@@ -264,6 +265,20 @@ public class Info implements java.io.Serializable {
 
 	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+
+	@PrePersist
+	@Transient
+	public void setCreatedAt() {
+		this.createdAt = System.currentTimeMillis();
+		this.updatedAt = this.createdAt;
+	}
+	
+	@PreUpdate
+	@Transient
+	public void setUpdatedAt() {
+		this.updatedAt = System.currentTimeMillis();
 	}
 
 	@Override

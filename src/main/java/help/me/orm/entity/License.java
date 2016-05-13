@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -40,9 +42,9 @@ public class License implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	@JsonIgnore
-	private Long createdAt;
+	private long createdAt;
 	@JsonIgnore
-	private Long updatedAt;
+	private long updatedAt;
 
 	public License() {
 	}
@@ -54,7 +56,7 @@ public class License implements java.io.Serializable {
 		this.service = service;
 	}
 
-	public License(int licenseId, User user, String licenseNumber, Service service, Long createdAt, Long updatedAt) {
+	public License(int licenseId, User user, String licenseNumber, Service service, long createdAt, long updatedAt) {
 		this.licenseId = licenseId;
 		this.user = user;
 		this.licenseNumber = licenseNumber;
@@ -117,22 +119,35 @@ public class License implements java.io.Serializable {
 		this.service = service;
 	}
 
-	@Column(name = "created_at", length = 19, insertable=true, updatable=false)
-	public Long getCreatedAt() {
+	@Column(name = "created_at", insertable=true, updatable=false)
+	public long getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Long createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	@Column(name = "updated_at", length = 19, insertable=true, updatable=true)
-	public Long getUpdatedAt() {
+	@Column(name = "updated_at", insertable=true, updatable=true)
+	public long getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Long updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	@PrePersist
+	@Transient
+	public void setCreatedAt() {
+		this.createdAt = System.currentTimeMillis();
+		this.updatedAt = this.createdAt;
+	}
+	
+	@PreUpdate
+	@Transient
+	public void setUpdatedAt() {
+		this.updatedAt = System.currentTimeMillis();
 	}
 
 	@Override

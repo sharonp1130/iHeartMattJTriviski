@@ -2,7 +2,6 @@ package help.me.orm.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -65,10 +64,10 @@ public class LicenseDaoImpl extends CustomHibernateDAOSupport<License> implement
 	 */
 	@Override
 	public License findLicenseByNumber(String licenseNumber) {
-		DetachedCriteria crit = DetachedCriteria.forClass(License.class)
-				.add(Restrictions.eq("licenseNumber", licenseNumber));
+		List<?> results = getCurrentSession().createCriteria(License.class)
+				.add(Restrictions.eq("licenseNumber", licenseNumber))
+				.list();
 			
-		List<?> results = getHibernateTemplate().findByCriteria(crit);
 		return results.isEmpty() ? null : (License) results.get(0);
 	}
 }
