@@ -84,7 +84,7 @@ public class ServicesResource extends BaseResource {
 			@ApiResponse(code=404, message="No services found")
 	})
 	public Response getServices() throws JsonProcessingException {
-		Collection<String> services = serviceBo.getServiceDescriptions();
+		Collection<String> services = serviceBo.getServiceNames();
 
 		if (services.isEmpty()) {
 			return notFound(("No services were found"));
@@ -111,7 +111,7 @@ public class ServicesResource extends BaseResource {
 	@ApiOperation(value="Get icon file for service.")
 	@ApiResponses(value={@ApiResponse(code=500, message="Service icon not found or unexpected error.")})
 	public Response getIcon(@PathParam("description") String description) {
-		Service service = serviceBo.getServiceWithDescription(description);
+		Service service = serviceBo.getServiceWithServiceName(description);
 		
 		if (service == null) {
 			return notFound();

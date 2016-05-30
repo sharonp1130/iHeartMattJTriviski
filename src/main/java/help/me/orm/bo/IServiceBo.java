@@ -21,18 +21,18 @@ public interface IServiceBo extends IBo<Service> {
 	
 	
 	/**
-	 * Finds the service with description.  
-	 * @param description
+	 * Finds the service with serviceName.  
+	 * @param serviceName
 	 * @return Service object null if found
 	 */
-	public Service getServiceWithDescription(String description);
+	public Service getServiceWithServiceName(String serviceName);
 
 	/**
 	 * Get a collection of all of the valid service descriptions.
 	 * 
 	 * @return
 	 */
-	public Collection<String> getServiceDescriptions();
+	public Collection<String> getServiceNames();
 	
 	/**
 	 * Takes the init file csv row and will check if the service already exists.  If it does not 
@@ -47,14 +47,15 @@ public interface IServiceBo extends IBo<Service> {
 			String description = csv.get(DESC_HEADER_NAME);
 			String fname = csv.get(ICON_HEADER_NAME);
 			
-			Service service = getServiceWithDescription(description);
+			Service service = getServiceWithServiceName(description);
 			
 			if (service == null) {
 				// Need to add a new service.
 				service = new Service();
 			}
 			
-			service.setDescription(description);
+			service.setServiceName(description);
+			service.setLongDescription(description+" as long description");
 			service.setIconFileName(fname);
 			
 			getDao().saveOrUpdate(service);

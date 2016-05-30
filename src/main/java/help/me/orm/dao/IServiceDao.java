@@ -14,5 +14,5 @@ public interface IServiceDao extends IDao<Service> {
 	 * @param description
 	 * @return Service object null if found
 	 */
-	public Service getServiceWithDescription(String description);
+	public Service getWithServiceName(String description);
 }

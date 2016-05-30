@@ -71,7 +71,7 @@ public class UserTest  {
 	public void setServices() {
 		for(String desc : Arrays.asList("plumbing", "electrical", "roofing")) {
 			Service s = new Service();
-			s.setDescription(desc);
+			s.setServiceName(desc);
 			serv.save(s);
 		}
 	}
@@ -89,7 +89,7 @@ public class UserTest  {
 		String ln = "balls";
 		License plum = ubo.addLicense(user, ln, "plumbing");
 		
-		assertEquals(plum.getService().getDescription(), "plumbing");
+		assertEquals(plum.getService().getServiceName(), "plumbing");
 		assertEquals(plum.getLicenseNumber(), "balls");
 		
 		assertEquals(plum, user.getLicenses().iterator().next());

@@ -29,7 +29,7 @@ public class LicenseTest {
 
 	public Service createService(String des) {
 		Service s = new Service();
-		s.setDescription(des);
+		s.setServiceName(des);
 		
 		return s;
 	}

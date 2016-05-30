@@ -16,12 +16,16 @@ import org.hibernate.search.annotations.Field;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "service", uniqueConstraints = @UniqueConstraint(columnNames = "description") )
+@Table(name = "service", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "serviceName"),
+		@UniqueConstraint(columnNames = "longDescription")
+})
 public class Service implements java.io.Serializable {
 	private int serviceId;
 
 	@Field
-	private String description;
+	private String serviceName;
+	private String longDescription;
 	private String iconFileName;
 	
 	public Service() {}
@@ -29,15 +33,22 @@ public class Service implements java.io.Serializable {
 	/**
 	 * Jackson constructor.
 	 * 
-	 * @param description
+	 * @param serviceName
 	 */
-	public Service(String description) {
-		this(-1, description, null);
+	public Service(String serviceName, String longDescription) {
+		this(-1, serviceName, longDescription, null);
 	}
 
-	public Service(int serviceId, String description, String iconFileName) {
+	/**
+	 * @param serviceId
+	 * @param serviceName
+	 * @param longDescription
+	 * @param iconFileName
+	 */
+	public Service(int serviceId, String serviceName, String longDescription, String iconFileName) {
 		this.serviceId = serviceId;
-		this.description = description;
+		this.serviceName = serviceName;
+		this.longDescription = longDescription;
 		this.iconFileName = iconFileName;
 	}
 
@@ -53,13 +64,22 @@ public class Service implements java.io.Serializable {
 		this.serviceId = serviceId;
 	}
 
-	@Column(name = "description", unique = true, nullable = false, length = 100)
-	public String getDescription() {
-		return this.description;
+	@Column(name = "serviceName", unique = true, nullable = false, length = 100)
+	public String getServiceName() {
+		return this.serviceName;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setServiceName(String description) {
+		this.serviceName = description;
+	}
+
+	@Column(name = "longDescription", unique = true, nullable = false)
+	public String getLongDescription() {
+		return this.longDescription;
+	}
+
+	public void setLongDescription(String longDescription) {
+		this.longDescription = longDescription;
 	}
 
 	@Column(name = "iconFileName", unique = false, nullable = false, length = 100)
@@ -76,8 +96,12 @@ public class Service implements java.io.Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Service [serviceId=");
 		builder.append(serviceId);
-		builder.append(", description=");
-		builder.append(description);
+		builder.append(", serviceName=");
+		builder.append(serviceName);
+		builder.append(", longDescription=");
+		builder.append(longDescription);
+		builder.append(", iconFileName=");
+		builder.append(iconFileName);
 		builder.append("]");
 		return builder.toString();
 	}

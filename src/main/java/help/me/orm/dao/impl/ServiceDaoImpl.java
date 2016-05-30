@@ -19,9 +19,9 @@ public class ServiceDaoImpl extends CustomHibernateDAOSupport<Service> implement
 	 * @see help.me.orm.dao.IServiceDao#getServiceWithDescription(java.lang.String)
 	 */
 	@Override
-	public Service getServiceWithDescription(String description) {
+	public Service getWithServiceName(String serviceName) {
 		return (Service) getCurrentSession().createCriteria(Service.class)
-				.add(Restrictions.eq("description", description))
+				.add(Restrictions.eq("serviceName", serviceName))
 				.uniqueResult();
 	}
 }

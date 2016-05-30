@@ -73,7 +73,7 @@ public class License implements java.io.Serializable {
 
 	@Transient
 	public String getServiceDescription() {
-		return service == null ? null : service.getDescription();
+		return service == null ? null : service.getServiceName();
 	}
 
 	@Id

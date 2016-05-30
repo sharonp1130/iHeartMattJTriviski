@@ -26,18 +26,18 @@ public class ServiceBoImpl implements IServiceBo {
 	}
 
 	/* (non-Javadoc)
-	 * @see help.me.orm.bo.IServiceBo#getServiceWithDescription(java.lang.String)
+	 * @see help.me.orm.bo.IServiceBo#getServiceWithServiceName(java.lang.String)
 	 */
 	@Override
-	public Service getServiceWithDescription(String description) {
-		return dao.getServiceWithDescription(description);
+	public Service getServiceWithServiceName(String description) {
+		return dao.getWithServiceName(description);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<String> getServiceDescriptions() {
+	public Collection<String> getServiceNames() {
 		List<String> results = dao.getCurrentSession().createCriteria(Service.class)
-			.setProjection(Projections.property("description"))
+			.setProjection(Projections.property("serviceName"))
 			.list();
 
 		return results;

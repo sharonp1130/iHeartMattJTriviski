@@ -27,7 +27,7 @@ public class LicenseDaoImpl extends CustomHibernateDAOSupport<License> implement
 	 * @return service
 	 */
 	public Service getService(String description) {
-		return serviceDao.getServiceWithDescription(description);
+		return serviceDao.getWithServiceName(description);
 	}
 	
 	/* (non-Javadoc)

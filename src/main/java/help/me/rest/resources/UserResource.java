@@ -412,11 +412,11 @@ public class UserResource extends BaseResource {
 			 * The service for the license is a stub.  We need to get the actual 
 			 * service and and set it properly.
 			 */
-			Service service = serviceBo.getServiceWithDescription(license.getService().getDescription());
+			Service service = serviceBo.getServiceWithServiceName(license.getService().getServiceName());
 			
 			if (service == null) {
 				// Invalid service.
-				return response(String.format("Invalid service description %s", license.getService().getDescription()), 
+				return response(String.format("Invalid service description %s", license.getService().getServiceName()), 
 						Status.BAD_REQUEST, MediaType.TEXT_PLAIN_TYPE);
 			} else {
 				license.setService(service);

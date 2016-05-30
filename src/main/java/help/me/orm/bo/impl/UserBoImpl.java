@@ -169,7 +169,7 @@ public class UserBoImpl implements IUserBo {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Map<Double, User> findProviders(String serviceDescription, double longitude, double latitude, double distance, int maxResults, Collection<Integer> userToSkip) {
-		Service service = serviceBo.getServiceWithDescription(serviceDescription);
+		Service service = serviceBo.getWithServiceName(serviceDescription);
 		
 		if (service == null) {
 			return Collections.<Double, User>emptyMap();
