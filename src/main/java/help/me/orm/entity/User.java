@@ -2,11 +2,9 @@ package help.me.orm.entity;
 // Generated Nov 26, 2015 6:04:16 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,12 +45,11 @@ public class User implements java.io.Serializable {
 	
 	@JsonProperty("email")
 	private String email;
-	@JsonProperty("firstName")
-	private String firstName;
-	@JsonProperty("lastName")
-	private String lastName;
 	@JsonProperty("isProvider")
 	boolean isProvider;
+
+	private String firstName;
+	private String lastName;
 
 	/**
 	 * info, settings and licenses are not included.  Those are returned independently.
@@ -74,6 +71,15 @@ public class User implements java.io.Serializable {
 	private long createdAt;
 	@JsonIgnore
 	private long updatedAt;
+	
+	/**
+	 * I don't like doing this since most of the time this is going to not be set.  Also
+	 * this is a value that must be set after the constructor is called.  But this is the simplest
+	 * way to make sure that the output user object for queries have the distance as part of the 
+	 * JSON.  Otherwise, I will have to do a ton of work with JSON
+	 */
+	@JsonIgnore
+	private double distance;
 
 	// I took this out, no reason to load them all in this entity.
     // private Set<Location> locations = new HashSet<Location>(0);
@@ -184,6 +190,7 @@ public class User implements java.io.Serializable {
 	}
 	
 	@Column(name = "firstName", unique = false, nullable = false, length = 64)
+	@JsonProperty("firstName")
 	public String getFirstName() {
 		return this.firstName;
 	}
@@ -193,6 +200,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "lastName", unique = false, nullable = false, length = 128)
+	@JsonProperty("lastName")
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -218,6 +226,14 @@ public class User implements java.io.Serializable {
 	}
 
 	/**
+	 * @return Returns formatted name "<first name> <last name>"
+	 */
+	@Transient
+	public String getFormattedName() {
+		return String.format("%s %s", firstName, lastName);
+	}
+	
+	/**
 	 * @param license Add a new license.
 	 */
 	@Transient
@@ -240,33 +256,33 @@ public class User implements java.io.Serializable {
         return this.locations;
     }
     
-    private static final Comparator<Location> lastLocation = new Comparator<Location>() {
+//    private static final Comparator<Location> lastLocation = new Comparator<Location>() {
 		
-		@Override
-		public int compare(Location o1, Location o2) {
-			// Want the last one so do it in reverse.
-			return Integer.compare(o2.getLocationId(), o1.getLocationId());
-		}
-	};
+//		@Override
+//		public int compare(Location o1, Location o2) {
+//			// Want the last one so do it in reverse.
+//			return Integer.compare(o2.getLocationId(), o1.getLocationId());
+//		}
+//	};
 	
-    @Transient
-    public Location getLastLocation() {
-    		if (locations == null || locations.isEmpty()) {
-    			return null;
-    		} else {
-	    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
-	    		locs.addAll(locations);
-	    		
-	    		for (Location loc : locs) {
-	    			if (!loc.getIsExpired()) {
-	    				return loc;
-	    			}
-	    		}
-	    		
-	    		// No unexpired locations so return null.
-	    		return null;
-    		}
-    }
+//    @Transient
+//    public Location getLastLocation() {
+//    		if (locations == null || locations.isEmpty()) {
+//    			return null;
+//    		} else {
+//	    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
+//	    		locs.addAll(locations);
+//	    		
+//	    		for (Location loc : locs) {
+//	    			if (!loc.getIsExpired()) {
+//	    				return loc;
+//	    			}
+//	    		}
+//	    		
+//	    		// No unexpired locations so return null.
+//	    		return null;
+//    		}
+//    }
     
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
@@ -303,6 +319,17 @@ public class User implements java.io.Serializable {
 	public void setUpdatedAt() {
 		this.updatedAt = System.currentTimeMillis();
 	}
+	
+	@Transient
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	
+	@Transient
+	public double getDistance() {
+		return distance;
+	}
+	
 	
 	@Override
 	public String toString() {

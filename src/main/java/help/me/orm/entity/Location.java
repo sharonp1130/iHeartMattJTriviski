@@ -53,7 +53,6 @@ public class Location implements java.io.Serializable {
 	@JsonIgnore
 	private User user;
 	
-	@JsonProperty("expired")
 	@Field
 	private boolean expired;
 	
@@ -131,6 +130,7 @@ public class Location implements java.io.Serializable {
 		this.latitude = latitude;
 	}
 
+	@JsonProperty("expired")
 	@Column(name = "expired", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean getIsExpired() {
 		return expired;

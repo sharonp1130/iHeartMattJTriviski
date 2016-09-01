@@ -35,6 +35,10 @@ public interface IServiceBo extends IBo<Service> {
 	public Collection<String> getServiceNames();
 	
 	/**
+	 * @return all services
+	 */
+	public Collection<Service> getServices();
+	/**
 	 * Takes the init file csv row and will check if the service already exists.  If it does not 
 	 * will create a new one and save it.
 	 * 

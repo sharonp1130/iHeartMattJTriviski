@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -163,6 +164,10 @@ public class UserBoImpl implements IUserBo {
 	      return distanceInMiles * 1.609344;
 	}
 
+	private double KMToMiles(double distanceInKM) {
+	      return distanceInKM / 1.609344;
+	}
+
 	/* (non-Javadoc)
 	 * @see help.me.orm.dao.ILicenseDao#findProviders(java.lang.String, double, double, double)
 	 */
@@ -206,6 +211,7 @@ public class UserBoImpl implements IUserBo {
 			String startField = getTimeFieldName(dayOfWeek, true);
 			String endField = getTimeFieldName(dayOfWeek, false);
 			long maxLastCheckin = System.currentTimeMillis() - MAX_LOCATION_AGE_MINUTES;
+			log.error("Max checkin is set to filter nothing, must change before production.");
 			maxLastCheckin = 1;
 			
 			/**
@@ -232,6 +238,7 @@ public class UserBoImpl implements IUserBo {
 
 			List<Object[]> results = hibQuery
 					.setMaxResults(maxResults > 0 ? maxResults : MAX_RESULTS)
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 					.list();
 
 			/**
@@ -240,10 +247,11 @@ public class UserBoImpl implements IUserBo {
 			Map<Double, User> distanceMap = new HashMap<Double, User>();
 
 			for (Object[] row : results) {
-				Double distance_ = (Double) row[0];
+				Double distance_ = KMToMiles((Double) row[0]);
 				Location l = (Location) row[1];
 
 				log.debug(String.format("distance=%f location=%s",  distance_, l));
+				l.getUser().setDistance(distance_);
 				distanceMap.put(distance_, l.getUser());
 			}
 			

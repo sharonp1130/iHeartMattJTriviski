@@ -13,9 +13,6 @@ import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 import help.me.orm.entity.Info;
 import help.me.orm.entity.License;
-import help.me.orm.entity.Location;
-import help.me.orm.entity.Service;
-import help.me.orm.entity.Settings;
 import help.me.orm.entity.User;
 
 /*
@@ -133,30 +130,33 @@ public class JsonUtilities {
 		@JsonProperty("info")
 		public abstract Info getInfo();
 
-		@JsonProperty("availability")
-		public abstract Settings getSettings();
-
 		@JsonProperty("licenses")
 		public abstract Set<License> getLicenses();
 
-		@JsonProperty("location")
-		public abstract Location getLastLocation();
-	}
-
-	abstract class LicenseMixin {
-		@JsonIgnore
-		public abstract Service getService();
-
-		@JsonProperty
-		public abstract String getServiceDescription(); 
-	}
-
-	abstract class ServiceMixin {
-		@JsonProperty("description")
-		public abstract String getDescription();
+		@JsonProperty("distance")
+		public abstract double getDistance();
+		
+		@JsonProperty("name")
+		public abstract String getFormattedName();
 		
 		@JsonIgnore
-		private String iconFileName;
+		public abstract String getFirstName();
+
+		@JsonIgnore
+		public abstract String getLastName();
+	}
+	
+	/**
+	 * The service id is needed for the lucene search, however we do not want to see it.  Transient 
+	 * properties are not ignored by default for this object mapper, so we must 
+	 * ignore this field through mixins. 
+	 * 
+	 * @author triviski
+	 *
+	 */
+	abstract class LicenseMixin {
+		@JsonIgnore
+		public abstract Integer getServiceId();
 	}
 
 	public static ObjectMapper createUserObjectMapper() {

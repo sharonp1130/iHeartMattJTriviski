@@ -73,6 +73,7 @@ public class UserResource extends BaseResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	@ApiOperation(value="Retrieve a user with the email.", 
 		notes="Email is a unique field and this method will always return either an empty set or the given user",
 		response=User.class)
@@ -101,6 +102,7 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/info")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	@ApiOperation(value="Retrieve the user info for specified user ID.",
 			response=Info.class,
 			notes="In the event that the account was created but not completed some of the info values could be null.")
@@ -130,6 +132,7 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/availability")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	@ApiOperation(value="Retrieve the availability for specified user ID.",
 			response=Settings.class,
 			notes="Some values may be null if start / end times were not supplied for a given day.")
@@ -159,6 +162,7 @@ public class UserResource extends BaseResource {
 	@GET
 	@Path("/{userId : \\d+}/licenses")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Transactional
 	@ApiOperation(value="Retrieve the set of licenses for specified user ID.",
 			response=License.class,
 			responseContainer="List"

@@ -66,6 +66,32 @@ public class ServicesResource extends BaseResource {
 	protected Response streamFileResponse(final String streamFileName) {
 		return streamFileResponse(new File(streamFileName));
 	}
+	
+	
+	/**
+	 * Finds all available services and returns them as a json.
+	 * 
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+	@Transactional
+	@ApiOperation(value="Retrieves all services.", 
+			response=String.class, 
+			responseContainer="List")
+	@ApiResponses(value={
+			@ApiResponse(code=404, message="No services found")
+	})
+	public Response getServices() throws JsonProcessingException {
+		Collection<Service> services = serviceBo.getServices();
+
+		if (services.isEmpty()) {
+			return notFound(("No services were found"));
+		} else {
+			return okay(services, MediaType.APPLICATION_JSON_TYPE);
+		}
+	}
 
 	/**
 	 * Finds all available services and returns them as a json.
@@ -83,7 +109,7 @@ public class ServicesResource extends BaseResource {
 	@ApiResponses(value={
 			@ApiResponse(code=404, message="No services found")
 	})
-	public Response getServices() throws JsonProcessingException {
+	public Response getServiceDescriptions() throws JsonProcessingException {
 		Collection<String> services = serviceBo.getServiceNames();
 
 		if (services.isEmpty()) {
