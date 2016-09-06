@@ -1,3 +1,4 @@
+*.pyc
 **.project
 **.settings
 .classpath
@@ -7,4 +8,8 @@
 target
 last_run.log
 ansible/roles/ansible-*
-*_.java
+hs_err*
+generated
+.springBeans
+.tern-project
+
