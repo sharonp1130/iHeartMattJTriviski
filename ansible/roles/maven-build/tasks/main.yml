@@ -1,0 +1,7 @@
+---
+# task file for maven build role.
+- name: Building repository at root directory "{{ repo_root_dir }} with goals ({{ maven_goals }})"
+  command: "{{ maven_cmd }} {{ maven_goals }}"
+  remote_user: "{{ deploy_user }}"
+  args:
+    chdir: "{{ repo_root_dir }}"

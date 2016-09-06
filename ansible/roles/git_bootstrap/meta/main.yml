@@ -1,0 +1,6 @@
+---
+dependencies:
+  # Need to make sure that git is installed.
+  - { role: apt_install, apt_packages: [git-all] }
+  # Since the ssh role will look for the files in the ssh_keys/files path, the files passed in must be in reference to that.
+  - { role: ssh_keys, pub_rsa: "../../git/files/id_rsa.pub.github", priv_rsa: "../../git/files/id_rsa.private.github" }

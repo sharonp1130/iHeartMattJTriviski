@@ -1,0 +1,15 @@
+*.pyc
+**.project
+**.settings
+.classpath
+.DS_Store
+.mvn
+*.swp
+target
+last_run.log
+ansible/roles/ansible-*
+hs_err*
+generated
+.springBeans
+.tern-project
+

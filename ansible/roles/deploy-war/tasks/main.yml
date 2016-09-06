@@ -1,0 +1,27 @@
+---
+# deploy/tasks/main.yml
+# Deploys a given deal and will blasdfkdjsfkj
+- name: Check to see if dest dir "{{ war_dest_dir }}" exists
+  stat: path="{{ war_dest_dir }}"
+  register: dir_stat
+  
+- name: "Create the {{ war_dest_dir }} if necessary"
+  file: 
+    path: "{{ war_dest_dir }}"
+    owner: "{{ war_owner }}"
+    state: directory
+  when: not dir_stat.stat.exists
+  
+- name: Copy "{{ war_file }}" to "{{ war_dest_dir }}".
+  copy: 
+    src: "{{ war_file }}" 
+    dest: "{{ war_dest_dir }}"
+    owner: "{{ war_owner }}"
+  register: result
+  
+- name: Register the path of the war file.
+  set_fact:
+    # Must use dest because when it is first copied that is the value
+    # set in the result deal.
+    war_executable: "{{ result.dest }}"
+    

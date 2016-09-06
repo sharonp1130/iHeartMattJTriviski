@@ -1,0 +1,7 @@
+---
+# Variables for retrieving the git repo.
+
+# These are used to grab the contents of the local rsa key file.  If the file does not exist
+# you must create it blah.
+ansible_user_pub_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+ansible_user_key: "{{ lookup('file', ansible_user_pub_file) }}"

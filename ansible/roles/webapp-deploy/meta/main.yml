@@ -1,0 +1,4 @@
+---
+# Meta file for webapp-deploy role
+dependencies:
+  - { role: maven-build, maven_goals: "clean compile" }

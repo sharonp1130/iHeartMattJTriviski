@@ -1,0 +1,15 @@
+---
+# file: git/tasks/main.yml.
+# All the variables are set up in the vars file except for the current ansible users public key to be added to the new_users authorized keys on the new node.
+# This needs to be passed in blah.
+- name: Add the current ansible users local ssh key to the autorized user for the new_user.
+  authorized_key: user={{ new_user }} state=present manage_dir=yes key="{{ ansible_user_key }}"
+
+- name: Get the fingerprint for git-hub and make sure it is in the known_hosts file.
+  command: ssh-keyscan github.com,192.30.252.*
+  register: rsa_fingerprint
+  
+- name: Add github host key to know_hosts file.
+  lineinfile: create=yes dest=/home/{{ new_user }}/.ssh/known_hosts state=present line="{{ rsa_fingerprint.stdout }}" owner={{ new_user }} group={{ new_user }}
+  when: rsa_fingerprint.stdout != ""
+  

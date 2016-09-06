@@ -1,0 +1,2 @@
+[spring-tomcat-servers]
+spring01 ansible_host=192.241.195.224

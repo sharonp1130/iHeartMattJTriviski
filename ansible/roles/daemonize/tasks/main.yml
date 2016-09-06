@@ -1,0 +1,37 @@
+---
+# daemonize/tasks/main.yml
+# This will create a script for the daemon task and add it to 
+# the init.d area so it can be run as a service.
+- name: Check to see if dest dir "{{ daemon_properties }}" exists
+  stat: path="{{ daemon_properties }}"
+  register: dir_stat
+
+- name: "Create the {{ daemon_properties }} if necessary"
+  file: 
+    path: "{{ daemon_properties }}"
+    state: directory
+  when: not dir_stat.stat.exists
+
+- name: Create the application.properties file in "{{ daemon_properties }}"
+  template:
+    src: application.properties.j2
+    dest: "{{ daemon_properties }}/application.properties"
+    mode: 0660
+
+- name: Add the daemon script to init.d named "{{ daemon_service_name }}"
+  template:
+    src: daemon-script.j2
+    dest: "/etc/init.d/{{ daemon_service_name }}"
+    mode: 0755
+  register: result
+  notify:
+    - "restart {{ daemon_service_name }}"
+    
+- name: "Make sure the daemon '{{ daemon_service_name }}' is started"
+  service: 
+    name: "{{ daemon_service_name }}"
+    state: started 
+    enabled: yes
+  when: not result.changed
+  
+  

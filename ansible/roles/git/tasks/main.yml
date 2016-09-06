@@ -1,0 +1,18 @@
+---
+# file: git/tasks/main.yml.
+# Since the git module for ansible is a piece of shit and is almost impossible to get working with the version we have there are two different roles that 
+# should be called separately.  This one only does the checkout of the repo and must NOT be called using accelerate mode.
+
+  # This task should never run as root or sudo.  For ansible 1.5 or higher.  As of now, the ansible version from yum is 1.4 so dont use this.
+# - name: Checkout the git repo.
+  # git: dest={{ git_dest_dir }} version={{ git_branch }} repo={{ git_url }} update=yes accept_hostkey=yes
+  # sudo: no
+  # remote_user: "{{ honey_user }}"
+  # ignore_errors: no
+
+  # This task should never run as root or sudo.  
+- name: Checkout the git repo.
+  git: dest={{ git_dest_dir }} version={{ git_branch }} repo={{ git_url }} update=yes accept_hostkey=yes key_file=/home/{{ new_user }}/.ssh/id_rsa
+  #become_user: "{{ new_user }}"
+  remote_user: "{{ new_user }}"
+  ignore_errors: no

@@ -1,0 +1,17 @@
+---
+# load-db/tasks/main.yml
+# Loads a db if the db does not already exist.
+- name: Check to see if database "{{ db_name }}" exists
+  mysql_db: state=present name="{{ db_name }}"
+  tags: db-load
+  register: db_exists
+
+- name: Copy db dump file to remote
+  copy: src="{{ dump_file }}" dest="{{ dump_dest }}"
+  tags: db-load
+  when: db_exists.changed
+  
+- name: Load dump file {{ dump_dest }}
+  mysql_db: state=import name="{{ db_name }}" target="{{ dump_dest }}"
+  tags: db-load
+  when: db_exists.changed

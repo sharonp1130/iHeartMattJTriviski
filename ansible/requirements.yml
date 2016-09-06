@@ -1,0 +1,11 @@
+---
+# Maven installer
+- src: tecris.maven
+  name: ansible-maven
+
+# Mysql installer.
+- src: geerlingguy.mysql
+  name: ansible-mysql
+  
+- src: angstwad.docker_ubuntu
+  name: ansible-docker
