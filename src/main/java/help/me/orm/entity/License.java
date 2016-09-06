@@ -71,11 +71,6 @@ public class License implements java.io.Serializable {
 		return service == null ? null : service.getServiceId();
 	}
 
-	@Transient
-	public String getServiceDescription() {
-		return service == null ? null : service.getServiceName();
-	}
-
 	@Id
 	@GeneratedValue(generator="licenseIncrement")
 	@GenericGenerator(name="licenseIncrement", strategy = "increment")

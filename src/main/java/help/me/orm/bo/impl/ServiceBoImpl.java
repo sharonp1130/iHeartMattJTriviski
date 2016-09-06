@@ -32,7 +32,8 @@ public class ServiceBoImpl implements IServiceBo {
 	public Service getServiceWithServiceName(String description) {
 		return dao.getWithServiceName(description);
 	}
-
+	
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<String> getServiceNames() {
@@ -41,5 +42,12 @@ public class ServiceBoImpl implements IServiceBo {
 			.list();
 
 		return results;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Service> getServices() {
+		return dao.getCurrentSession().createCriteria(Service.class)
+			.list();
 	}
 }

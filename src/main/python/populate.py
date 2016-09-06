@@ -67,9 +67,15 @@ def gen_avail():
     
     
 def gen_license(service=None):
+    sn = service if service is not None and service in services else get_service()
+    ld = sn + " a long description"
+
     return {"licenseNumber" : "%s-%d" % (get_word(), long(time.time() % random.randint(1, 999))),
-            "service" : service if service is not None and service in services else get_service()
+            "service" : dict(serviceName=sn, longDescription=ld)
             }
+#     return {"licenseNumber" : "%s-%d" % (get_word(), long(time.time() % random.randint(1, 999))),
+#             "serviceName" : service if service is not None and service in services else get_service()
+#             }
         
 def do_run(nums=100, num_locs=2):
     import datetime as dt
@@ -95,7 +101,7 @@ def do_run(nums=100, num_locs=2):
         av = r.json()
      
         added = []
-        for _ in range(random.randint(1, len(services))):
+        for _ in range(random.randint(2, len(services))):
             service = random.choice(services)
             
             if service in added:
@@ -132,8 +138,8 @@ if __name__ == "__main__":
     import datetime as dt
     st = dt.datetime.now()
 
-    thread_count = 5
-    user_to_add = 100
+    thread_count = 4
+    user_to_add = 4
     
     procs = []
     
@@ -152,52 +158,3 @@ if __name__ == "__main__":
      
    
     print "Number records=%5d took %s" % (user_to_add, dt.datetime.now() - st)
-#     for _ in xrange(0, nums):
-#         user = gen_user()
-#         info = gen_info()
-#         avail = gen_avail()
-#         license = gen_license()
-# 
-#         # add the user.
-#         r = requests.put(user_url, json=user)
-# 
-#         # add the users info.
-#         u = r.json()
-#         uid = u.get("userId")
-# 
-#         r = requests.post(info_url % uid, json=info)
-#         inf = r.json()
-# 
-#         r = requests.post(availability_url % uid, json=avail)
-#         av = r.json()
-#      
-#         added = []
-#         for _ in range(random.randint(1, len(services))):
-#             service = random.choice(services)
-#             
-#             if service in added:
-#                 while service in added:
-#                     service = random.choice(services)
-#                 
-#             added.append(service)
-#                 
-#             r = requests.put(license_url % uid, json=gen_license(service))
-#             
-#             
-# #             34.190163    -118.131317 - alta
-# #             34.161327    -118.167648 - rose bowl
-# #             34.146461    -118.134476 - target
-#             
-#         #Add some locations here.
-#         r = requests.post(location_url % uid, json=dict(longitude=get_longitude(), latitude=get_latitude()))
-# 
-#             
-#     print "Number records=%5d took %s" % (nums, dt.datetime.now() - st)
-# 
-#          
-#          
-#     r = requests.get(url_root + "/query/service/heating", params=dict(longitude=1234, latitude=2345, distance=5, usersToSkip="4,5,10..15,18"))
-#     print r.json()
-
-
-
