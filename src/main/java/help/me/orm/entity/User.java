@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User implements java.io.Serializable {
 	@JsonProperty("userId")
 	private int userId;
-	
+
 	@JsonProperty("email")
 	private String email;
 	@JsonProperty("isProvider")
@@ -63,6 +63,14 @@ public class User implements java.io.Serializable {
 	@JsonIgnore
     private Set<License> licenses = new HashSet<License>(0);
 
+	// These are reviews this user created on others.
+	@JsonIgnore
+    private Set<Review> writtenReviews = new HashSet<Review>(0);
+
+	// These are reviews written about this user.
+	@JsonIgnore
+    private Set<Review> providerReviews = new HashSet<Review>(0);
+
 	@JsonIgnore
 	@ContainedIn
 	private Set<Location> locations = new HashSet<Location>(0);
@@ -71,11 +79,11 @@ public class User implements java.io.Serializable {
 	private long createdAt;
 	@JsonIgnore
 	private long updatedAt;
-	
+
 	/**
 	 * I don't like doing this since most of the time this is going to not be set.  Also
 	 * this is a value that must be set after the constructor is called.  But this is the simplest
-	 * way to make sure that the output user object for queries have the distance as part of the 
+	 * way to make sure that the output user object for queries have the distance as part of the
 	 * JSON.  Otherwise, I will have to do a ton of work with JSON
 	 */
 	@JsonIgnore
@@ -85,14 +93,16 @@ public class User implements java.io.Serializable {
     // private Set<Location> locations = new HashSet<Location>(0);
 
 	/**
-	 * 
+	 *
 	 */
 	public User() {
 	}
 
 
     public User(int userId, Info info, Settings settings, String email, String firstName, String lastName,
-			boolean isProvider, Set<License> licenses, long createdAt, long updatedAt) {
+			boolean isProvider, Set<License> licenses,
+			Set<Review> writtenReviews, Set<Review> providerReviews,
+			long createdAt, long updatedAt) {
 		super();
 		this.userId = userId;
 		this.info = info;
@@ -101,20 +111,22 @@ public class User implements java.io.Serializable {
 		this.lastName = lastName;
 		this.isProvider = isProvider;
 		this.licenses = licenses;
+		this.writtenReviews = writtenReviews;
+		this.providerReviews = providerReviews;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		
+
 		this.setEmail(email);
-		
+
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
 
     /**
-     * Merges user into this.  Only checks the values that can be updated, 
+     * Merges user into this.  Only checks the values that can be updated,
      * first and last name and isProvider. Email can not change, and will not update
      * anyway.
-     * 
+     *
      * @param user
      */
     @Transient
@@ -123,11 +135,11 @@ public class User implements java.io.Serializable {
     		if (user.getFirstName() != null) {
     			firstName = user.getFirstName();
     		}
-    		
+
     		if (user.getLastName() != null) {
     			lastName = user.getLastName();
     		}
-    		
+
     		isProvider = user.getIsProvider();
     }
 
@@ -145,8 +157,8 @@ public class User implements java.io.Serializable {
 
 	/**
 	 * Checks to see if this account creation is complete.  Used for Jackson JSON output.
-	 * 
-	 * @return True if the account is complete, ie the info, settings and license portion of this account 
+	 *
+	 * @return True if the account is complete, ie the info, settings and license portion of this account
 	 * have already been created.
 	 */
 	@Transient
@@ -157,7 +169,7 @@ public class User implements java.io.Serializable {
 		 */
 		return settings != null && info != null && !licenses.isEmpty();
 	}
-	
+
 	@Column(name = "isProvider", nullable = false, columnDefinition="TINYINT(1)")
 	public boolean getIsProvider() {
 		return isProvider;
@@ -188,13 +200,13 @@ public class User implements java.io.Serializable {
 	public void setSettings(Settings settings) {
 		this.settings = settings;
 	}
-	
+
 	@Column(name = "firstName", unique = false, nullable = false, length = 64)
 	@JsonProperty("firstName")
 	public String getFirstName() {
 		return this.firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -204,11 +216,11 @@ public class User implements java.io.Serializable {
 	public String getLastName() {
 		return this.lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	@Column(name = "email", unique = true, nullable = false, length = 128, updatable = false)
 	public String getEmail() {
 		return this.email;
@@ -221,7 +233,7 @@ public class User implements java.io.Serializable {
 		if (!EmailValidator.getInstance().isValid(email)) {
 			throw new IllegalStateException("Email address is invalid.");
 		}
-		
+
 		this.email = email;
 	}
 
@@ -232,7 +244,61 @@ public class User implements java.io.Serializable {
 	public String getFormattedName() {
 		return String.format("%s %s", firstName, lastName);
 	}
-	
+
+	/**
+	 * Add a new review that this user created about another user.
+	 *
+	 * @param review newly created review about another user.
+	 */
+	@Transient
+	public void addWrittenReview(Review review) {
+		this.writtenReviews.add(review);
+	}
+
+    /**
+     * Get all reviews this user wrote about other users.
+     * @return
+     */
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="reviewer", cascade=CascadeType.ALL)
+    public Set<Review> getWrittenReviews() {
+        return this.writtenReviews;
+    }
+
+    /**
+     * Set the reviews that this user created about other users.
+     * @param reviews
+     */
+    public void setWrittenReviews(Set<Review> reviews) {
+    	this.writtenReviews = reviews;
+    }
+
+	/**
+	 * Add a review another user made on tis user.
+	 * @param review Add a new review.
+	 */
+	@Transient
+	public void addProviderReview(Review review) {
+		this.providerReviews.add(review);
+	}
+
+    /**
+     * Get all the reviews written about this user.
+     * @return
+     */
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="provider", cascade=CascadeType.ALL)
+    public Set<Review> getProviderReviews() {
+        return this.providerReviews;
+    }
+
+    /**
+     * Set the reviews written about this user.
+     * @param reviews
+     */
+    public void setProviderReviews(Set<Review> reviews) {
+    	this.providerReviews = reviews;
+    }
+
+
 	/**
 	 * @param license Add a new license.
 	 */
@@ -240,31 +306,32 @@ public class User implements java.io.Serializable {
 	public void addLicense(License license) {
 		this.licenses.add(license);
 	}
-	
+
+
     @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
 	@IndexedEmbedded(depth=1)
     public Set<License> getLicenses() {
         return this.licenses;
     }
-    
+
     public void setLicenses(Set<License> licenses) {
         this.licenses = licenses;
     }
-    
+
     @OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
     public Set<Location> getLocations() {
         return this.locations;
     }
-    
+
 //    private static final Comparator<Location> lastLocation = new Comparator<Location>() {
-		
+
 //		@Override
 //		public int compare(Location o1, Location o2) {
 //			// Want the last one so do it in reverse.
 //			return Integer.compare(o2.getLocationId(), o1.getLocationId());
 //		}
 //	};
-	
+
 //    @Transient
 //    public Location getLastLocation() {
 //    		if (locations == null || locations.isEmpty()) {
@@ -272,23 +339,23 @@ public class User implements java.io.Serializable {
 //    		} else {
 //	    		TreeSet<Location> locs =  new TreeSet<Location>(lastLocation);
 //	    		locs.addAll(locations);
-//	    		
+//
 //	    		for (Location loc : locs) {
 //	    			if (!loc.getIsExpired()) {
 //	    				return loc;
 //	    			}
 //	    		}
-//	    		
+//
 //	    		// No unexpired locations so return null.
 //	    		return null;
 //    		}
 //    }
-    
+
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
     }
-    
-	
+
+
 	@Column(name = "created_at", insertable=true, updatable=false)
 	public long getCreatedAt() {
 		return this.createdAt;
@@ -306,31 +373,48 @@ public class User implements java.io.Serializable {
 	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
 	@PrePersist
 	@Transient
 	public void setCreatedAt() {
 		this.createdAt = System.currentTimeMillis();
 		this.updatedAt = this.createdAt;
 	}
-	
+
 	@PreUpdate
 	@Transient
 	public void setUpdatedAt() {
 		this.updatedAt = System.currentTimeMillis();
 	}
-	
+
 	@Transient
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
-	
+
 	@Transient
 	public double getDistance() {
 		return distance;
 	}
-	
-	
+
+	/**
+	 * @return Average of the reviews, -1 if no reviews have been created.
+	 */
+	@Transient
+	public double getAverageProviderRating() {
+		if (!providerReviews.isEmpty()) {
+			double avg = 0;
+			for (Review review : providerReviews) {
+				avg += review.getRating();
+			}
+
+			return avg / providerReviews.size();
+		} else {
+			return 0;
+		}
+	}
+
+
 	@Override
 	public String toString() {
 		final int maxLen = 10;
